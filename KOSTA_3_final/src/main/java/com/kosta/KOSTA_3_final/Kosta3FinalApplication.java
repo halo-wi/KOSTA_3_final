@@ -11,5 +11,4 @@ public class Kosta3FinalApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(Kosta3FinalApplication.class, args);
 	}
-
 }
