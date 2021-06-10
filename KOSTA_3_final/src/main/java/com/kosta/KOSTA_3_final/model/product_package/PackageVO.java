@@ -11,6 +11,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.kosta.KOSTA_3_final.model.board.Review;
+import com.kosta.KOSTA_3_final.model.subscribe.Subscribe;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +21,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-//대분류
+//패키지
 @Getter
 @Setter
 @Entity
@@ -27,16 +29,24 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="tp_largecl")
-public class Category {
+@Table(name="tp_package")
+public class PackageVO {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	int category_id;
-	String category_name;
+	int package_id;
+	String package_name;
+	int price;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL) //, fetch = FetchType.EAGER
-	List<Product> products;
+	@OneToMany(mappedBy = "pack", cascade = CascadeType.ALL) //, fetch = FetchType.EAGER
+	List<Review> reviews;
 	
+	@JsonIgnore
+	@OneToMany(mappedBy = "pack", cascade = CascadeType.ALL) //, fetch = FetchType.EAGER
+	List<Subscribe> subscribes;
+	
+	
+	@OneToMany(mappedBy = "pack")
+	List<Product_Package> ppList;
 }
