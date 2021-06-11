@@ -35,7 +35,7 @@ import lombok.ToString;
 public class BoardReply {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	int board_reply_id;
+	Long board_reply_id;
 
 	String board_reply; //댓글내용
 	
