@@ -3,7 +3,10 @@ package com.kosta.KOSTA_3_final.model.user;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,13 +43,16 @@ public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	int customer_id;
-	String customer_name;
+	Integer customer_id;
+	@Column(name = "customer_name")
+	String customerName;
 	String email;
 	String password;
 	String phone_number;
 	String address;
-	String auth;
+	@Enumerated(EnumType.STRING)
+	UserRoleEnumType auth;
+	
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL) //, fetch = FetchType.EAGER

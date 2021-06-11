@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<title>회원 가입</title>
+</head>
+<body>
+<form method="post" action="/auth/joinForm" onsubmit="return submitCheck()">
+이메일<br>
+<input type="email" id="email" name="email" class="mail" value=""> <button class="sendmail">이메일 인증</button>
+<br>이름<br>
+<input type="text" 	id="customer_name" name="customer_name" value="">
+<br>비밀번호<br>
+<input type="text" 	id="password" name="password" value="">
+<br>전화번호<br>
+<input type="text" 	id="phone_number" name="phone_number" value="">
+<br>주소<br>
+<input type="text" 	id="adredd" name="adredd" value="">
+<input type="hidden" id="auth" name="auth" value="user">
+ <section class="check-section">
+  <input type="text" placeholder="인증 키 입력" style="display: none;"
+	class="compare"><span class="compare-text"
+	style="display: none">불일치</span>
+ </section>
+<input class="signup-btn waves-effect waves-light btn" type="submit" value="회원 가입">
+</form>
+<input type="button" value="인증하기" class="cehcksession">
+<script>
+$(".sendMail").click(function() {// 메일 입력 유효성 검사
+	var mail = $(".mail").val(); //사용자의 이메일 입력값. 
+	
+	if (mail == "") {
+		alert("메일 주소가 입력되지 않았습니다.");
+	} else {
+		
+		$.ajax({
+			type : 'post',
+			url : '/email',
+			data : {
+				mail:mail
+				},
+			dataType :'json',
+
+		});
+		alert("인증번호가 전송되었습니다.") 
+		isCertification=true; //추후 인증 여부를 알기위한 값
+	}
+});
+$(".signup-btn waves-effect waves-light btn").click(function submitCheck(){
+	if(isCertification==false){
+		alert("메일 인증이 완료되지 않았습니다.");
+		return false;
+	}else
+		true;
+});
+
+$(".compare").on("propertychange change keyup paste input", function() {
+	if ($(".compare").val() == key) {   //인증 키 값을 비교를 위해 텍스트인풋과 벨류를 비교
+		$(".compare-text").text("인증 성공!").css("color", "black");
+		isCertification = true;  //인증 성공여부 check
+	} else {
+		$(".compare-text").text("불일치!").css("color", "red");
+		isCertification = false; //인증 실패
+	}
+});
+</script>
+</body>
+</html>
