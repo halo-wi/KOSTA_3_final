@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -39,22 +40,28 @@ import lombok.ToString;
 public class Board {
 	@Id // 필수PK
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	Long board_id;
-	String board_title;
+	@Column(name="board_id")
+	Long bid;
+	@Column(name="board_title")
+	String btitle;
 	
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
 	User customer; //댓글작성자
 	
+	@Column(name="board_content")
+	String bcontent;
 	
-	String board_content;
 	@CreationTimestamp
-	Timestamp board_regdate;
+	@Column(name="board_regdate")
+	Timestamp bregdate;
 	@UpdateTimestamp
-	Timestamp board_updatedate;
+	@Column(name="board_updatedate")
+	Timestamp bupdatedate;
 
 	@JsonIgnore // tostring과 유사, JSON만들때 무한loop 방지
 	@OneToMany(mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	List<BoardReply> board_replies;
+	@Column(name="board_replies")
+	List<BoardReply> breplies;
 
 }

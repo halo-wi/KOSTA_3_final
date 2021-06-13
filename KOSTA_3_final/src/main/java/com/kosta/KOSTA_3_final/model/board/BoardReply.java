@@ -2,6 +2,7 @@ package com.kosta.KOSTA_3_final.model.board;
 
 import java.sql.Timestamp;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -35,19 +36,22 @@ import lombok.ToString;
 public class BoardReply {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	Long board_reply_id;
-
-	String board_reply; //댓글내용
+	@Column(name="board_reply_id")
+	Long rid;
+	@Column(name="board_reply")
+	String reply; //댓글내용
 	
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
 	User customer; // FK, 댓글 작성자. issue : User에서도 양방향으로 참조해야할까? <본인댓글조회 기능 시 필요> , 변수명에 대해 의논
 
 	@CreationTimestamp
-	Timestamp reg_date;
+	@Column(name="reg_date")
+	Timestamp rregdate;
 
 	@UpdateTimestamp
-	Timestamp update_date;
+	@Column(name="update_date")
+	Timestamp rupdatedate;
 
 	// 여러개의 댓글은 하나의 게시글을 참조한다.
 	@ManyToOne

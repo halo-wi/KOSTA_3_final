@@ -32,7 +32,7 @@ class Kosta3FinalApplicationTests {
 	@Test
 	public void boardReplyCount() {
 		repo.findById(690L).ifPresent(b->{
-			System.out.println(b.getBoard_replies().size());
+			System.out.println(b.getBreplies().size());
 		});
 	}
 	
@@ -40,11 +40,11 @@ class Kosta3FinalApplicationTests {
 	//@Test
 	public void insertReply() {
 		repo.findById(690L).ifPresent(b->{
-			List<BoardReply> replies = b.getBoard_replies();
-			b.setBoard_title("title 수정합니다1.");
+			List<BoardReply> replies = b.getBreplies();
+			b.setBtitle("title 수정합니다1.");
 			IntStream.range(1, 4).forEach(i->{
 				BoardReply wreply = BoardReply.builder()
-						.board_reply("댓글..."+i)
+						.reply("댓글..."+i)
 						.board(b)
 						.build();
 				replies.add(wreply);

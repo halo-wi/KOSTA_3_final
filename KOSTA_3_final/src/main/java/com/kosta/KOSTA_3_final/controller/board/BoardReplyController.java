@@ -28,26 +28,26 @@ public class BoardReplyController {
 	BoardReplyService service;
 	
 	//특정 보드 번호에 해당하는 모든 댓글 조회
-	@GetMapping("/board/{board_id}")
-	public ResponseEntity<List<BoardReply>> selectAll(@PathVariable Long board_id) {
-		Board board = Board.builder().board_id(board_id).build();
+	@GetMapping("/board/{bid}")
+	public ResponseEntity<List<BoardReply>> selectAll(@PathVariable Long bid) {
+		Board board = Board.builder().bid(bid).build();
 		return new ResponseEntity<>(service.selectAll(board), HttpStatus.OK);
 	}
 	
 	//댓글상세보기
-		@GetMapping("{board_reply_id}")
-		public ResponseEntity<BoardReply> viewReply(@PathVariable Long board_reply_id) {
+		@GetMapping("{rid}")
+		public ResponseEntity<BoardReply> viewReply(@PathVariable Long rid) {
 				
-				return new ResponseEntity<>(service.selectById(board_reply_id), HttpStatus.OK);
+				return new ResponseEntity<>(service.selectById(rid), HttpStatus.OK);
 			}
 	
 	
 	
 	//특정 보드에 댓글등록, 입려 후 다시 조회
-	@PostMapping("/{board_id}")
-	public ResponseEntity<List<BoardReply>> addRep(@PathVariable Long board_id, @RequestBody BoardReply reply) {
+	@PostMapping("/{bid}")
+	public ResponseEntity<List<BoardReply>> addRep(@PathVariable Long bid, @RequestBody BoardReply reply) {
 		
-		Board board = Board.builder().board_id(board_id).build();
+		Board board = Board.builder().bid(bid).build();
 		reply.setBoard(board);
 		service.updateOrInsert(reply);
 		return new ResponseEntity<>(service.selectAll(board), HttpStatus.CREATED);
@@ -57,19 +57,19 @@ public class BoardReplyController {
 	
 	
 	//삭제
-	@DeleteMapping("/{board_id}/{board_reply_id}")
-	public ResponseEntity<List<BoardReply>> deleteByboard_reply_id(@PathVariable Long board_reply_id, @PathVariable Long board_id) {
-		service.delete(board_reply_id);
-		Board board = Board.builder().board_id(board_id).build();
+	@DeleteMapping("/{bid}/{rid}")
+	public ResponseEntity<List<BoardReply>> deleteByboard_reply_id(@PathVariable Long rid, @PathVariable Long bid) {
+		service.delete(rid);
+		Board board = Board.builder().bid(bid).build();
 		
 		return new ResponseEntity<>(service.selectAll(board), HttpStatus.OK);
 	}
 	
 	//수정
-	@PutMapping("/{board_id}")
-	public ResponseEntity<List<BoardReply>> updateRep(@PathVariable Long board_id, @RequestBody BoardReply reply) {
+	@PutMapping("/{bid}")
+	public ResponseEntity<List<BoardReply>> updateRep(@PathVariable Long bid, @RequestBody BoardReply reply) {
 		
-		Board board = Board.builder().board_id(board_id).build();
+		Board board = Board.builder().bid(bid).build();
 		reply.setBoard(board);
 		service.updateOrInsert(reply);
 		

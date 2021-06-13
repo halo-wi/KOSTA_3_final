@@ -15,16 +15,16 @@ import com.querydsl.core.types.Predicate;
 
 public interface BoardPersistance extends CrudRepository<Board, Long>, QuerydslPredicateExecutor<Board>{
 
-//	//JPQL문법
-	@Query("select b.board_title, count(r) "
-			+ "from Board b left outer join b.board_replies r "
-			+ "group by b.board_title order by b.board_title")
+//JPQL문법
+	@Query("select b.btitle, count(r) "
+			+ "from Board b left outer join b.breplies r "
+			+ "group by b.btitle order by b.btitle")
 	public List<Object[]> getBoardReplyCount();                 
 	
 	public default Predicate makePredicate1() {
 		BooleanBuilder builder = new BooleanBuilder();
 		QBoard board = QBoard.board;
-		builder.and(board.board_id.gt(0)); // and board_id>0
+		builder.and(board.bid.gt(0)); // and board_id>0
 		
 		return builder;
 	}
@@ -32,15 +32,15 @@ public interface BoardPersistance extends CrudRepository<Board, Long>, QuerydslP
 		BooleanBuilder builder = new BooleanBuilder();
 		QBoard board = QBoard.board;
 		QUser user = QUser.user;
-		builder.and(board.board_id.gt(0)); // and board_id>0
+		builder.and(board.bid.gt(0)); // and board_id>0
 		
 		if(type==null) return builder;
 		switch(type) {
 		case "board_title":
-			builder.and(board.board_title.like("%"+keyword+"%"));
+			builder.and(board.btitle.like("%"+keyword+"%"));
 			break;
 		case "board_content":
-			builder.and(board.board_content.like("%"+keyword+"%"));
+			builder.and(board.bcontent.like("%"+keyword+"%"));
 			break;
 		case "email":
 			builder.and(user.email.like("%"+keyword+"%"));
