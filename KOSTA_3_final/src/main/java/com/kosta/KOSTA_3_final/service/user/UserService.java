@@ -3,6 +3,7 @@ package com.kosta.KOSTA_3_final.service.user;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
@@ -42,20 +43,25 @@ public class UserService implements UserDetailsService{
 	
 
 	
+
 	
-	
-	 public EmailDTO createMailAndChangePassword(String userEmail, String userName){
-	        String str = getTempPassword();
+	 public EmailDTO createMailAndChangePassword(String email, String customerName){
+	     //메일 본문 생성 및 비번 바꾸기   
+		 String str = getTempPassword();
 	        EmailDTO dto = new EmailDTO();
-	        dto.setAddress(userEmail);
-	        dto.setTitle(userName+"님의  임시비밀번호 안내 이메일 입니다.");
-	        dto.setMessage("안녕하세요.  임시비밀번호 안내 관련 이메일 입니다." + "[" + userName + "]" +"님의 임시 비밀번호는 "
+	        String rr=repo.findByEmail(email).get().getCustomerName();
+	        System.out.println(rr);
+	        dto.setAddress(email);
+	        dto.setTitle(rr+"님의  임시비밀번호 안내 이메일 입니다.");
+	        dto.setMessage("안녕하세요.  임시비밀번호 안내 관련 이메일 입니다." + "[" + rr + "]" +"님의 임시 비밀번호는 "
 	        + str + " 입니다.");
-	        updatePassword(str,userEmail);
+	        System.out.println(dto);
+	        updatePassword(str,email);
 	        return dto;
 	    }
 	
 	 public String getTempPassword(){
+		 //랜덤한 문자와 숫자 배열 생성
 	        char[] charSet = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
 	                'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
 
@@ -70,15 +76,17 @@ public class UserService implements UserDetailsService{
 	    }
 	 
 	  public void updatePassword(String str,String userEmail){
-	        String pw = passwordEncoder.encode(str);
-	        int id = repo.findByEmail(userEmail).get().getCustomer_id();
-	        User member=repo.findById(id).get();
-	        member.builder().password(pw).build();
-	        repo.save(member);
+	      //비번 암호화 및 업데이트  
+		  String pw = passwordEncoder.encode(str);
+	        String name=repo.findByEmail(userEmail).get().getCustomerName();
+	       System.out.println(name);
+	        User id = repo.findByCustomerName(name);
+	       id.setPassword(pw);
+	        repo.save(id);
 	    }
 	 
 	public boolean userEmailCheck(String userEmail, String userName) {
-
+		//이메일 유무 확인
         User user = repo.findByEmail(userEmail).get();
         if(user!=null && user.getCustomerName().equals(userName)) {
             return true;
@@ -88,10 +96,7 @@ public class UserService implements UserDetailsService{
         }
     }
 	
-	 @Async
-	    public void sendEmail(SimpleMailMessage email) {
-	        sender.send(email);
-	    }
+	
 	
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

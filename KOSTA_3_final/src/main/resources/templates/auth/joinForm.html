@@ -8,46 +8,60 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <body>
 <form method="post" action="/auth/joinForm" onsubmit="return submitCheck()">
 이메일<br>
-<input type="email" id="email" name="email" class="mail" value=""> <button class="sendmail">이메일 인증</button>
+<input type="text" id="email" name="email" class="email" value="" placeholder="예시)sample1@gmail.com"/>
+ <a href="#" class="sendMail">이메일 인증</a>
 <br>이름<br>
-<input type="text" 	id="customer_name" name="customer_name" value="">
+<input type="text" 	id="customerName" name="customerName" value=""/>
 <br>비밀번호<br>
-<input type="text" 	id="password" name="password" value="">
+<input type="text" 	id="password" name="password" value=""/>
 <br>전화번호<br>
-<input type="text" 	id="phone_number" name="phone_number" value="">
+<input type="text" 	id="phone_number" name="phone_number" value=""/>
 <br>주소<br>
-<input type="text" 	id="adredd" name="adredd" value="">
-<input type="hidden" id="auth" name="auth" value="user">
+<input type="text" 	id="adress" name="adress" value=""/>
+<input type="hidden" id="auth" name="auth" value="USER"/>
  <section class="check-section">
   <input type="text" placeholder="인증 키 입력" style="display: none;"
 	class="compare"><span class="compare-text"
 	style="display: none">불일치</span>
  </section>
-<input class="signup-btn waves-effect waves-light btn" type="submit" value="회원 가입">
+<input class="btn" type="submit" value="회원 가입">
 </form>
-<input type="button" value="인증하기" class="cehcksession">
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js">
+</script>
 <script>
+$(function() {
+	var isCertification = false;
+	var key = "";
 $(".sendMail").click(function() {// 메일 입력 유효성 검사
-	var mail = $(".mail").val(); //사용자의 이메일 입력값. 
+	var email = $(".email").val(); //사용자의 이메일 입력값. 
 	
-	if (mail == "") {
+	if (email == "") {
 		alert("메일 주소가 입력되지 않았습니다.");
 	} else {
 		
+		console.log(email);
 		$.ajax({
 			type : 'post',
-			url : '/email',
+			url : '/auth/CheckMail',
+			dataType : 'json',
+			async : "false",
 			data : {
-				mail:mail
-				},
-			dataType :'json',
-
+				'email' : email
+			},
+			success : function(data) {
+				console.log(data.key);
+				key = data.key;
+				alert("이메일을 확인하시기 바랍니다.");
+			}
 		});
-		alert("인증번호가 전송되었습니다.") 
+		
 		isCertification=true; //추후 인증 여부를 알기위한 값
+		$(".compare").css("display", "block");
+		$(".compare-text").css("display", "block");
 	}
 });
-$(".signup-btn waves-effect waves-light btn").click(function submitCheck(){
+$(".btn").click(function submitCheck(){
 	if(isCertification==false){
 		alert("메일 인증이 완료되지 않았습니다.");
 		return false;
@@ -63,6 +77,7 @@ $(".compare").on("propertychange change keyup paste input", function() {
 		$(".compare-text").text("불일치!").css("color", "red");
 		isCertification = false; //인증 실패
 	}
+});
 });
 </script>
 </body>

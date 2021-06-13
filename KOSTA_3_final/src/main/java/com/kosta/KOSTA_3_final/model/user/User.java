@@ -46,6 +46,7 @@ public class User {
 	Integer customer_id;
 	@Column(name = "customer_name")
 	String customerName;
+	@Column(unique = true)
 	String email;
 	String password;
 	String phone_number;
