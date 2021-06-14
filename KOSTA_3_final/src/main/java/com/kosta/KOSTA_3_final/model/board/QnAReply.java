@@ -2,6 +2,7 @@ package com.kosta.KOSTA_3_final.model.board;
 
 import java.sql.Timestamp;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,13 +35,15 @@ import lombok.ToString;
 public class QnAReply {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	int question_reply_id;
+	@Column(name="question_reply_id")
+	Long qrid;
 	
-	String question_reply;
+	@Column(name="question_reply")
+	String qreply;
 	
 	@ManyToOne
 	@JoinColumn(name = "question_id")
-	QnA question_id;
+	QnA qid;
 	
 	
 	
@@ -50,8 +53,10 @@ public class QnAReply {
 	
 	
 	@CreationTimestamp
-	Timestamp question_reply_reg_date;
+	@Column(name="question_reply_reg_date")
+	Timestamp qreplyregDate;
 
 	@UpdateTimestamp
-	Timestamp question_reply_update_date;
+	@Column(name="question_reply_update_date")
+	Timestamp qrupdateDate;
 }

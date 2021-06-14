@@ -1,18 +1,24 @@
 package com.kosta.KOSTA_3_final.model.board;
 
 import java.sql.Timestamp;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kosta.KOSTA_3_final.model.user.User;
 
 import lombok.AllArgsConstructor;
@@ -34,19 +40,33 @@ import lombok.ToString;
 public class QnA {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	int question_id;
+	@Column(name="question_id")
+	Long qid;
 	
-	String question_title;
-	String question_content;
+	@Column(name="question_title")
+	String qtitle;
+	@Column(name="question_content")
+	String qcontent;
 	
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
 	User customer; // 문의글 작성자
 	
 	@CreationTimestamp
-	Timestamp question_reg_date;
+	@Column(name= "question_reg_date")
+	Timestamp qregDate;
 
 	@UpdateTimestamp
-	Timestamp question_update_date;
+	@Column(name= "question_updatedate")
+	Timestamp qupdateDate;
+	
+	/*
+	 * @JsonIgnore // tostring과 유사, JSON만들때 무한loop 방지
+	 * 
+	 * @OneToMany(mappedBy = "qnA", cascade = CascadeType.ALL, fetch =
+	 * FetchType.LAZY)
+	 * 
+	 * @Column(name="qnA_replies") List<BoardReply> qreplies;
+	 */
 
 }

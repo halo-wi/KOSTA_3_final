@@ -4,32 +4,32 @@
 	layout:decorate="~{layout/layout1}">
 <head>
 <meta charset="UTF-8">
-<btitle>상세보기</btitle>
+<board_board_title>상세보기</board_board_title>
 </head>
 <body>
 
-	<div class="panel panel-default" layout:fragment="bcontent1">
+	<div class="panel panel-default" layout:fragment="board_board_content1">
 		<h1 class="panel-heading">Board 상세보기</h1>
 		<div class="panel-body">
 
 			<form id="myfrm" class="form-inline" th:action="@{/board/update}"
 				method="post">
-				<input type="hidden" id="bid" name="bid" th:value="${board.bid}">
-				<input type="hidden" id="redate" name="bregdate"
-					th:value="${board.bregdate}">
+				<input type="hidden" id="board_id" name="board_id" th:value="${board.board_id}">
+				<input type="hidden" id="redate" name="board_board_regdate"
+					th:value="${board.board_board_regdate}">
 				<div class="form-group">
-					<label for="btitle">btitle:</label> <br> <input type="text"
-						class="form-control" id="btitle" name="btitle"
-						th:value="${board.btitle}">
+					<label for="board_board_board_title">board_board_title:</label> <br> <input type="text"
+						class="form-control" id="board_board_title" name="board_board_title"
+						th:value="${board.board_board_board_title}">
 
 
 				</div>
 				<br> <br>
 				<div class="form-group">
-					<label for="bcontent">bcontent:</label><br>
-					<textarea class="form-group" rows="3" cols="" id="b_content"
-						name="bcontent">
-						[[${board.bcontent}]]
+					<label for="board_board_board_content">board_board_content:</label><br>
+					<textarea class="form-group" rows="3" cols="" id="board_board_content"
+						name="board_board_content">
+						[[${board.board_board_board_content}]]
 					</textarea>
 				</div>
 				<br> <br> <br>
@@ -37,9 +37,9 @@
 
 
 				<div class="form-group">
-					<label for="bregdate">날짜:</label> <br> <input type="date"
-						class="form-control" id="bregdate" name="bregdate"
-						th:value="${#dates.format(bregdate, 'yyyy-MM-dd')}">
+					<label for="board_board_regdate">날짜:</label> <br> <input type="date"
+						class="form-control" id="board_board_regdate" name="board_board_regdate"
+						th:value="${#dates.format(board.board_board_regdate, 'yyyy-MM-dd')}">
 				</div>
 				<br> <br> <br>
 
@@ -55,9 +55,9 @@
 
 				<div class="pull-right">
 					<a href="javascript:call()" class="btn btn-warning modbtn2">수정하기</a>
-					<a th:href="@{/board/delete(bid=${board.bid})}"
+					<a th:href="@{/webboard/delete(board_id=${board.board_id})}"
 						class="btn btn-warning delbtn2">삭제하기</a> <a
-						th:href="@{/board/boardlist(page=${pagevo.page},size=${pagevo.size},type=${pagevo.type},keyword=${pagevo.keyword})}"
+						th:href="@{/webboard/boardlist(page=${pagevo.page},size=${pagevo.size},type=${pagevo.type},keyword=${pagevo.keyword})}"
 						class="btn btn-warning modbtn2">목록보기</a>
 				</div>
 
@@ -74,10 +74,10 @@
 				<div class="modal-dialog">
 
 					<!-- Modal board_board_content-->
-					<div class="modal-bcontent">
+					<div class="modal-board_board_content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<h4 class="modal-btitle">Modal Header</h4>
+							<h4 class="modal-board_board_title">Modal Header</h4>
 						</div>
 						<div class="modal-body">
 							<label>댓글내용</label> <input type="text" name="replyText"
@@ -137,7 +137,7 @@
 				$("input[name='replyText']").val("");
 				$("input[name='replyer']").val("");
 				$("#myModal").show();
-				$(".modal-btitle").text("댓글을 추가합니다");
+				$(".modal-board_board_title").text("댓글을 추가합니다");
 				mode = "ADD";
 			});
 
@@ -146,7 +146,7 @@
 				var replyText = $("input[name='replyText']");
 				var replyer = $("input[name='replyer']");
 				var obj = {
-					"bid" : "[[${board.bid}]]",
+					"board_id" : "[[${board.board_id}]]",
 					"reply" : replyText.val(),
 					"replyer" : replyer.val()
 				};
@@ -170,7 +170,7 @@
 				var replyText = $("input[name='replyText']");
 				var replyer = $("input[name='replyer']");
 				var obj = {
-					"bid" : "[[${board.bid}]]",
+					"board_id" : "[[${board.board_id}]]",
 					"rno" : rno
 				};
 				replyManager.remove(obj, printList);
@@ -192,12 +192,12 @@
 				$("input[name='replyText']").val(reply);
 				$("input[name='replyer']").val(replyer);
 				$("#myModal").show();
-				$(".modal-btitle").text("댓글 수정 또는 삭제 작업");
+				$(".modal-board_board_title").text("댓글 수정 또는 삭제 작업");
 
 			});
 
 			//console.log(replyManager);
-			replyManager.getAll("[[${board.bid}]]", printList);
+			replyManager.getAll("[[${board.board_id}]]", printList);
 
 			function printList(rList) {
 				console.log(rList);

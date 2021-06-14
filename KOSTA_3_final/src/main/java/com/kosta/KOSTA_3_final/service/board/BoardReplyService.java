@@ -21,18 +21,18 @@ public class BoardReplyService {
 		return (List<BoardReply>) persistance.findByBoard(board);
 	}
 	
-	public BoardReply selectById(Long board_reply_id) {
-		return persistance.findById(board_reply_id).get();
+	public BoardReply selectById(Long rid) {
+		return persistance.findById(rid).get();
 	}
 	
 	public BoardReply updateOrInsert(BoardReply reply) {
 		return persistance.save(reply);
 	}
 	
-	public int delete(Long board_reply_id) {
+	public int delete(Long rid) {
 		int ret=0;
 		try {
-		 persistance.deleteById(board_reply_id);
+		 persistance.deleteById(rid);
 		 ret=1;
 		}catch(Exception e) {
 			

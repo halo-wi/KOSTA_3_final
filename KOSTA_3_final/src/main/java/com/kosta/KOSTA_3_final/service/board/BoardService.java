@@ -26,8 +26,8 @@ public class BoardService {
 		return result;
 	}
 	
-	public Board selectById(Long board_id) {
-		return persistance.findById(board_id).get();
+	public Board selectById(Long bid) {
+		return persistance.findById(bid).get();
 	}
 	
 	public Board insertBoard(Board board) {
@@ -38,10 +38,10 @@ public class BoardService {
 		return persistance.save(board);
 	}
 	
-	public int deleteBoard(Long board_id) {
+	public int deleteBoard(Long bid) {
 		int ret=0;
 		try {
-			persistance.deleteById(board_id);
+			persistance.deleteById(bid);
 		ret=1;
 		}catch(Exception ex){
 		}

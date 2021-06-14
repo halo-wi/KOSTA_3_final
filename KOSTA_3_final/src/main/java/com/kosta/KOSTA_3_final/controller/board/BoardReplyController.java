@@ -23,7 +23,6 @@ import com.kosta.KOSTA_3_final.service.board.BoardReplyService;
 @RequestMapping("/replies/*")
 public class BoardReplyController {
 
-	
 	@Autowired
 	BoardReplyService service;
 	
@@ -58,7 +57,7 @@ public class BoardReplyController {
 	
 	//삭제
 	@DeleteMapping("/{bid}/{rid}")
-	public ResponseEntity<List<BoardReply>> deleteByboard_reply_id(@PathVariable Long rid, @PathVariable Long bid) {
+	public ResponseEntity<List<BoardReply>> deleteByrid(@PathVariable Long rid, @PathVariable Long bid) {
 		service.delete(rid);
 		Board board = Board.builder().bid(bid).build();
 		

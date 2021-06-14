@@ -36,10 +36,10 @@ public interface BoardPersistance extends CrudRepository<Board, Long>, QuerydslP
 		
 		if(type==null) return builder;
 		switch(type) {
-		case "board_title":
+		case "btitle":
 			builder.and(board.btitle.like("%"+keyword+"%"));
 			break;
-		case "board_content":
+		case "bcontent":
 			builder.and(board.bcontent.like("%"+keyword+"%"));
 			break;
 		case "email":
