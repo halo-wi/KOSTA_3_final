@@ -18,7 +18,7 @@ public class QnAReplyService {
 	
 	
 	public List<QnAReply> selectAll(Long qid) {
-		return (List<QnAReply>) repository.findByQnA(qid);
+		return (List<QnAReply>) repository.findByQid(qid);
 	}
 	
 	public QnAReply selectById(Long qrid) {
