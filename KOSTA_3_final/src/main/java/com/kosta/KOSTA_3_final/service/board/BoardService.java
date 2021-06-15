@@ -10,10 +10,8 @@ import com.kosta.KOSTA_3_final.model.board.PageVO;
 import com.kosta.KOSTA_3_final.persistance.board.BoardPersistance;
 import com.querydsl.core.types.Predicate;
 
-
 @Service
 public class BoardService {
-
 
 	@Autowired
 	BoardPersistance persistance;
@@ -21,7 +19,7 @@ public class BoardService {
 	public Page<Board> selectAll(PageVO pvo) {
 		Predicate p = persistance.makePredicate(pvo.getType(),pvo.getKeyword());
 		
-		Pageable pageable = pvo.makePaging(0, "board_id");
+		Pageable pageable = pvo.makePaging(0, "bid");
 		Page<Board> result = persistance.findAll(p, pageable);
 		return result;
 	}

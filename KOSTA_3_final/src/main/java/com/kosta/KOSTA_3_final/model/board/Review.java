@@ -1,5 +1,6 @@
 package com.kosta.KOSTA_3_final.model.board;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,7 +31,8 @@ import lombok.ToString;
 public class Review {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	int review_id;
+	@Column(name = "review_id")
+	int reviewId;
 	
 	@ManyToOne
 	@JoinColumn(name = "package_id")

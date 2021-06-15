@@ -4,7 +4,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 layout:decorate="~{layout/layout1}">
 <head>
 <meta charset="UTF-8">
-<btitle>board</btitle>
+<title>board</title>
 <th:block layout:fragment="style1">
  <style>
    /*table,td,th{ border: 1px solid black; border-collapse: collapse;}*/
@@ -20,7 +20,7 @@ layout:decorate="~{layout/layout1}">
 		<option>전체</option>
 		<option value = "btitle" th:selected="${pagevo.type=='btitle'}">제목</option>
 		<option value = "bcontent" th:selected="${pagevo.type=='bcontent'}" >내용</option>
-		<option value = "email" th:selected="${pagevo.type=='email'}" >작성자</option>
+		<option value = "email" th:selected="${pagevo.type=='user.email'}" >작성자</option>
 	</select>
 	<input type="text" id="searchKeyword">
 	<button id="searchBtn">조건검색</button>
@@ -46,7 +46,7 @@ layout:decorate="~{layout/layout1}">
          <td th:text="${board.bcontent}"></td>
          
          <td >
-         		<a class = "boardLink" th:text="${board.email}" th:href="${board.bid}"></a>
+         		<a class = "boardLink" th:text="${user.email}" th:href="${board.bid}"></a>
          </td>
          <td th:text="${board.bregdate}"></td>
          <td th:text="${board.bupdatedate}"></td>

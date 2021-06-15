@@ -4,32 +4,32 @@
 	layout:decorate="~{layout/layout1}">
 <head>
 <meta charset="UTF-8">
-<board_board_title>상세보기</board_board_title>
+<title>상세보기</title>
 </head>
 <body>
 
-	<div class="panel panel-default" layout:fragment="board_board_content1">
-		<h1 class="panel-heading">Board 상세보기</h1>
+	<div class="panel panel-default" layout:fragment="bcontent1">
+		<h1 class="panel-heading">qna 상세보기</h1>
 		<div class="panel-body">
 
-			<form id="myfrm" class="form-inline" th:action="@{/board/update}"
+			<form id="myfrm" class="form-inline" th:action="@{/qna/update}"
 				method="post">
-				<input type="hidden" id="board_id" name="board_id" th:value="${board.board_id}">
-				<input type="hidden" id="redate" name="board_board_regdate"
-					th:value="${board.board_board_regdate}">
+				<input type="hidden" id="qid" name="qid" th:value="${qna.qid}">
+				<input type="hidden" id="qreDate" name="qregDate"
+					th:value="${qna.qregDate}">
 				<div class="form-group">
-					<label for="board_board_board_title">board_board_title:</label> <br> <input type="text"
-						class="form-control" id="board_board_title" name="board_board_title"
-						th:value="${board.board_board_board_title}">
+					<label for="qtitle">title:</label> <br> <input type="text"
+						class="form-control" id="qtitle" name="qtitle"
+						th:value="${qna.qtitle}">
 
 
 				</div>
 				<br> <br>
 				<div class="form-group">
-					<label for="board_board_board_content">board_board_content:</label><br>
-					<textarea class="form-group" rows="3" cols="" id="board_board_content"
-						name="board_board_content">
-						[[${board.board_board_board_content}]]
+					<label for="qcontent">content:</label><br>
+					<textarea class="form-group" rows="3" cols="" id="qcontent"
+						name="qcontent">
+						[[${qna.qcontent}]]
 					</textarea>
 				</div>
 				<br> <br> <br>
@@ -37,16 +37,16 @@
 
 
 				<div class="form-group">
-					<label for="board_board_regdate">날짜:</label> <br> <input type="date"
-						class="form-control" id="board_board_regdate" name="board_board_regdate"
-						th:value="${#dates.format(board.board_board_regdate, 'yyyy-MM-dd')}">
+					<label for="bregdate">날짜:</label> <br> <input type="date"
+						class="form-control" id="qregDate" name="qregDate"
+						th:value="${#dates.format(qna.qregDate, 'yyyy-MM-dd')}">
 				</div>
 				<br> <br> <br>
 
 				<div class="form-group">
 					<label for="email">email:</label> <br> <input type="text"
 						class="form-control" id="email" name="email"
-						th:value="${board.email}">
+						th:value="${qna.email}">
 				</div>
 				<br> <br> <br>
 
@@ -55,9 +55,9 @@
 
 				<div class="pull-right">
 					<a href="javascript:call()" class="btn btn-warning modbtn2">수정하기</a>
-					<a th:href="@{/webboard/delete(board_id=${board.board_id})}"
+					<a th:href="@{/qna/delete(qid=${qna.qid})}"
 						class="btn btn-warning delbtn2">삭제하기</a> <a
-						th:href="@{/webboard/boardlist(page=${pagevo.page},size=${pagevo.size},type=${pagevo.type},keyword=${pagevo.keyword})}"
+						th:href="@{/board/qnalist(page=${pagevo.page},size=${pagevo.size},type=${pagevo.type},keyword=${pagevo.keyword})}"
 						class="btn btn-warning modbtn2">목록보기</a>
 				</div>
 
@@ -74,10 +74,10 @@
 				<div class="modal-dialog">
 
 					<!-- Modal board_board_content-->
-					<div class="modal-board_board_content">
+					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<h4 class="modal-board_board_title">Modal Header</h4>
+							<h4 class="modal-title">Modal Header</h4>
 						</div>
 						<div class="modal-body">
 							<label>댓글내용</label> <input type="text" name="replyText"
@@ -137,7 +137,7 @@
 				$("input[name='replyText']").val("");
 				$("input[name='replyer']").val("");
 				$("#myModal").show();
-				$(".modal-board_board_title").text("댓글을 추가합니다");
+				$(".modal-title").text("댓글을 추가합니다");
 				mode = "ADD";
 			});
 
@@ -146,7 +146,7 @@
 				var replyText = $("input[name='replyText']");
 				var replyer = $("input[name='replyer']");
 				var obj = {
-					"board_id" : "[[${board.board_id}]]",
+					"qid" : "[[${qna.qid}]]",
 					"reply" : replyText.val(),
 					"replyer" : replyer.val()
 				};
@@ -170,7 +170,7 @@
 				var replyText = $("input[name='replyText']");
 				var replyer = $("input[name='replyer']");
 				var obj = {
-					"board_id" : "[[${board.board_id}]]",
+					"qid" : "[[${qna.qid}]]",
 					"rno" : rno
 				};
 				replyManager.remove(obj, printList);
@@ -192,12 +192,12 @@
 				$("input[name='replyText']").val(reply);
 				$("input[name='replyer']").val(replyer);
 				$("#myModal").show();
-				$(".modal-board_board_title").text("댓글 수정 또는 삭제 작업");
+				$(".modal-title").text("댓글 수정 또는 삭제 작업");
 
 			});
 
 			//console.log(replyManager);
-			replyManager.getAll("[[${board.board_id}]]", printList);
+			replyManager.getAll("[[${qna.qid}]]", printList);
 
 			function printList(rList) {
 				console.log(rList);

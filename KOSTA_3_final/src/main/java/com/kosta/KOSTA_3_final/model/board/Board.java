@@ -31,7 +31,7 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "breplies")
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity

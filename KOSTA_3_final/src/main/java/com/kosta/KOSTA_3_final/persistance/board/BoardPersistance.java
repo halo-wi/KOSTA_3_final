@@ -31,7 +31,6 @@ public interface BoardPersistance extends CrudRepository<Board, Long>, QuerydslP
 	public default Predicate makePredicate(String type, String keyword) {
 		BooleanBuilder builder = new BooleanBuilder();
 		QBoard board = QBoard.board;
-		QUser user = QUser.user;
 		builder.and(board.bid.gt(0)); // and board_id>0
 		
 		if(type==null) return builder;
@@ -43,7 +42,7 @@ public interface BoardPersistance extends CrudRepository<Board, Long>, QuerydslP
 			builder.and(board.bcontent.like("%"+keyword+"%"));
 			break;
 		case "email":
-			builder.and(user.email.like("%"+keyword+"%"));
+			builder.and(board.customer.email.like("%"+keyword+"%"));
 			break;
 		default:
 			break;
