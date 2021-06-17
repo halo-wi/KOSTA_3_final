@@ -1,8 +1,6 @@
 package com.kosta.KOSTA_3_final.persistance.board;
 
-import java.util.List;
 
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
@@ -10,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.kosta.KOSTA_3_final.model.board.QQnA;
 import com.kosta.KOSTA_3_final.model.board.QnA;
-import com.kosta.KOSTA_3_final.model.user.QUser;
+import com.kosta.KOSTA_3_final.model.user.QMember;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 
@@ -34,7 +32,7 @@ public interface QnARepository extends CrudRepository<QnA, Long>, QuerydslPredic
 		public default Predicate makePredicate(String type, String keyword) {
 			BooleanBuilder builder = new BooleanBuilder();
 			QQnA QnA = QQnA.qnA;
-			QUser user = QUser.user;
+			QMember user = QMember.member;
 			builder.and(QnA.qid.gt(0)); 
 			
 			if(type==null) return builder;

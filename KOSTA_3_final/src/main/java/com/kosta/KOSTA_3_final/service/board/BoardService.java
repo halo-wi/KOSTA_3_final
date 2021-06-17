@@ -20,6 +20,8 @@ public class BoardService {
 		Predicate p = persistance.makePredicate(pvo.getType(),pvo.getKeyword());
 		
 		Pageable pageable = pvo.makePaging(0, "bid");
+		System.out.println(p);
+		System.out.println(pageable);
 		Page<Board> result = persistance.findAll(p, pageable);
 		return result;
 	}
@@ -45,7 +47,5 @@ public class BoardService {
 		}
 		return ret;
 	}
-	
-	
 
 }

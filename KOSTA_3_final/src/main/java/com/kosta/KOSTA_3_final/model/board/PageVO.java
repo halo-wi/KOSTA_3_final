@@ -5,8 +5,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Builder
+@AllArgsConstructor
 @Getter
 public class PageVO {
 	private static final int DEFAULT_SIZE = 10;

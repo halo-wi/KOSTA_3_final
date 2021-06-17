@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kosta.KOSTA_3_final.model.product_package.PackageVO;
-import com.kosta.KOSTA_3_final.model.user.User;
+import com.kosta.KOSTA_3_final.model.user.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -43,7 +43,7 @@ public class Subscribe {
 	
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
-	User customer;
+	Member customer;
 	
 	@ManyToOne
 	@JoinColumn(name = "package_id", insertable = false, updatable = false)

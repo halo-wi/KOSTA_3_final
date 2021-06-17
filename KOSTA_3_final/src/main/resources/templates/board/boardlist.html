@@ -32,33 +32,30 @@ layout:decorate="~{layout/layout1}">
 
    <table class="table table-striped table-bordered table-hover" >
       <tr> 
-       <th>번호</th><th>제목</th><th>내용</th><th>작성자</th><th>작성일</th><th>수정일</th>
+       <th>번호</th><th>제목</th><th>작성자</th><th>작성일</th>
       </tr>
-      <tr th:each="board:${boardResult.bcontent}">
+      <tr th:each="board:${boardResult.content}">
          <td>
             <a th:href="@{/board/boarddetail(bid=${board.bid})}" th:text="${board.bid}"></a>
-            <span class = "badge">[[${board.replies.size()}]]</span>
          </td>
          <td>
-         	<a class = "boardLink" th:text="${board.btitle}" th:href="${board.bid}"></a>
+         	<a class = "boardLink" th:text="${board.btitle}" th:href="@{/board/boarddetail(bid=${board.bid})}"></a>
+        	 <span class = "badge">[[${board.replies.size()}]]</span>
          </td>
-         
-         <td th:text="${board.bcontent}"></td>
-         
          <td >
-         		<a class = "boardLink" th:text="${user.email}" th:href="${board.bid}"></a>
+         <!-- 문자열의 한계치를 설정하고, length가 한계치 이상이라면 잘라낸후 …으로 표시해준다. -->
+         	<div class = "email" th:text="${#strings.abbreviate(board.customer.email,7)}"> </div>
          </td>
          <td th:text="${board.bregdate}"></td>
-         <td th:text="${board.bupdatedate}"></td>
       </tr>
    </table>
    
    <!-- 페이징 처리 -->
    <form id="f1" th:action="@{/board/boardlist}" method="get">
-   	<input type="text" name="page" th:value=${result.currentPageNum}>
-   	<input type="text" name="size" th:value=${result.currentPage.pageSize}>
-   	<input type="text" name="type" th:value=${pagevo.type}>
-   	<input type="text" name="keyword" th:value=${pagevo.keyword}>
+   	<input type="hidden" name="page" th:value=${result.currentPageNum}>
+   	<input type="hidden" name="size" th:value=${result.currentPage.pageSize}>
+   	<input type="hidden" name="type" th:value=${pagevo.type}>
+   	<input type="hidden" name="keyword" th:value=${pagevo.keyword}>
    </form>
    <nav>
    	<ul class="pagination">
@@ -77,11 +74,9 @@ layout:decorate="~{layout/layout1}">
    </nav>
 </div>
 <th:block layout:fragment="script1">
-
 <script>
 $(function() {
 	/* var msg="[[${resultMessage}]]"; */
-	
 	
 	var formObj = $("#f1");
 	$(".pagination a").click(function(e) {

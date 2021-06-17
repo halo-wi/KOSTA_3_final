@@ -1,5 +1,6 @@
 package com.kosta.KOSTA_3_final;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -16,9 +17,11 @@ import org.springframework.test.annotation.Commit;
 import com.kosta.KOSTA_3_final.model.board.Board;
 import com.kosta.KOSTA_3_final.model.board.BoardReply;
 import com.kosta.KOSTA_3_final.model.board.PageVO;
-
+import com.kosta.KOSTA_3_final.model.user.Member;
 import com.kosta.KOSTA_3_final.persistance.board.BoardPersistance;
-
+import com.kosta.KOSTA_3_final.persistance.board.BoardReplyPersistance;
+import com.kosta.KOSTA_3_final.persistance.user.UserPersistance;
+import com.kosta.KOSTA_3_final.service.user.UserService;
 import com.querydsl.core.types.Predicate;
 
 import lombok.extern.java.Log;
@@ -29,11 +32,38 @@ class Kosta3FinalApplicationTests {
 	
 	@Autowired
 	BoardPersistance repo;
+	@Autowired
+	BoardReplyPersistance replyPersistance;
+	@Autowired
+	UserPersistance userPersistance;
 	
 
 	//@Test
 	void contextLoads() {
 	}
+	
+	@Test
+	public void insertreply() {
+		Long[] arr = {47L, 48L, 49L};
+		
+		
+		
+		Arrays.stream(arr).forEach(num -> {
+			Board board = new Board();
+			board.setBid(num);
+			IntStream.range(0, 10).forEach(i -> {
+				BoardReply reply = new BoardReply();
+				reply.setReply("qqq"+i);
+				reply.setCustomer(userPersistance.findByCustomerName("swk9514@naver.com"));
+				reply.setBoard(board);
+
+				replyPersistance.save(reply);
+			});
+		});
+
+	}
+	
+	
 	
 	
 	//@Test
@@ -58,22 +88,25 @@ class Kosta3FinalApplicationTests {
 	//@Test
 	public void boardReplyCount() {
 		repo.findById(690L).ifPresent(b->{
-			System.out.println(b.getBreplies().size());
+			System.out.println(b.getReplies().size());
 		});
 	}
 	
 	@Transactional
 	//@Test
 	public void insertReply() {
-		repo.findById(690L).ifPresent(b->{
-			List<BoardReply> replies = b.getBreplies();
+		repo.findById(47L).ifPresent(b->{
+			System.out.println("찾음?");
+			List<BoardReply> replies = b.getReplies();
 			b.setBtitle("title 수정합니다1.");
+			System.out.println("됨?");
 			IntStream.range(1, 4).forEach(i->{
-				BoardReply wreply = BoardReply.builder()
+				BoardReply reply = BoardReply.builder()
 						.reply("댓글..."+i)
 						.board(b)
 						.build();
-				replies.add(wreply);
+				System.out.println("insert");
+				replies.add(reply);
 			});
 			repo.save(b);
 		});

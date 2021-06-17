@@ -1,5 +1,6 @@
 package com.kosta.KOSTA_3_final.controller.board;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,16 +14,22 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.kosta.KOSTA_3_final.model.board.Board;
 import com.kosta.KOSTA_3_final.model.board.PageMake;
 import com.kosta.KOSTA_3_final.model.board.PageVO;
+import com.kosta.KOSTA_3_final.model.user.Member;
 import com.kosta.KOSTA_3_final.service.board.BoardService;
+import com.kosta.KOSTA_3_final.service.user.UserService;
 
 @Controller
 public class BoardController {
 
 	@Autowired
 	BoardService service;
+	@Autowired
+	UserService uservice;
 	
 	@GetMapping("/board/boardlist")
 	public void selectAll(Model model, PageVO pagevo) {
+		if(pagevo==null) pagevo = PageVO.builder().page(1).size(10).keyword("").type("").build();
+
 		Page<Board> result = service.selectAll(pagevo);
 		
 		List<Board> boardlist = result.getContent();
@@ -46,9 +53,11 @@ public class BoardController {
 	}
 	
 	@PostMapping("/board/register")
-	public String boardRegisterPost(Board board, RedirectAttributes rttr) {
+	public String boardRegisterPost(Board board, RedirectAttributes rttr, Principal principal) {
 		System.out.println(board);
-		
+		Member member = uservice.getMemberInfo(principal.getName());
+		board.setCustomer(member);
+		System.out.println(board);
 		Board ins_board = service.insertBoard(board);
 		//주소창에 보이지 않고 전달된다.
 		rttr.addFlashAttribute("resultMessage", ins_board==null?"입력실패":"입력성공");
@@ -56,14 +65,14 @@ public class BoardController {
 	}
 
 	  @GetMapping("/board/boarddetail") 
-	  public void selectAll(Model model, Long board_id, PageVO pagevo) { 
-		  model.addAttribute("board",service.selectById(board_id)); 
+	  public void selectAll(Model model, Long bid, PageVO pagevo) { 
+		  model.addAttribute("board",service.selectById(bid)); 
 		  model.addAttribute("pagevo", pagevo);
 		  }
 
 	  @GetMapping("/board/delete")
-	  public String boardDelete(Long board_id) {
-		  int ret = service.deleteBoard(board_id);
+	  public String boardDelete(Long bid) {
+		  int ret = service.deleteBoard(bid);
 		  System.out.println("삭제 : "+ret);
 		  return "redirect:/board/boardlist";
 				 

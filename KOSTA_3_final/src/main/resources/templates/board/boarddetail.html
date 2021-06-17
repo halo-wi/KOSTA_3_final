@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
 	layout:decorate="~{layout/layout1}">
 <head>
 <meta charset="UTF-8">
-<btitle>상세보기</btitle>
+<title>상세보기</title>
 </head>
 <body>
 
@@ -18,46 +19,32 @@
 				<input type="hidden" id="redate" name="bregdate"
 					th:value="${board.bregdate}">
 				<div class="form-group">
-					<label for="btitle">title:</label> <br> <input type="text"
-						class="form-control" id="btitle" name="btitle"
-						th:value="${board.btitle}">
-
-
+					<label for="btitle">title:</label>
+					<article class="form-control" id="btitle">
+						[[${board.btitle}]]</article>
 				</div>
-				<br> <br>
+				<label for="bregdate">작성일:</label>
+				<div class = "bregdate" th:text="${#dates.format(board.bregdate, 'yyyy-MM-dd')}"></div>	
+				<br> 
+				<label for="bregdate">작성자:</label>
+				<div class = "email" th:text="${#strings.abbreviate(board.customer.email,7)}"> </div>
+				<br>
 				<div class="form-group">
 					<label for="bcontent">content:</label><br>
-					<textarea class="form-group" rows="3" cols="" id="b_content"
-						name="bcontent">
+					<div id="bcontent" style="border: black solid 1px; width: 300px; height: 100%">
 						[[${board.bcontent}]]
-					</textarea>
+					</div>
 				</div>
 				<br> <br> <br>
-
-
-
-				<div class="form-group">
-					<label for="bregdate">날짜:</label> <br> <input type="date"
-						class="form-control" id="bregdate" name="bregdate"
-						th:value="${#dates.format(bregdate, 'yyyy-MM-dd')}">
-				</div>
-				<br> <br> <br>
-
-				<div class="form-group">
-					<label for="email">email:</label> <br> <input type="text"
-						class="form-control" id="email" name="email"
-						th:value="${board.email}">
-				</div>
-				<br> <br> <br>
-
-
 
 
 				<div class="pull-right">
+				
+				<div th:if="${board.customer.email}==${#authentication.name}">
 					<a href="javascript:call()" class="btn btn-warning modbtn2">수정하기</a>
-					<a th:href="@{/board/delete(bid=${board.bid})}"
-						class="btn btn-warning delbtn2">삭제하기</a> <a
-						th:href="@{/board/boardlist(page=${pagevo.page},size=${pagevo.size},type=${pagevo.type},keyword=${pagevo.keyword})}"
+					<a th:href="@{/board/delete(bid=${board.bid})}" class="btn btn-warning delbtn2">삭제하기</a> 
+					</div>
+						<a th:href="@{/board/boardlist(page=${pagevo.page},size=${pagevo.size},type=${pagevo.type},keyword=${pagevo.keyword})}"
 						class="btn btn-warning modbtn2">목록보기</a>
 				</div>
 
@@ -69,20 +56,21 @@
 			</form>
 
 
+			
 			<!-- Modal -->
 			<div id="myModal" class="modal fade" role="dialog">
 				<div class="modal-dialog">
 
-					<!-- Modal board_board_content-->
-					<div class="modal-bcontent">
+					<!-- Modal content-->
+					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<h4 class="modal-btitle">Modal Header</h4>
+							<h4 class="modal-title">Modal Header</h4>
 						</div>
 						<div class="modal-body">
-							<label>댓글내용</label> <input type="text" name="replyText"
-								class="form-control"> <label>작성자</label> <input
-								type="text" name="replyer" class="form-control">
+							<label>댓글내용</label> 
+							<input type="text" name="reply" class="form-control"> 
+							<label>작성자</label> <input type="text" name="email" class="form-control">
 
 						</div>
 						<div class="modal-footer">
@@ -97,23 +85,30 @@
 
 				</div>
 			</div>
+			
 			<!-- 댓글 넣기 -->
 			<div>
-				<button data-toggle="modal" data-target="#myModal"
-					class="btn btn-warning" id="addReply">댓글추가</button>
+				<button data-toggle="modal" data-target="#myModal" class="btn btn-warning" id="addReply">댓글추가</button>
 			</div>
+			
+			<div class='container'>
+			
 			<table class="table table-striped table-bordered table-hover">
 				<thead>
 					<tr>
 						<th>댓글번호</th>
 						<th>내용</th>
 						<th>작성자</th>
+						<th>작성일</th>
 					</tr>
 				</thead>
 				<tbody id="replyTable" data-toggle="modal" data-target="#myModal">
 
-				</tbody>
+				</tbody> 
 			</table>
+					</div>
+					
+					
 
 
 
@@ -128,34 +123,91 @@
 		</div>
 
 	</div>
-	<th:block layout:fragment="script1">
-		<script th:src="@{/js/external.js}"></script>
-		<script>
-			var mode = "";
+	<th:block layout:fragment="script">
+		<script th:inline="javascript" th:src="@{/js/external.js}"></script>
+		<script th:inline="javascript">
+	
+		var a= '??'
+			console.log(a)
+		
+		
+		$(document).ready(function(e) {
+			
+
+			var p= '?11?'
+				console.log(p)
+			
+			
+		
+			(function(){
+		console.log(replyManager);
+		replyManager.getAll("[[${board.bid}]]", printList);
+		
+			})();
+		
+		function printList(rList) {
+			console.log(rList);
+			var str = "";
+			$.each(rList, function(idx, item) {
+				str += "<tr>";
+				str += "<td>" + item["rid"] + "</td>";
+				str += "<td>" + item["reply"] + "</td>";
+				str += "<td>" + item["email"] + "</td>";
+				str += "<td>" + formatDate(item["rupdatedate"]) + "</td>";
+				
+				str += "</tr>";
+			});
+			$("#replyTable").html(str);
+
+		};
+
+		
+		function formatDate(t){
+			var date = new Date(t)
+		return (date.getFullMonth()+1 >= 10?date.getMounth()+1 : '0'+(date.getMonth()+1))+"-"+date.getDate()			
+		
+			}
+		});
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		var mode = "";
 			$("#addReply").click(function() {
 
-				$("input[name='replyText']").val("");
-				$("input[name='replyer']").val("");
+				$("input[name='reply']").val("");
+				$("input[name='email']").val("");
 				$("#myModal").show();
-				$(".modal-btitle").text("댓글을 추가합니다");
+				$(".modal-title").text("댓글을 추가합니다");
 				mode = "ADD";
 			});
 
 			$("#modalButton").click(function() {
 
-				var replyText = $("input[name='replyText']");
-				var replyer = $("input[name='replyer']");
+				var reply = $("input[name='reply']");
+				var email = $("input[name='email']");
 				var obj = {
 					"bid" : "[[${board.bid}]]",
-					"reply" : replyText.val(),
-					"replyer" : replyer.val()
+					"reply" : reply.val(),
+					"email" : email.val()
 				};
 
 				if (mode == "ADD") {
 					replyManager.add(obj, printList);
 					alert("입력완료");
 				} else if (mode == "MOD") {
-					obj["rno"] = rno;
+					obj["rid"] = rno;
 					replyManager.update(obj, printList);
 					alert("수정완료");
 				}
@@ -167,17 +219,17 @@
 
 			$("#delButton").click(function() {
 
-				var replyText = $("input[name='replyText']");
-				var replyer = $("input[name='replyer']");
+				var reply = $("input[name='reply']");
+				var email = $("input[name='email']");
 				var obj = {
 					"bid" : "[[${board.bid}]]",
-					"rno" : rno
+					"rid" : rid
 				};
 				replyManager.remove(obj, printList);
 				alert("삭제완료");
 				$("#myModrenal").hide();
-				replyText.val("");
-				replyer.val("");
+				reply.val("");
+				email.val("");
 
 			});
 
@@ -185,34 +237,16 @@
 				mode = "MOD";
 				alert(mode);
 				var tds = $(this).find("td");
-				rno = tds[0].innerHTML;
-				var reply = tds[1].innerHTML;
-				var replyer = tds[2].innerHTML;
+				rid = tds[0].innerHTML;
+				var reply1 = tds[1].innerHTML;
+				var email = tds[2].innerHTML;
 
-				$("input[name='replyText']").val(reply);
-				$("input[name='replyer']").val(replyer);
+				$("input[name='reply']").val(reply1);
+				$("input[name='email']").val(email);
 				$("#myModal").show();
-				$(".modal-btitle").text("댓글 수정 또는 삭제 작업");
+				$(".modal-title").text("댓글 수정 또는 삭제 작업");
 
 			});
-
-			//console.log(replyManager);
-			replyManager.getAll("[[${board.bid}]]", printList);
-
-			function printList(rList) {
-				console.log(rList);
-				var str = "";
-				$.each(rList, function(idx, item) {
-					str += "<tr>";
-					str += "<td>" + item["rno"] + "</td>";
-					str += "<td>" + item["reply"] + "</td>";
-					str += "<td>" + item["replyer"] + "</td>";
-
-					str += "</tr>";
-				});
-				$("#replyTable").html(str);
-
-			};
 
 			function call() {
 				var myfrm = $("#myfrm");

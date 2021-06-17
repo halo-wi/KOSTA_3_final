@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kosta.KOSTA_3_final.model.board.Board;
 import com.kosta.KOSTA_3_final.model.board.BoardReply;
+import com.kosta.KOSTA_3_final.persistance.board.BoardReplyPersistance;
 import com.kosta.KOSTA_3_final.service.board.BoardReplyService;
 
 
@@ -25,6 +26,9 @@ public class BoardReplyController {
 
 	@Autowired
 	BoardReplyService service;
+	
+	@Autowired
+	BoardReplyPersistance persistance;
 	
 	//특정 보드 번호에 해당하는 모든 댓글 조회
 	@GetMapping("/board/{bid}")
@@ -44,7 +48,7 @@ public class BoardReplyController {
 	
 	//특정 보드에 댓글등록, 입려 후 다시 조회
 	@PostMapping("/{bid}")
-	public ResponseEntity<List<BoardReply>> addRep(@PathVariable Long bid, @RequestBody BoardReply reply) {
+	public ResponseEntity<List<BoardReply>> addReply(@PathVariable("bid")Long bid, @RequestBody BoardReply reply) {
 		
 		Board board = Board.builder().bid(bid).build();
 		reply.setBoard(board);

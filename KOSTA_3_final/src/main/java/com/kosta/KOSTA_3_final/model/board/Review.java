@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.kosta.KOSTA_3_final.model.product_package.PackageVO;
-import com.kosta.KOSTA_3_final.model.user.User;
+import com.kosta.KOSTA_3_final.model.user.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,7 +40,7 @@ public class Review {
 	
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
-	User customer; //변수명
+	Member customer; //변수명
 	
 	int score; //별점 모양으로 출력
 	String review;
