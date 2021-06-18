@@ -1,13 +1,9 @@
-/**
- * 
- */
+
 
 var replyManager =(function(){
 
-	var a= '??'
-		console.log(a)
+console.log("@@@");
 
-	
 	var getAll = function(obj, callback){	
 		console.log("get All..."+obj);
 
