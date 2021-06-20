@@ -4,23 +4,23 @@
 	layout:decorate="~{layout/layout1}">
 <head>
 <meta charset="UTF-8">
-<board_title>Insert board_title here</board_title>
+<title>Insert board_title here</title>
 </head>
 <body>
 
-	<div class="panel panel-default" layout:fragment="board_content1">
-		<h1 class="panel-heading">Board 신규등록</h1>
+	
+		<h1 class="panel-heading"> 신규등록</h1>
 		<div class="panel-body">
 		
 			<form class="form-inline" th:action="@{register}" method="post">
 				<div class="form-group">
-					<label for="board_board_title">board_title:</label> <br>
-					<input type="text" class="form-control" id="board_title" placeholder="enter board_title" name = "board_title">
+					<label for="qtitle">qtitle:</label> <br>
+					<input type="text" class="form-control" id="qtitle" placeholder="enter qtitle" name = "qtitle">
 					<p class="help-block">여기는 제목입니다.</p>
 				</div><br><br>
 				<div class="form-group">
-					<label for="board_board_content">board_content:</label><br>
-					<textarea class="form-group" rows="3" cols="" id="board_content" name ="board_content"></textarea>
+					<label for="qcontent">"qcontent":</label><br>
+					<textarea class="form-group" rows="3" cols="" id=""qcontent"" name =""qcontent""></textarea>
 				</div><br><br><br>
 				<div class="form-group">
 					<label for="email">작성자:</label> <br>
