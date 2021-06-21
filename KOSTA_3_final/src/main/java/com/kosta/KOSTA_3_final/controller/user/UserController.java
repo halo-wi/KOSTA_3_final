@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.kosta.KOSTA_3_final.model.user.User;
+import com.kosta.KOSTA_3_final.model.user.Member;
 import com.kosta.KOSTA_3_final.service.user.UserService;
 
 @Controller
@@ -44,7 +44,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/auth/joinForm")
-	public String joinUser2(@ModelAttribute User user) {
+	public String joinUser2(@ModelAttribute Member user) {
 		service.joinUser(user);
 		
 		return "redirect:/auth/login";
