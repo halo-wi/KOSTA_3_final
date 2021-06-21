@@ -9,5 +9,6 @@ public interface UserPersistance extends CrudRepository<Member, Integer>{
 	public Optional<Member> findByEmail(String email);
 	public Member findByCustomerName(String userEmail);
 
+
 	
 }

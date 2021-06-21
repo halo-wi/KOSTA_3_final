@@ -34,7 +34,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
+
 @ToString(exclude = {"boards","payments","qnas","qnareplies","subscribes","reviews","boardreplies"})
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
