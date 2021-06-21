@@ -49,4 +49,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 .and().csrf().disable();  //csrf(크로스사이트 위조요청에 대한 설정) 토큰 비활성화 (test시에는 disable권장)            
 http.exceptionHandling().accessDeniedPage("/accessFail"); // 403 예외처리 핸들링   권한이 없는 대상이 접속을시도했을 때
 }
+
 }

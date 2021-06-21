@@ -1,6 +1,7 @@
 package com.kosta.KOSTA_3_final.model.product_package;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,11 +37,11 @@ public class Product_Package {
 	generator = "PP_ID_EX_SEQ")
 	int ppId;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_id")
 	Product product;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "package_id")
 	PackageVO pack;
 	

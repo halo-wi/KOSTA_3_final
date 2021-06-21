@@ -14,7 +14,9 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+
 import com.kosta.KOSTA_3_final.model.user.Member;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
