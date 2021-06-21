@@ -4,6 +4,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="UTF-8">
 <title>회원 가입</title>
+
 <style>
 #address{width: 750px;}
 </style>
@@ -20,8 +21,10 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <br>전화번호<br>
 <input type="text" 	id="phone_number" name="phone_number" value=""/>
 <br>주소<br>
+
 <input type="text" 	id="address" name="address" value="" placeholder="우편 번호 검색 후 아파트의 동과 호는 직접 쳐주세요" />
 <input type="button" onclick="Postcode()" value="우편번호 찾기"><br>
+
 <input type="hidden" id="auth" name="auth" value="USER"/>
  <section class="check-section">
   <input type="text" placeholder="인증 키 입력" style="display: none;"
@@ -33,7 +36,9 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js">
 </script>
+
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
 <script>
 $(function() {
 	var isCertification = false;
@@ -83,6 +88,7 @@ $(".compare").on("propertychange change keyup paste input", function() {
 		isCertification = false; //인증 실패
 	}
 });
+
 
 });
 function Postcode() {

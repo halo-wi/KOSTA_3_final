@@ -3,6 +3,7 @@ package com.kosta.KOSTA_3_final.model.product_package;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,8 +35,10 @@ public class PackageVO {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	int package_id;
-	String package_name;
+	@Column(name = "package_id")
+	int packageid;
+	@Column(name = "package_name")
+	String packagename;
 	int price;
 	
 	@JsonIgnore

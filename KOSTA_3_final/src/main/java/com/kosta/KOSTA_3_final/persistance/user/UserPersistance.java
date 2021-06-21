@@ -3,11 +3,12 @@ import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.kosta.KOSTA_3_final.model.user.User;
+import com.kosta.KOSTA_3_final.model.user.Member;
 
-public interface UserPersistance extends CrudRepository<User, Integer>{
-	public Optional<User> findByEmail(String email);
-	public User findByCustomerName(String userEmail);
+public interface UserPersistance extends CrudRepository<Member, Integer>{
+	public Optional<Member> findByEmail(String email);
+	public Member findByCustomerName(String userEmail);
+
 
 	
 }
