@@ -39,7 +39,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="tp_user")
-public class User {
+public class Member {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
