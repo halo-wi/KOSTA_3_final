@@ -3,7 +3,10 @@ package com.kosta.KOSTA_3_final.model.user;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,22 +34,28 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@ToString
+
+@ToString(exclude = {"boards","payments","qnas","qnareplies","subscribes","reviews","boardreplies"})
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="tp_user")
-public class User {
+public class Member {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	int customer_id;
-	String customer_name;
+	Integer customer_id;
+	@Column(name = "customer_name")
+	String customerName;
+	@Column(unique = true)
 	String email;
 	String password;
 	String phone_number;
 	String address;
-	String auth;
+	@Enumerated(EnumType.STRING)
+	UserRoleEnumType auth;
+	
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL) //, fetch = FetchType.EAGER

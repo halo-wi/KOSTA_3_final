@@ -1,12 +1,12 @@
-/**
- * 공통 자바스크립트
- */
+
 
 var replyManager =(function(){
-	
-	var getAll = function(obj, callback){
+
+console.log("@@@");
+
+	var getAll = function(obj, callback){	
 		console.log("get All..."+obj);
-		//$.getJSON은 Ajax의 하나의 방법
+
 		$.getJSON("/replies/board/"+obj, callback)
 		
 		
@@ -16,7 +16,7 @@ var replyManager =(function(){
 	
 		console.log("add...");
 		$.ajax({
-			url:"/replies/" + obj["bno"],
+			url:"/replies/" + obj["bid"],
 			data:JSON.stringify(obj),
 			dataType:"json",
 			type: "post",
@@ -28,7 +28,7 @@ var replyManager =(function(){
 	var update = function(obj, callback){
 		console.log("update reply.........");
 		$.ajax({
-			url:"/replies/" + obj["bno"],
+			url:"/replies/" + obj["bid"],
 			data: JSON.stringify(obj),
 			dataType:"json",
 			type:"put",
@@ -42,7 +42,7 @@ var replyManager =(function(){
 	var remove = function(obj, callback){
 		console.log("remove...");
 		$.ajax({
-			url:"/replies/"+obj["bno"]+"/"+obj["rno"],
+			url:"/replies/"+obj["bid"]+"/"+obj["rid"],
 			type:"delete",
 			success:callback
 		});
