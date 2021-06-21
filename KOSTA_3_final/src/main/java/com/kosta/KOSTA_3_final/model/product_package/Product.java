@@ -2,7 +2,10 @@ package com.kosta.KOSTA_3_final.model.product_package;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -10,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,7 +27,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@ToString
+@ToString(exclude = {"category","company","ppList"})
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,21 +36,27 @@ public class Product {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	int product_id;
-	String product_name;
+	@Column(name = "product_id")
+	int productId;
+	@Column(name = "product_name")
+	String productName;
 	int price;
-	int category_id;
-	int company_id;
+	@Column(name = "category_id")
+	int categoryId;
+	@Column(name = "company_id")
+	int companyId;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id", insertable = false, updatable = false)
-	Category category; 
+	Category category;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "company_id", insertable = false, updatable = false)
 	Company company; 
 	
-	@OneToMany(mappedBy = "product")
+	@JsonIgnore
+	@OneToMany(mappedBy = "product",cascade = CascadeType.ALL,
+			fetch = FetchType.LAZY)
 	List<Product_Package> ppList;
 	
 	

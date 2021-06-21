@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,7 +24,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@ToString
+@ToString(exclude = "products")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -36,6 +37,6 @@ public class Company {
 	String company_name;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "company", cascade = CascadeType.ALL) //, fetch = FetchType.EAGER
+	@OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.LAZY) //, fetch = FetchType.EAGER
 	List<Product> products;
 }

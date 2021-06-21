@@ -33,7 +33,7 @@ import lombok.ToString;
 public class PackageVO {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	int package_id;
 	String package_name;
 	int price;
