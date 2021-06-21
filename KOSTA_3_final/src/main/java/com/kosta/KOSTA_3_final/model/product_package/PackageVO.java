@@ -3,6 +3,7 @@ package com.kosta.KOSTA_3_final.model.product_package;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,7 +26,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@ToString
+@ToString(exclude = {"reviews","subscribes","ppList"})
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -34,16 +35,20 @@ public class PackageVO {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	int package_id;
-	String package_name;
+	int packageId;
+	
+	@Column(name = "package_name")
+	public String packageName;
+	
+
 	int price;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "pack", cascade = CascadeType.ALL) //, fetch = FetchType.EAGER
+	@OneToMany(mappedBy = "pack", cascade = CascadeType.ALL)
 	List<Review> reviews;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "pack", cascade = CascadeType.ALL) //, fetch = FetchType.EAGER
+	@OneToMany(mappedBy = "pack", cascade = CascadeType.ALL) 
 	List<Subscribe> subscribes;
 	
 	

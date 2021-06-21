@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<title>회원 가입</title>
+</head>
+<body>
+<form method="post" action="/auth/joinForm" onsubmit="return submitCheck()">
+이메일<br>
+<input type="text" id="email" name="email" class="email" value="" placeholder="예시)sample1@gmail.com"/>
+ <a href="#" class="sendMail">이메일 인증</a>
+<br>이름<br>
+<input type="text" 	id="customerName" name="customerName" value=""/>
+<br>비밀번호<br>
+<input type="text" 	id="password" name="password" value=""/>
+<br>전화번호<br>
+<input type="text" 	id="phone_number" name="phone_number" value=""/>
+<br>주소<br>
+<input type="text" 	id="adress" name="adress" value=""/>
+<input type="hidden" id="auth" name="auth" value="USER"/>
+ <section class="check-section">
+  <input type="text" placeholder="인증 키 입력" style="display: none;"
+	class="compare"><span class="compare-text"
+	style="display: none">불일치</span>
+ </section>
+<input class="btn" type="submit" value="회원 가입">
+</form>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js">
+</script>
+<script>
+$(function() {
+	var isCertification = false;
+	var key = "";
+$(".sendMail").click(function() {// 메일 입력 유효성 검사
+	var email = $(".email").val(); //사용자의 이메일 입력값. 
+	
+	if (email == "") {
+		alert("메일 주소가 입력되지 않았습니다.");
+	} else {
+		
+		console.log(email);
+		$.ajax({
+			type : 'post',
+			url : '/auth/CheckMail',
+			dataType : 'json',
+			async : "false",
+			data : {
+				'email' : email
+			},
+			success : function(data) {
+				console.log(data.key);
+				key = data.key;
+				alert("이메일을 확인하시기 바랍니다.");
+			}
+		});
+		
+		isCertification=true; //추후 인증 여부를 알기위한 값
+		$(".compare").css("display", "block");
+		$(".compare-text").css("display", "block");
+	}
+});
+$(".btn").click(function submitCheck(){
+	if(isCertification==false){
+		alert("메일 인증이 완료되지 않았습니다.");
+		return false;
+	}else
+		true;
+});
+
+$(".compare").on("propertychange change keyup paste input", function() {
+	if ($(".compare").val() == key) {   //인증 키 값을 비교를 위해 텍스트인풋과 벨류를 비교
+		$(".compare-text").text("인증 성공!").css("color", "black");
+		isCertification = true;  //인증 성공여부 check
+	} else {
+		$(".compare-text").text("불일치!").css("color", "red");
+		isCertification = false; //인증 실패
+	}
+});
+});
+</script>
+</body>
+</html>

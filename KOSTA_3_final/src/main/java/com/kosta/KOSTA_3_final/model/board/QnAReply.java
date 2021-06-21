@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.kosta.KOSTA_3_final.model.user.User;
+import com.kosta.KOSTA_3_final.model.member.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -46,7 +46,7 @@ public class QnAReply {
 	
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
-	User admin;
+	Member admin;
 	
 	
 	@CreationTimestamp

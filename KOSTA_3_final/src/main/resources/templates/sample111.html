@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript"
+	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script>
+	//실제 복사하여 사용시에는 모든 주석을 지운 후 사용하세요
+	var IMP = window.IMP; // 생략가능
+	IMP.init('imp41751598'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+
+	function payStart() {
+		// IMP.request_pay(param, callback) 호출
+		 IMP.request_pay({ // param
+			    pg: "html5_inicis.INIBillTst",
+			    pay_method: "card",
+			    merchant_uid: "1234",
+			    customer_uid:"INIpayTest",
+			    name: "노르웨이 회전 의자",
+			    amount: 64900,
+			    buyer_email: "gildong@gmail.com",
+			    buyer_name: "홍길동",
+			    buyer_tel: "010-4242-4242",
+			    buyer_addr: "서울특별시 강남구 신사동",
+			    buyer_postcode: "01181"
+			  }, function (rsp) { // callback
+			    if (rsp.success) {
+			    	 jQuery.ajax({
+			    	        url: "https://www.myservice.com/billings/", // 서비스 웹서버
+			    	        method: "POST",
+			    	        headers: { "Content-Type": "application/json" },
+			    	        data: {
+			    	          customer_uid: "INIpayTest", // 카드(빌링키)와 1:1로 대응하는 값
+			    	        }
+			    	      });
+			      } else {
+			        alert("결제에 실패하였습니다. 에러 내용: " +  rsp.error_msg);
+			      }
+			    });
+	}
+</script>
+
+
+<body>
+	<h1>controller test</h1>
+	<button onclick="payStart()">구독 빌링키 발급</button>
+
+
+</body>
+
+
+</html>

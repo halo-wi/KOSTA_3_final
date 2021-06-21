@@ -19,9 +19,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.kosta.KOSTA_3_final.model.member.Member;
 import com.kosta.KOSTA_3_final.model.subscribe.Subscribe;
-import com.kosta.KOSTA_3_final.model.user.User;
-
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -46,7 +45,7 @@ public class Board {
 	
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
-	User customer; //댓글작성자
+	Member customer; //댓글작성자
 	
 	
 	String board_content;
