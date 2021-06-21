@@ -6,9 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,10 +25,15 @@ import lombok.ToString;
 @NoArgsConstructor
 @Entity
 @Table(name = "tp_productpack")
+@SequenceGenerator(
+		  name = "PP_ID_EX_SEQ", 
+		  sequenceName = "EX_SEQ", // 매핑할 데이터베이스 시퀀스 이름 
+		  allocationSize = 1)
 public class Product_Package {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,
+	generator = "PP_ID_EX_SEQ")
 	int ppId;
 	
 	@ManyToOne
@@ -39,7 +43,6 @@ public class Product_Package {
 	@ManyToOne
 	@JoinColumn(name = "package_id")
 	PackageVO pack;
-	
 	
 	int product_qty;
 }

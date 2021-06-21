@@ -34,6 +34,7 @@ import lombok.ToString;
 public class PackageVO {
 
 	@Id
+
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "package_id")
 	int packageid;
