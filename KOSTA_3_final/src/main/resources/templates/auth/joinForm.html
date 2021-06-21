@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<title>회원 가입</title>
+<style>
+#address{width: 750px;}
+</style>
+</head>
+<body>
+<form method="post" action="/auth/joinForm" onsubmit="return submitCheck()">
+이메일<br>
+<input type="text" id="email" name="email" class="email" value="" placeholder="예시)sample1@gmail.com"/>
+ <a href="#" class="sendMail">이메일 인증</a>
+<br>이름<br>
+<input type="text" 	id="customerName" name="customerName" value=""/>
+<br>비밀번호<br>
+<input type="text" 	id="password" name="password" value=""/>
+<br>전화번호<br>
+<input type="text" 	id="phone_number" name="phone_number" value=""/>
+<br>주소<br>
+<input type="text" 	id="address" name="address" value="" placeholder="우편 번호 검색 후 아파트의 동과 호는 직접 쳐주세요" />
+<input type="button" onclick="Postcode()" value="우편번호 찾기"><br>
+<input type="hidden" id="auth" name="auth" value="USER"/>
+ <section class="check-section">
+  <input type="text" placeholder="인증 키 입력" style="display: none;"
+	class="compare"><span class="compare-text"
+	style="display: none">불일치</span>
+ </section>
+<input class="btn" type="submit" value="회원 가입">
+</form>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js">
+</script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+$(function() {
+	var isCertification = false;
+	var key = "";
+$(".sendMail").click(function() {// 메일 입력 유효성 검사
+	var email = $(".email").val(); //사용자의 이메일 입력값. 
+	
+	if (email == "") {
+		alert("메일 주소가 입력되지 않았습니다.");
+	} else {
+		
+		console.log(email);
+		$.ajax({
+			type : 'post',
+			url : '/auth/CheckMail',
+			dataType : 'json',
+			async : "false",
+			data : {
+				'email' : email
+			},
+			success : function(data) {
+				console.log(data.key);
+				key = data.key;
+				alert("이메일을 확인하시기 바랍니다.");
+			}
+		});
+		
+		isCertification=true; //추후 인증 여부를 알기위한 값
+		$(".compare").css("display", "block");
+		$(".compare-text").css("display", "block");
+	}
+});
+$(".btn").click(function submitCheck(){
+	if(isCertification==false){
+		alert("메일 인증이 완료되지 않았습니다.");
+		return false;
+	}else
+		true;
+});
+
+$(".compare").on("propertychange change keyup paste input", function() {
+	if ($(".compare").val() == key) {   //인증 키 값을 비교를 위해 텍스트인풋과 벨류를 비교
+		$(".compare-text").text("인증 성공!").css("color", "black");
+		isCertification = true;  //인증 성공여부 check
+	} else {
+		$(".compare-text").text("불일치!").css("color", "red");
+		isCertification = false; //인증 실패
+	}
+});
+
+});
+function Postcode() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+            // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+            var roadAddr = data.address; // 도로명 주소 변수
+            var extraRoadAddr = ''; // 참고 항목 변수
+
+            // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+            // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+            if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                extraRoadAddr += data.bname;
+            }
+            // 건물명이 있고, 공동주택일 경우 추가한다.
+            if(data.buildingName !== '' && data.apartment === 'Y'){
+               extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+            }
+            // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+            if(extraRoadAddr !== ''){
+                extraRoadAddr = ' (' + extraRoadAddr + ')';
+            }
+
+            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+            document.getElementById('address').value += ' ' +data.zonecode;
+            document.getElementById("address").value += ' ' +roadAddr;
+            document.getElementById("address").value += ' ' +data.jibunAddress;
+            
+            // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+            if(roadAddr !== ''){
+                document.getElementById("address").value += ' ' +extraRoadAddr;
+            } else {
+               
+            }
+        }
+    }).open();
+}
+</script>
+</body>
+</html>
