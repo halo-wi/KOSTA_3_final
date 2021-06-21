@@ -63,11 +63,11 @@
 			</form>
 
 
-<!-- ############################################### 댓글 #################################################-->
+			<!-- ############################################### 댓글 #################################################-->
 
 
 			<div class='container'>
-
+				
 				<table class="table table-striped table-bordered table-hover">
 					<thead>
 						<tr>
@@ -76,10 +76,12 @@
 							<th>작성일</th>
 						</tr>
 					</thead>
+					
 					<tbody id="Table">
 
 					</tbody>
 				</table>
+				
 			</div>
 
 
@@ -105,7 +107,7 @@
 		<div class="modal-dialog">
 
 			<!-- Modal content-->
-		
+
 
 		</div>
 	</div>
@@ -118,7 +120,8 @@
 
 
 
-	<a th:href="@{/board/boardlist(page=${pagevo.page},size=${pagevo.size},type=${pagevo.type},keyword=${pagevo.keyword})}"
+	<a
+		th:href="@{/board/boardlist(page=${pagevo.page},size=${pagevo.size},type=${pagevo.type},keyword=${pagevo.keyword})}"
 		class="btn btn-warning modbtn2">목록보기</a>
 
 
@@ -130,152 +133,144 @@
 	<th:block layout:fragment="script">
 		<script th:src="@{/js/reply.js}"></script>
 		<script th:inline="javascript">
-			$(document)
-					.ready(
-							function(e) {
+			$(function(e) {
 
-								(function() {
-									console.log(replyManager);
-									replyManager.getAll("[[${board.bid}]]",
-											printList);
+				(function() {
+					console.log(replyManager);
+					replyManager.getAll("[[${board.bid}]]", printList);
 
-								})();
+				})();
 
-								function printList(rList) {
-									console.log(rList);
-									var str = "";
-									$
-											.each(
-													rList,
-													function(idx, item) {
-														str += "<tr>";
-														
-														str += "<td>"
-																+ item["reply"]
-																+ "</td>";
-														str += "<td>"
-																+ item["customer"]["email"]
-																		.substr(0, 4)
-																+ "***"
-																+ "</td>";
-														str += "<td>"
-																+ formatDate(item["rupdatedate"])
-																+ "</td>";
-														str += "<td>"
-																+ "<button type='button' onclick='call(this);' id='modify'> 댓글수정 </button>"
-																+ "</td>";
-														str += "</tr>";
-													});
-									$("#Table").html(str);
+				$("#modalButton").click(function() {
 
-								};
+					var reply = $("input[name='reply']");
+					var email = $("input[name='email']");
+					var obj = {
+						"bid" : "[[${board.bid}]]",
+						"reply" : reply.val(),
+						"email" : email.val()
+					};
 
-								function formatDate(t) {
-									var date = new Date(t)
-									return (date.getMonth() + 1 >= 10 ? date
-											.getMonth() + 1 : '0'
-											+ (date.getMonth() + 1))
-											+ "-" + date.getDate()
+					if (mode == "ADD") {
+						replyManager.add(obj, printList);
+					} else if (mode == "MOD") {
+						obj["rid"] = rid;
+						replyManager.update(obj, printList);
+						alert("수정완료");
+					}
+					$("#myModal").hide();
+					replyText.val("");
+					replyer.val("");
 
-								};
-								
-								
-								
-								
-								
-								
-								
+				});
 
-								
-								
+				
 
-								$("#modalButton").click(function() {
 
-									var reply = $("input[name='reply']");
-									var email = $("input[name='email']");
-									var obj = {
-										"bid" : "[[${board.bid}]]",
-										"reply" : reply.val(),
-										"email" : email.val()
-									};
+			});
+			function printList(rList) {
+				console.log(rList);
+				var str = "";
+				$
+						.each(
+								rList,
+								function(idx, item) {
+									str += "<tr>";
 
-									if (mode == "ADD") {
-										replyManager.add(obj, printList);
-									} else if (mode == "MOD") {
-										obj["rid"] = rid;
-										replyManager.update(obj, printList);
-										alert("수정완료");
-									}
-									$("#myModal").hide();
-									replyText.val("");
-									replyer.val("");
-
+									str += "<td>" + item["reply"] + "</td>";
+									str += "<td>"
+											+ item["customer"]["email"].substr(
+													0, 4) + "***" + "</td>";
+									str += "<td>"
+											+ formatDate(item["rupdatedate"])
+											+ "</td>";
+									str += "<td>"
+											+ "<button type='button' onclick='call(this);' id='modify'> 댓글수정 </button>"
+											+ "<span style=' display : none;'>"
+											+ item["rid"] + "</span>"
+											+ "<span style=' display : none;'>"
+											+ item["customer"]["customer_id"]
+											+ "</span>" + "<button type='button' onclick='del(this);' id='modify'> 삭제 </button> </td>";
+									str += "</tr>";
 								});
+				$("#Table").html(str);
 
-								$("#delButton").click(function() {
+			};
 
-									var reply = $("input[name='reply']");
-									var email = $("input[name='email']");
-									var obj = {
-										"bid" : "[[${board.bid}]]",
-										"rid" : rid
-									};
-									replyManager.remove(obj, printList);
-									alert("삭제완료");
-									$("#myModrenal").hide();
-									reply.val("");
-									email.val("");
+			function formatDate(t) {
+				var date = new Date(t)
+				return (date.getMonth() + 1 >= 10 ? date.getMonth() + 1 : '0'
+						+ (date.getMonth() + 1))
+						+ "-" + date.getDate()
 
-								});
-
-								
-
-								function call() {
-									var myfrm = $("#myfrm");
-									myfrm.submit();
-								}
-								;
-
-							});
+			};
 		</script>
 		<script>
 		
-			function call(item){
-				const target =  document.getElementById('modify');
-				target.disabled = true;
-					console.log(item);
-					var reply = $(item).parent().parent().children("td:nth-child(1)");
-					var email = $(item).parent().parent().children("td:nth-child(2)");
-					
-					var mod = "<tr>"
-					 +"<td><input value='"+ reply.html()+"'></td>"
-					 +"<td>"+ email.html() +"</td>" 
-					 +"<td> 수정중 </td>" 
-					 +"<td><button type='button' onclick='addReply(this); id='save'>저장</button></td></tr>";
-					 $(item).parent().parent().after(mod);
-				
-			}
+		
+		function del(item) {
 			
-			function addReply(item){
+			var rid = $(item).parent().children("span:nth-child(2)");
+			
+			var obj = {
+				"bid" : "[[${board.bid}]]",
+				"rid" : rid.html()
+			};
+			replyManager.remove(obj, printList);
+			alert("삭제완료");
+
+		};
+		
+		
+		
+		
+			function call(item) {
+				item.disabled = true;
+				console.log(item);
+				var reply = $(item).parent().parent().children(
+						"td:nth-child(1)");
+				var email = $(item).parent().parent().children(
+						"td:nth-child(2)");
+				var customer = $(item).parent().children("span:nth-child(3)")
+						.html();
+				var rid = $(item).parent().children("span:nth-child(2)").html();
 				
-				var reply = $(item).parent().parent().children("td:nth-child(1)").html();
-				var email = $(item).parent().parent().children("td:nth-child(2)").html();
+				var mod = "<tr>"
+						+ "<td><input id ='replyId'  value='"
+						+ reply.html()
+						+ "'></td>"
+						+ "<td>"
+						+ email.html()
+						+ "</td>"
+						+ "<td> 수정중 </td>"
+						+ "<td><button type='button' onclick='addReply(this);' id='save'>저장</button>"
+						+ "<span style=' display : none;'>" + rid + "</span>"
+						+ "<span style=' display : none;'>" + customer
+						+ "</span>" + "</td></tr>";
 				
-				
-				var replyText = $("input[name='reply']");
-				var replyer = $("input[name='email']");
+				$(item).parent().parent().after(mod);
+			}
+			// 댓글수정
+			function addReply(item) {
+				var reply = $(item).parent().parent().children(
+						"td:nth-child(1)");
+				var email = $(item).parent().parent().children(
+						"td:nth-child(2)");
+				var rid = $(item).parent().children("span:nth-child(2)");
+				var customer = $(item).parent().children("span:nth-child(3)");
+
 				var obj = {
 					"bid" : "[[${board.bid}]]",
-					"reply" : replyText.val(),
-					"replyer" : replyer.val()
+					"reply" : $("#replyId").val(),
+					"customer" : customer.html(),
+					"rid" : rid.html()
 				};
-	
-				obj["rid"] = rid;
+				console.log(obj);
+
 				replyManager.update(obj, printList);
 				alert("수정완료");
-			
+
 			};
-		
 		</script>
 	</th:block>
 </body>

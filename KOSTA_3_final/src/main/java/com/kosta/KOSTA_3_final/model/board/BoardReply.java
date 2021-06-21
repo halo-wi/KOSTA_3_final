@@ -28,7 +28,7 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "customer")
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -48,10 +48,6 @@ public class BoardReply {
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
 	Member customer; // FK, 댓글 작성자. issue : User에서도 양방향으로 참조해야할까? <본인댓글조회 기능 시 필요> , 변수명에 대해 의논
-
-	@CreationTimestamp
-	@Column(name="reg_date")
-	Timestamp rregdate;
 
 	@UpdateTimestamp
 	@Column(name="update_date")

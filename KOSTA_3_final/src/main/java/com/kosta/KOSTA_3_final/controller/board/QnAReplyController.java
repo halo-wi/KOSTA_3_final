@@ -19,7 +19,7 @@ import com.kosta.KOSTA_3_final.model.board.QnAReply;
 import com.kosta.KOSTA_3_final.service.board.QnAReplyService;
 
 @RestController
-@RequestMapping("/replies/*")
+@RequestMapping("/qreplies/*")
 public class QnAReplyController {
 	
 	@Autowired

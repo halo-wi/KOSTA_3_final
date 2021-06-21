@@ -18,6 +18,8 @@ import com.kosta.KOSTA_3_final.model.board.Board;
 import com.kosta.KOSTA_3_final.model.board.BoardReply;
 import com.kosta.KOSTA_3_final.persistance.board.BoardReplyPersistance;
 import com.kosta.KOSTA_3_final.service.board.BoardReplyService;
+import com.kosta.KOSTA_3_final.service.board.BoardService;
+import com.kosta.KOSTA_3_final.service.user.UserService;
 
 
 @RestController
@@ -28,7 +30,13 @@ public class BoardReplyController {
 	BoardReplyService service;
 	
 	@Autowired
+	BoardService boardService;
+	
+	@Autowired
 	BoardReplyPersistance persistance;
+	
+	@Autowired
+	UserService userService;
 	
 	//특정 보드 번호에 해당하는 모든 댓글 조회
 	@GetMapping("/board/{bid}")
@@ -68,17 +76,22 @@ public class BoardReplyController {
 		return new ResponseEntity<>(service.selectAll(board), HttpStatus.OK);
 	}
 	
-	//수정
-	@PutMapping("/{bid}")
-	public ResponseEntity<List<BoardReply>> updateRep(@PathVariable Long bid, @RequestBody BoardReply reply) {
-		
-		Board board = Board.builder().bid(bid).build();
-		reply.setBoard(board);
-		service.updateOrInsert(reply);
+	//수정  {bid: "48", reply: "fewafe", customer: "25", rid: "90"}
+	@PutMapping("/{bid}/{rid}")
+	public ResponseEntity<List<BoardReply>> updateRep(@PathVariable Long bid,
+			  String customer, @PathVariable Long rid, String reply) {
+		System.out.println("reply:" + reply);
+		BoardReply breply = new BoardReply();
+		Board board = boardService.selectById(bid);
+		breply.setBoard(board);
+		breply.setCustomer(userService.getMemberInfoById(Integer.parseInt(customer)));
+		breply.setRid(rid);
+		breply.setReply(reply);
+		System.out.println(breply);
+		service.updateOrInsert(breply);
 		
 		return new ResponseEntity<>(service.selectAll(board), HttpStatus.OK);
 	}
-	
-	
+
 
 }

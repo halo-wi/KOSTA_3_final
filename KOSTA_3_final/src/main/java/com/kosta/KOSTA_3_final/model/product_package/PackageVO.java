@@ -37,6 +37,7 @@ public class PackageVO {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "package_id")
 	int packageid;
+	
 	@Column(name = "package_name")
 	String packagename;
 	int price;

@@ -17,7 +17,7 @@ console.log("@@@");
 		console.log("add...");
 		$.ajax({
 			url:"/replies/" + obj["bid"],
-			data:JSON.stringify(obj),
+			data:JSON.parse(obj),
 			dataType:"json",
 			type: "post",
 			contentType:"application/json",
@@ -25,15 +25,14 @@ console.log("@@@");
 		});
 	};
 	
+	
 	var update = function(obj, callback){
-		console.log("update reply.........");
+		console.log(obj);
 		$.ajax({
-			url:"/replies/" + obj["bid"],
-			data: JSON.stringify(obj),
-			dataType:"json",
-			type:"put",
-			contentType:"application/json",
-			success:callback
+			url:"/replies/" + obj["bid"] + "/"+ obj["rid"],
+			data:  obj,
+			type: "put",
+ 			success:callback
 			
 		});
 	};
