@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -39,7 +40,7 @@ import lombok.ToString;
 //자유게시판_댓글VO
 public class BoardReply {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name="board_reply_id")
 	Long rid;
 	@Column(name="board_reply")
@@ -48,6 +49,7 @@ public class BoardReply {
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
 	Member customer; // FK, 댓글 작성자. issue : User에서도 양방향으로 참조해야할까? <본인댓글조회 기능 시 필요> , 변수명에 대해 의논
+
 
 	@UpdateTimestamp
 	@Column(name="update_date")

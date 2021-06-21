@@ -56,10 +56,12 @@ public class BoardReplyController {
 	
 	//특정 보드에 댓글등록, 입려 후 다시 조회
 	@PostMapping("/{bid}")
-	public ResponseEntity<List<BoardReply>> addReply(@PathVariable("bid")Long bid, @RequestBody BoardReply reply) {
+	public ResponseEntity<List<BoardReply>> addReply(@PathVariable("bid")Long bid, BoardReply reply, String email) {
+		System.out.println("e:"+email);
 		
 		Board board = Board.builder().bid(bid).build();
 		reply.setBoard(board);
+		reply.setCustomer(userService.getMemberInfo(email));
 		service.updateOrInsert(reply);
 		return new ResponseEntity<>(service.selectAll(board), HttpStatus.CREATED);
 	}

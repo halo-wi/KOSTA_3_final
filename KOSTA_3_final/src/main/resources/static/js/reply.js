@@ -2,8 +2,6 @@
 
 var replyManager =(function(){
 
-console.log("@@@");
-
 	var getAll = function(obj, callback){	
 		console.log("get All..."+obj);
 
@@ -17,11 +15,9 @@ console.log("@@@");
 		console.log("add...");
 		$.ajax({
 			url:"/replies/" + obj["bid"],
-			data:JSON.parse(obj),
-			dataType:"json",
+			data: obj,
 			type: "post",
-			contentType:"application/json",
-			success:callback  /*printlist가 실행됨*/
+			success:callback  
 		});
 	};
 	
