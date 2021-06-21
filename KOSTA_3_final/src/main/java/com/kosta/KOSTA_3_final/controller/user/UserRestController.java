@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kosta.KOSTA_3_final.model.member.EmailDTO;
+import com.kosta.KOSTA_3_final.model.user.EmailDTO;
 import com.kosta.KOSTA_3_final.service.user.UserService;
 
 @RestController
@@ -101,3 +101,4 @@ public class UserRestController {
 	       
 	}
 }
+

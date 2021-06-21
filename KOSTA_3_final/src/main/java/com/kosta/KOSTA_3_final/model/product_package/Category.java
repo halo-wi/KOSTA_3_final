@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,7 +24,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@ToString
+@ToString(exclude = "products")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -32,11 +33,11 @@ public class Category {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	int category_id;
-	String category_name;
+	int categoryId;
+	String categoryName;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL) //, fetch = FetchType.EAGER
+	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY) //, fetch = FetchType.EAGER
 	List<Product> products;
 	
 }

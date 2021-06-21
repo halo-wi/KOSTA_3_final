@@ -1,9 +1,6 @@
 package com.kosta.KOSTA_3_final.security;
 
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,11 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.web.cors.CorsUtils;
-import org.springframework.web.filter.CorsFilter;
-
 import com.kosta.KOSTA_3_final.service.user.UserService;
-
 import lombok.extern.java.Log;
 @Log
 @Configuration
@@ -25,11 +18,6 @@ import lombok.extern.java.Log;
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
 	UserService UserService; 
-	@Autowired
-	DataSource dataSource;
-	
-	
-	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();   //Spring Security에서 제공하는 비밀번호 암호화 객체
@@ -44,11 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		// antMatchers url 패턴에 대한 접근허용
 		// permitAll: 모든사용자가 접근가능하다는 의미
 		// hasRole : 특정권한을 가진 사람만 접근가능하다는 의미
-
-		
-		http
-		.authorizeRequests() // HttpServletRequest에 따라 접근(access)을 제한
-				.requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+		http.authorizeRequests() // HttpServletRequest에 따라 접근(access)을 제한
 				.antMatchers("/Home/**", "/auth/**").permitAll() //   누구나 접근 허용
 				.antMatchers("/admin/**").hasRole("ADMIN") // /admin으로 시작하는 경로는  ADMIN롤을 가진 사용자만  접근 가능(자동으로 ROLE_가 삽입)
 				.anyRequest().authenticated() // 나머지 요청들은 권한의 종류에 상관 없이 권한이 있어야 접근 가능
@@ -65,4 +49,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 .and().csrf().disable();  //csrf(크로스사이트 위조요청에 대한 설정) 토큰 비활성화 (test시에는 disable권장)            
 http.exceptionHandling().accessDeniedPage("/accessFail"); // 403 예외처리 핸들링   권한이 없는 대상이 접속을시도했을 때
 }
+
 }

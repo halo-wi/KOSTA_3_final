@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.kosta.KOSTA_3_final.model.member.Member;
+import com.kosta.KOSTA_3_final.model.user.Member;
 import com.kosta.KOSTA_3_final.service.user.UserService;
 
 @Controller
@@ -58,6 +58,7 @@ public void pwdfind() {
 
 
 }
+
 
 
 
