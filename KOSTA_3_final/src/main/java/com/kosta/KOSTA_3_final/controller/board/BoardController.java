@@ -54,7 +54,7 @@ public class BoardController {
 	
 	@PostMapping("/board/register")
 	public String boardRegisterPost(Board board, RedirectAttributes rttr, Principal principal) {
-		System.out.println(board);
+		System.out.println(rttr);
 		Member member = uservice.getMemberInfo(principal.getName());
 		board.setCustomer(member);
 		System.out.println(board);

@@ -1,39 +1,34 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-	layout:decorate="~{layout/layout1}">
-	
-	
-	
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
 
-	<div class="panel panel-default" layout:fragment="bcontent1">
-		<h1 class="panel-heading">Board 신규등록</h1>
-		<div class="panel-body">
+	<div>
+		<h1 >Board 등록</h1>
+		<div >
 		
-			<form class="form-inline" th:action="@{register}" method="post">
+			<form th:action="@{register}" method="post">
 				<div class="form-group">
 					<label for="btitle">title:</label> <br>
-					<input type="text" class="form-control" id="btitle" placeholder="enter title" name = "btitle">
-					<p class="help-block">여기는 제목입니다.</p>
+					<input type="text" class="form-control" placeholder="enter title" >
 				</div><br><br>
 				<div class="form-group">
 					<label for="bcontent">content:</label><br>
-					<textarea class="form-group" rows="3" cols="" id="bcontent" name ="bcontent"></textarea>
+					<textarea class="form-group" rows="3" cols=""></textarea>
 				</div><br><br><br>
 			
 				
 				<div class="form-group">
 				<p sec:authentication="name">님에 의해서 작성됩니다.</p>
 				</div><br><br><br>
-		
-				<button type="submit" class="btn btn-success">등록하기</button>
-				<button type="reset" class="btn btn-primary">reset</button>
+				<button type="submit" >등록하기</button>
+				<button type="reset" >reset</button>
 			</form>
 
 		</div>

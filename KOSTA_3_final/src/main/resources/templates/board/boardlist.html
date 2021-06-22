@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-layout:decorate="~{layout/layout1}">
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 <meta charset="UTF-8">
 <title>board</title>
- <style>
-   /*table,td,th{ border: 1px solid black; border-collapse: collapse;}*/
- </style>
+
 </th:block>
 </head>
 <body>
 
- <div class="panel panel-default" layout:fragment="bcontent1">
+
  <img alt="이미지" th:src="@{/images/고래밥.jpg}" width="100px" height=100px> 
  <div>
 	<select id="searchType">
@@ -43,7 +40,7 @@ layout:decorate="~{layout/layout1}">
          </td>
          <td >
          <!-- 문자열의 한계치를 설정하고, length가 한계치 이상이라면 잘라낸후 …으로 표시해준다. -->
-         	<div class = "email" th:text="${#strings.abbreviate(board.customer.email,7)}"> </div>
+         	<!--<div class = "email" th:text="${#strings.abbreviate(board.customer.email,7)}"> </div>-->
          </td>
          <td th:text="${board.bregdate}"></td>
       </tr>
@@ -71,7 +68,7 @@ layout:decorate="~{layout/layout1}">
    		</li>
    	</ul>
    </nav>
-</div>
+
 <th:block layout:fragment="script1">
 <script>
 $(function() {

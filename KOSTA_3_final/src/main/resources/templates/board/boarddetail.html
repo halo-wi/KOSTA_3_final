@@ -27,7 +27,7 @@
 					th:value="${board.bregdate}">
 				<div class="form-group">
 					<label for="btitle">title:</label>
-					<article>[[${board.btitle}]]</article>
+					<h3>[[${board.btitle}]]</h3>
 				</div>
 				<label for="bregdate">작성일:</label>
 				<div class="bregdate"
@@ -36,11 +36,14 @@
 				<div class="email"
 					th:text="${#strings.abbreviate(board.customer.email,7)}"></div>
 				<br>
-				<div class="form-group">
+				<div class="form-group" id="contentButton">
 					<label for="bcontent">content:</label><br>
+					
+					
 					<div id="bcontent"
 						style="border: black solid 1px; width: 300px; height: 100%">
-						[[${board.bcontent}]]</div>
+						[[${board.bcontent}]]
+					</div>
 				</div>
 				<br> <br> <br>
 
@@ -48,7 +51,7 @@
 				<div class="pull-right">
 
 					<div th:if="${board.customer.email}==${#authentication.name}">
-						<a href="javascript:call()" class="btn btn-warning modbtn2">수정하기</a>
+						<a href="javascript:boardMod()" >수정하기</a>
 						<a th:href="@{/board/delete(bid=${board.bid})}"
 							class="btn btn-warning delbtn2">삭제하기</a>
 					</div>
@@ -124,23 +127,18 @@
 	</div>
 
 
-
-
-
-	<a
-		th:href="@{/board/boardlist(page=${pagevo.page},size=${pagevo.size},type=${pagevo.type},keyword=${pagevo.keyword})}"
+	<a th:href="@{/board/boardlist(page=${pagevo.page},size=${pagevo.size},type=${pagevo.type},keyword=${pagevo.keyword})}"
 		class="btn btn-warning modbtn2">목록보기</a>
-
-
-
-
 
 
 
 	<th:block layout:fragment="script">
 		<script th:src="@{/js/reply.js}"></script>
 		<script th:inline="javascript">
-			$(function(e) {
+		
+
+			
+		$(function(e) {
 
 				(function() {
 					console.log(replyManager);
@@ -151,8 +149,8 @@
 			});
 			function printList(rList) {
 				console.log(rList);
-				var authName = '[[${#authentication.name}]]';
-				console.log(authName);
+				var authName = [[${#authentication.name}]];
+				console.log("'" + authName + "'");
 				var str = "";
 				$
 						.each(
@@ -167,15 +165,17 @@
 									str += "<td>"
 											+ formatDate(item["rupdatedate"])
 											+ "</td> <td>";
+											console.log("'" + item['customer']['email'] + "'");	
 									if (item['customer']['email'] == authName) {
-										str += +"<button type='button' onclick='call(this);' id='modify'> 댓글수정 </button>"
+										console.log("yes");
+										str += "<button  onclick='call(this);' id='modify' > 댓글수정 </button>"
 												+ "<span style=' display : none;'>"
 												+ item["rid"]
 												+ "</span>"
 												+ "<span style=' display : none;'>"
 												+ item["customer"]["customer_id"]
 												+ "</span>"
-												+ "<button type='button' onclick='del(this);' id='modify'> 삭제 </button>";
+												+ "<button  onclick='del(this);' id='modify'> 삭제 </button>";
 									}
 									str += "</td> </tr>";
 								});
@@ -236,12 +236,11 @@
 				
 				var rid = $(item).parent().children("span:nth-child(2)");
 				var customer = $(item).parent().children("span:nth-child(3)");
-
 				var obj = {
 					"bid" : "[[${board.bid}]]",
 					"reply" : $("#replyId").val(),
 					"customer" : customer.html(),
-					"rid" : rid.html()
+					"rid" : rid.html(),
 				};
 				console.log(obj);
 
@@ -262,6 +261,29 @@
 				console.log(obj);
 					replyManager.add(obj, printList);
 			};
+			
+			function boardMod() {
+				$('#bcontent').contents().unwrap().wrap( '<textarea>[[${board.bcontent}]] </textarea>' );
+				$('#contentButton').after("<button onclick='modifyBoard(this);'> 수정완료 </button>");
+				
+			};
+			
+			function modifyBoard(item) {
+				
+				var obj = {
+						"board" : "[[${board}]]",
+						"reply" : $("#replyADD").val(),
+						"email" : authName
+				};
+				
+				$.ajax({
+					url:"/board/update",
+					data:  obj,
+					type: "post",
+		 			success:callback
+				})
+			}
+			
 		</script>
 	</th:block>
 </body>
