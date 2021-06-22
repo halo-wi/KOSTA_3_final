@@ -16,14 +16,13 @@
 			<form th:action="@{register}" method="post">
 				<div class="form-group">
 					<label for="btitle">title:</label> <br>
-					<input type="text" class="form-control" placeholder="enter title" >
+					<input class="form-control" placeholder="enter title" name="btitle" >
 				</div><br><br>
 				<div class="form-group">
 					<label for="bcontent">content:</label><br>
-					<textarea class="form-group" rows="3" cols=""></textarea>
+					<textarea class="form-group" rows="3" cols="" name="bcontent"></textarea>
 				</div><br><br><br>
-			
-				
+	
 				<div class="form-group">
 				<p sec:authentication="name">님에 의해서 작성됩니다.</p>
 				</div><br><br><br>

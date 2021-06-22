@@ -54,7 +54,7 @@ public class BoardController {
 	
 	@PostMapping("/board/register")
 	public String boardRegisterPost(Board board, RedirectAttributes rttr, Principal principal) {
-		System.out.println(rttr);
+		System.out.println("rttr"+rttr);
 		Member member = uservice.getMemberInfo(principal.getName());
 		board.setCustomer(member);
 		System.out.println(board);
@@ -79,16 +79,21 @@ public class BoardController {
 	  }
 	
 	  @PostMapping("/board/update")
-	  public String boardUpdate(Board board, RedirectAttributes rttr, Integer page, Integer size,
-			  String type, String keyword) {
-		  Board update_board= service.updateBoard(board);
+	  public String boardUpdate(Long bid, RedirectAttributes rttr, PageVO pagevo, 
+			  String bcontent, String btitle, String email) {
+	
+		  Board board = new Board();
+		  board.setBid(bid);
+		  board.setBcontent(bcontent);
+		  board.setBtitle(btitle);
+		  board.setCustomer(uservice.getMemberInfo(email));
+		  Board update_board = service.updateBoard(board);
 		  System.out.println("수정사항 : "+update_board);
-		  
+
 		  rttr.addFlashAttribute("resultMessage", update_board==null?"수정실패":"수정성공");
+		  rttr.addFlashAttribute("pagevo", pagevo);
 		  
-		  
-		  String param = "page=" + page + "&size=" + size + "&type="+type+"&keyword="+keyword;
-		  return "redirect:/board/boardlist?" + param;
+		  return "redirect:/board/boarddetail?bid="+bid;
 				 
 	  }
 

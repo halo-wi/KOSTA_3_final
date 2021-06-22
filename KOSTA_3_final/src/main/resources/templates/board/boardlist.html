@@ -40,7 +40,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
          </td>
          <td >
          <!-- 문자열의 한계치를 설정하고, length가 한계치 이상이라면 잘라낸후 …으로 표시해준다. -->
-         	<!--<div class = "email" th:text="${#strings.abbreviate(board.customer.email,7)}"> </div>-->
+         	 <div class = "email" th:text="${#strings.abbreviate(board.customer.email,7)}"> </div>
          </td>
          <td th:text="${board.bregdate}"></td>
       </tr>
