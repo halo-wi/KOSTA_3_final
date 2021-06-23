@@ -29,18 +29,11 @@ public class BoardController {
 	@GetMapping("/board/boardlist")
 	public void selectAll(Model model, PageVO pagevo) {
 		if(pagevo==null) pagevo = PageVO.builder().page(1).size(10).keyword("").type("").build();
-
+		System.out.println("controller...pagevo:" + pagevo);
 		Page<Board> result = service.selectAll(pagevo);
 		
-		List<Board> boardlist = result.getContent();
-		System.out.println(1);
-		boardlist.forEach(b->{
-			System.out.println(2);
-			System.out.println("asdfsadfsdafajsdflk"+b);
-		});
-		System.out.println("한페이지의 사이즈"+result.getSize());
-		System.out.println("전체페이지"+result.getTotalPages());
 		
+	 
 		model.addAttribute("boardResult", result);
 		model.addAttribute("pagevo", pagevo);
 		model.addAttribute("result", new PageMake<>(result));
