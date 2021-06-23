@@ -23,6 +23,7 @@ public class BoardService {
 		System.out.println(p);
 		System.out.println(pageable);
 		Page<Board> result = persistance.findAll(p, pageable);
+		
 		return result;
 	}
 	

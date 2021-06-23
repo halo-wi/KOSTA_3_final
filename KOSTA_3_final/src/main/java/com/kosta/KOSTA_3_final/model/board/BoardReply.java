@@ -42,6 +42,7 @@ public class BoardReply {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="board_reply_id")
 	Long rid;
+	
 	@Column(name="board_reply")
 	String reply; //댓글내용
 	

@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,6 +15,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kosta.KOSTA_3_final.model.user.Member;
 
 import lombok.AllArgsConstructor;
@@ -25,7 +27,7 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "admin")
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -41,14 +43,13 @@ public class QnAReply {
 	@Column(name="question_reply")
 	String qreply;
 	
-	@ManyToOne
-	@JoinColumn(name = "question_id")
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
 	QnA qid;
 	
 	
-	
 	@ManyToOne
-	@JoinColumn(name = "customer_id")
+	@JoinColumn(name = "custcomer_id")
 	Member admin;
 	
 	

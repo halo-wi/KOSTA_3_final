@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <head>
 <meta charset="UTF-8">
@@ -11,95 +11,137 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <body>
 
 
- <img alt="이미지" th:src="@{/images/고래밥.jpg}" width="100px" height=100px> 
- <div>
-	<select id="searchType">
-		<option>전체</option>
-		<option value = "btitle" th:selected="${pagevo.type=='btitle'}">제목</option>
-		<option value = "bcontent" th:selected="${pagevo.type=='bcontent'}" >내용</option>
-		<option value = "email" th:selected="${pagevo.type=='user.email'}" >작성자</option>
-	</select>
-	<input type="text" id="searchKeyword">
-	<button id="searchBtn">조건검색</button>
-</div>
+	<img alt="이미지" th:src="@{/images/고래밥.jpg}" width="100px" height=100px>
+	<div>
+		<select id="searchType">
+			<option>전체</option>
+			<option value="btitle" th:selected="${pagevo.type=='btitle'}">제목</option>
+			<option value="bcontent" th:selected="${pagevo.type=='bcontent'}">내용</option>
+			<option value="email" th:selected="${pagevo.type=='user.email'}">작성자</option>
+		</select> <input type="text" id="searchKeyword">
+		<button id="searchBtn">조건검색</button>
+	</div>
 
-<div class="panel-body pull-right">
-	<h3><a class="label label-default" th:href="@{/board/register}">글쓰기</a></h3>
-</div>
+	<div class="panel-body pull-right">
+		<h3>
+			<a class="label label-default" th:href="@{/board/register}">글쓰기</a>
+		</h3>
+	</div>
 
-   <table class="table table-striped table-bordered table-hover" >
-      <tr> 
-       <th>번호</th><th>제목</th><th>작성자</th><th>작성일</th>
-      </tr>
-      <tr th:each="board:${boardResult.content}">
-         <td>
-            <a th:href="@{/board/boarddetail(bid=${board.bid})}" th:text="${board.bid}"></a>
-         </td>
-         <td>
-         	<a class = "boardLink" th:text="${board.btitle}" th:href="@{/board/boarddetail(bid=${board.bid})}"></a>
-        	 <span class = "badge">[[${board.replies.size()}]]</span>
-         </td>
-         <td >
-         <!-- 문자열의 한계치를 설정하고, length가 한계치 이상이라면 잘라낸후 …으로 표시해준다. -->
-         	 <div class = "email" th:text="${#strings.abbreviate(board.customer.email,7)}"> </div>
-         </td>
-         <td th:text="${board.bregdate}"></td>
-      </tr>
-   </table>
-   
-   <!-- 페이징 처리 -->
-   <form id="f1" th:action="@{/board/boardlist}" method="get">
-   	<input type="text" name="page" th:value=${result.currentPageNum}>
-   	<input type="text" name="size" th:value=${result.currentPage.pageSize}>
-   	<input type="text" name="type" th:value=${pagevo.type}>
-   	<input type="text" name="keyword" th:value=${pagevo.keyword}>
-   </form>
-   <nav>
-   	<ul class="pagination">
-   		<li class="page-item" th:if="${result.prevPage}">
-   			<a th:href="${result.prevPage.pageNumber}+1">PREV</a>
-   		</li>
-   		<li class="page-item" th:each="pg:${result.pageList}">
-   			<a th:href="${pg.pageNumber}+1" 
-   			th:classappend="${pg.pageNumber==result.currentPageNum-1}?active:''" >
-   			[[${pg.pageNumber}+1]]</a>
-   		</li>
-   		<li class="page-item" th:if="${result.nextPage}">
-   			<a th:href="${result.nextPage.pageNumber}+1">NEXT</a>
-   		</li>
-   	</ul>
-   </nav>
+	<table class="table table-striped table-bordered table-hover">
+		<tr>
+			<th>번호</th>
+			<th>제목</th>
+			<th>작성자</th>
+			<th>작성일</th>
+		</tr>
+		<tr th:each="board:${boardResult.content}">
+			<td><a th:href="@{/board/boarddetail(bid=${board.bid})}"
+				th:text="${board.bid}"></a></td>
+			<td><a class="boardLink" th:text="${board.btitle}"
+				th:href="@{/board/boarddetail(bid=${board.bid})}"></a> <span
+				class="badge">[[${board.replies.size()}]]</span></td>
+			<td>
+				<!-- 문자열의 한계치를 설정하고, length가 한계치 이상이라면 잘라낸후 …으로 표시해준다. -->
+				<div class="email"
+					th:text="${#strings.abbreviate(board.customer.email,7)}"></div>
+			</td>
+			<td>
+				<div th:text="${board.bupdatedate}"></div>
+			</td>
+		</tr>
+	</table>
 
-<th:block layout:fragment="script1">
-<script>
-$(function() {
-	/* var msg="[[${resultMessage}]]"; */
-	
-	var formObj = $("#f1");
-	$(".pagination a").click(function(e) {
-		e.preventDefault(); //본래의 기능(link)을 취소
-		formObj.find("[name='page']").val($(this).attr("href"));
-		//alert($(this).attr("href"));
-		formObj.submit();
-	});
-	$("#searchBtn").click(function(){
-		var typeStr = $("#searchType").find(":selected").val();
-		var keywordStr = $("#searchKeyword").val();
-		alert(typeStr +":"+keywordStr);
-		formObj.find("[name='type']").val(typeStr);
-		formObj.find("[name='keyword']").val(keywordStr);
-		formObj.submit();
-	});
-	
-	$(".boardLink").click(function(e) {
-		e.preventDefault();
-		var bid= $(this).attr("href");
-		formObj.attr("action", "[[@{/board/boarddetail}]]");
-		formObj.append("<input type='hidden' name='bid' value=' " +bid +"'>");
-		formObj.submit();		
-	});
-});
-</script>
-</th:block>
+
+	<!-- 페이징 처리 -->
+	<form id="f1" th:action="@{/board/boardlist}" method="get">
+		<input type="hidden" name="page" th:value=${result.currentPageNum}>
+		<input type="hidden" name="size"
+			th:value=${result.currentPage.pageSize}> <input type="hidden"
+			name="type" th:value=${pagevo.type}> <input type="hidden"
+			name="keyword" th:value=${pagevo.keyword}>
+	</form>
+	<nav>
+		<ul class="pagination">
+			<li class="page-item" th:if="${result.prevPage}"><a
+				th:href="${result.prevPage.pageNumber}+1">PREV</a></li>
+			<li class="page-item" th:each="pg:${result.pageList}"><a
+				th:href="${pg.pageNumber}+1"
+				th:classappend="${pg.pageNumber==result.currentPageNum-1}?active:''">
+					[[${pg.pageNumber}+1]]</a></li>
+			<li class="page-item" th:if="${result.nextPage}"><a
+				th:href="${result.nextPage.pageNumber}+1">NEXT</a></li>
+		</ul>
+	</nav>
+
+	<script>
+		$(function() {
+			var today = new Date();
+			$("tr td:last-child div")
+					.each(
+							function(index, item) {
+
+								var aa = new Date($(item).html());
+								var time = today - aa;
+								console.log(item);
+
+								time = Math.ceil(time / 1000);
+								if (time < 60) {
+									$(item).html(time+'초 전');
+
+								} else {
+									time = Math.ceil(time / 60);
+									if (time < 60) {
+										$(item).html(time+'분 전');
+
+									} else {
+										time = Math.ceil(time / 60);
+										if (time < 24) {
+											$(item).html(time+'시간 전');
+
+										} else {
+											$(item).html((aa.getMonth() + 1 >= 10 ? aa.getMonth() + 1 : '0'
+												+ (aa.getMonth() + 1))
+												+ "-" + aa.getDate());
+
+										}
+
+									}
+								}
+
+							});
+		});
+
+		$(function() {
+
+			var formObj = $("#f1");
+			$(".pagination a").click(function(e) {
+				e.preventDefault(); //본래의 기능(link)을 취소
+				formObj.find("[name='page']").val($(this).attr("href"));
+				formObj.submit();
+			});
+			$("#searchBtn").click(function() {
+				var typeStr = $("#searchType").find(":selected").val();
+				var keywordStr = $("#searchKeyword").val();
+				alert(typeStr + ":" + keywordStr);
+				formObj.find("[name='type']").val(typeStr);
+				formObj.find("[name='keyword']").val(keywordStr);
+				formObj.submit();
+			});
+
+			$(".boardLink")
+					.click(
+							function(e) {
+								e.preventDefault();
+								var bid = $(this).attr("href");
+								formObj.attr("action",
+										"[[@{/board/boarddetail}]]");
+								formObj
+										.append("<input type='hidden' name='bid' value=' " +bid +"'>");
+								formObj.submit();
+							});
+		});
+	</script>
+	</th:block>
 </body>
 </html>

@@ -1,15 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <head>
 <meta charset="UTF-8">
 <title>qna</title>
-<style>
-table, td, th {
-	border: 1px solid black;
-	border-collapse: collapse;
-}
-</style>
 </head>
 <body>
 
@@ -19,7 +14,7 @@ table, td, th {
 			<select id="searchType">
 				<option>전체</option>
 				<option value="qtitle" th:selected="${pagevo.type=='qtitle'}">제목</option>
-				<option value="bcontent" th:selected="${pagevo.type=='bcontent'}">내용</option>
+				<option value="qcontent" th:selected="${pagevo.type=='qcontent'}">내용</option>
 				<option value="email" th:selected="${pagevo.type=='user.email'}">작성자</option>
 			</select> <input type="text" id="searchKeyword">
 			<button id="searchBtn">조건검색</button>
@@ -27,7 +22,7 @@ table, td, th {
 
 		<div class="panel-body pull-right">
 			<h3>
-				<a class="label label-default" th:href="@{/qna/register}">글쓰기</a>
+				<a class="label label-default" th:href="@{/board/qnaregister}">문의하기</a>
 			</h3>
 		</div>
 
@@ -39,17 +34,17 @@ table, td, th {
 				<th>작성일</th>
 			</tr>
 			<tr th:each="qna:${qnaResult.content}">
-				<td><a th:href="@{/qna/qnadetail(qid=${qna.bid})}"
-					th:text="${qna.bid}"></a></td>
+				<td><a th:href="@{/qna/qnadetail(qid=${qna.qid})}"
+					th:text="${qna.qid}"></a></td>
 				<td><a class="qnaLink" th:text="${qna.qtitle}"
-					th:href="@{/qna/qnadetail(qid=${qna.bid})}"></a> <span
-					class="badge">[[${qna.replies.size()}]]</span></td>
+					th:href="@{/qna/qnadetail(qid=${qna.qid})}"></a> <span
+					class="badge" th:if="${qna.qreplies.size()}!=0" >답변완료</span></td>
 				<td>
 					<!-- 문자열의 한계치를 설정하고, length가 한계치 이상이라면 잘라낸후 …으로 표시해준다. -->
 					<div class="email"
-						th:text="${#strings.abbreviate(qna.customer.email,7)}"></div>
+						th:text="${qna.customer.customerName}"></div>
 				</td>
-				<td th:text="${qna.bregdate}"></td>
+				<td th:text="${qna.qupdateDate}"></td>
 			</tr>
 		</table>
 
@@ -74,16 +69,15 @@ table, td, th {
 			</ul>
 		</nav>
 	</div>
-	<th:block layout:fragment="script1">
+	
 		<script>
 			$(function() {
-				/* var msg="[[${resultMessage}]]"; */
+				
 
 				var formObj = $("#f1");
 				$(".pagination a").click(function(e) {
 					e.preventDefault(); //본래의 기능(link)을 취소
 					formObj.find("[name='page']").val($(this).attr("href"));
-					//alert($(this).attr("href"));
 					formObj.submit();
 				});
 				$("#searchBtn").click(function() {
