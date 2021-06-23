@@ -18,9 +18,8 @@ public class UserController {
 	@Autowired
 	JavaMailSender sender;
 	
-
 	
-	@GetMapping("/auth/login")
+	@GetMapping("/login")
 	public void login(){
 		
 	}
@@ -33,6 +32,7 @@ public class UserController {
 	public void loginMethod(){
 		
 	}
+
 	@GetMapping("/logout")
 	public void logout(){
 		
@@ -47,7 +47,7 @@ public class UserController {
 	public String joinUser2(@ModelAttribute Member user) {
 		service.joinUser(user);
 		
-		return "redirect:/auth/login";
+		return "redirect:/login";
 		
 	}
 	

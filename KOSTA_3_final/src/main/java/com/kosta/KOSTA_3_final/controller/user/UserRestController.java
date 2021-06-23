@@ -13,12 +13,14 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMailMessage;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kosta.KOSTA_3_final.model.user.EmailDTO;
+import com.kosta.KOSTA_3_final.model.user.Member;
 import com.kosta.KOSTA_3_final.service.user.UserService;
 
 @RestController
@@ -99,6 +101,11 @@ public class UserRestController {
 			}
 			
 	       
+	}
+	
+	@GetMapping("/auth/emailcheck")
+	public boolean emailchk(String email) {
+		return service.emailchk(email);
 	}
 }
 

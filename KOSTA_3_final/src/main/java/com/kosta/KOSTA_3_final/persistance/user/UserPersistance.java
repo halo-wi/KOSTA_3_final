@@ -8,6 +8,7 @@ import com.kosta.KOSTA_3_final.model.user.Member;
 public interface UserPersistance extends CrudRepository<Member, Integer>{
 	public Optional<Member> findByEmail(String email);
 	public Member findByCustomerName(String userEmail);
+	public boolean existsByEmail(String email);
 
 
 	
