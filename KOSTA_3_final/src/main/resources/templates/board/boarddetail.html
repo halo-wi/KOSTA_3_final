@@ -20,7 +20,7 @@
 		<h1 class="panel-heading">Board 상세보기</h1>
 		<div class="panel-body">
 
-			<form id="myfrm" class="form-inline" 
+			<form id="myfrm" class="form-inline" th:action="@{/board/update}"
 				method="post">
 				<input type="hidden" id="bid" name="bid" th:value="${board.bid}">
 				<input type="hidden" id="redate" name="bregdate"
@@ -30,39 +30,32 @@
 					<h3 id="btitle">[[${board.btitle}]]</h3>
 				</div>
 				<br>
-				<label for="bregdate">작성일:</label>
-				<div class="bregdate"
-					th:text="${#dates.format(board.bregdate, 'yyyy-MM-dd')}"></div>
-				<br> <label for="bregdate">작성자:</label>
+				<label for="bupdatedate">작성일:</label>
+				<div class="bupdatedate"
+					th:text="${#dates.format(board.bupdatedate, 'yyyy-MM-dd')}"></div>
+				
+				
+				<br> <label for="email">작성자:</label>
+				<input type="hidden" id="email" name="email" th:value="${board.customer.email}">
+				
+				
 				<div class="email"
 					th:text="${#strings.abbreviate(board.customer.email,7)}"></div>
 				<br>
 				<div class="form-group" id="contentButton">
 					<label for="bcontent">content:</label><br>
 					
-					
 					<div id="bcontent"
-						style="border: black solid 1px; width: 300px; height: 100%">
+						style="border: black solid 1px; width: 300px; height: 100%;">
 						[[${board.bcontent}]]
 					</div>
 				</div>
 				<br> <br> <br>
 
-
-				<div class="pull-right">
-
 					<div th:if="${board.customer.email}==${#authentication.name}">
 						<a href="javascript:boardMod()" >수정하기</a>
-						<a th:href="@{/board/delete(bid=${board.bid})}"
-							class="btn btn-warning delbtn2">삭제하기</a>
+						<a th:href="@{/board/delete(bid=${board.bid})}">삭제하기</a>
 					</div>
-
-				</div>
-
-				<input type="hidden" name="page" th:value=${pagevo.page}> <input
-					type="hidden" name="size" th:value=${pagevo.size}> <input
-					type="hidden" name="type" th:value=${pagevo.type}> <input
-					type="hidden" name="keyword" th:value=${pagevo.keyword}>
 
 			</form>
 
@@ -265,33 +258,17 @@
 			
 			function boardMod() {
 				
-				$('#bcontent').contents().unwrap().wrap( '<textarea id="boardContent"> </textarea>' );
-				$('#btitle').contents().unwrap().wrap( '<textarea id="boardTitle"> </textarea>' );
+				$('#bcontent').contents().unwrap().wrap( '<textarea name="bcontent"> </textarea>' );
+				$('#btitle').contents().unwrap().wrap( '<textarea name="btitle"> </textarea>' );
 				$('#contentButton').after("<input type='button' onclick='modifyBoard(this);' value='수정완료'>");
-				
 			
+				
 			};
 			
 			function modifyBoard(item, callback) {
 				
-				var bcontent = $('#boardContent').val();
-				var btitle = $('#boardTitle').val();
-				var authName = '[[${#authentication.name}]]';
-				var obj = {
-						"bid" : "[[${board.bid}]]",
-						"pageVO" : "[[${pageVO}]]",	
-						"bcontent" : bcontent,
-						"btitle" : btitle,
-						"email" : authName
-						
-				};
-				console.log(obj);
-				$.ajax({
-				url:"/board/update",
-				data:  obj,
-				type: "post",
-	 			success:callback
-			}) 
+				var myfrm = $("#myfrm");
+				myfrm.submit();
 			} 
 			
 		</script>

@@ -81,7 +81,7 @@ public class BoardController {
 	  @PostMapping("/board/update")
 	  public String boardUpdate(Long bid, RedirectAttributes rttr, PageVO pagevo, 
 			  String bcontent, String btitle, String email) {
-	
+		  
 		  Board board = new Board();
 		  board.setBid(bid);
 		  board.setBcontent(bcontent);
