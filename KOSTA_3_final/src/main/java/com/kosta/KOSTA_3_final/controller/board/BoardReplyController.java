@@ -1,6 +1,5 @@
 package com.kosta.KOSTA_3_final.controller.board;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;

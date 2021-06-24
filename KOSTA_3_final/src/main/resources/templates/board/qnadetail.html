@@ -118,7 +118,6 @@
 
 
 	<th:block layout:fragment="script">
-		<script th:src="@{/js/reply.js}"></script>
 		<script th:inline="javascript">
 		
 
@@ -143,22 +142,19 @@
 								function(idx, item) {
 									str += "<tr>";
 
-									str += "<td>" + item["reply"] + "</td>";
+									str += "<td>" + item["qreply"] + "</td>";
 									str += "<td>"
-											+ item["customer"]["email"].substr(
-													0, 4) + "***" + "</td>";
+											+ item["admin"]["customerName"];
 									str += "<td>"
-											+ formatDate(item["rupdatedate"])
+											+ formatDate(item["qrupdateDate"])
 											+ "</td> <td>";
-											console.log("'" + item['customer']['email'] + "'");	
-									if (item['customer']['email'] == authName) {
-										console.log("yes");
+									if (item['admin']['email'] == authName) {
 										str += "<button  onclick='call(this);' id='modify' > 댓글수정 </button>"
 												+ "<span style=' display : none;'>"
-												+ item["rid"]
+												+ item["qrid"]
 												+ "</span>"
 												+ "<span style=' display : none;'>"
-												+ item["customer"]["customer_id"]
+												+ item["admin"]["customer_id"]
 												+ "</span>"
 												+ "<button  onclick='del(this);' id='modify'> 삭제 </button>";
 									}
@@ -179,11 +175,11 @@
 		<script>
 			function del(item) {
 
-				var rid = $(item).parent().children("span:nth-child(2)");
+				var qrid = $(item).parent().children("span:nth-child(2)");
 
 				var obj = {
 					"qid" : "[[${qna.qid}]]",
-					"rid" : rid.html()
+					"qrid" : qrid.html()
 				};
 				replyManager.remove(obj, printList);
 				alert("삭제완료");
@@ -240,7 +236,7 @@
 				console.log(authName);
 				var obj = {
 						"qid" : "[[${qna.qid}]]",
-						"reply" : $("#replyADD").val(),
+						"qreply" : $("#replyADD").val(),
 						"email" : authName
 				};
 				console.log(obj);

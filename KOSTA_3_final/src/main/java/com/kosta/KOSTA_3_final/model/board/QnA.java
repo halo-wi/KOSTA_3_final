@@ -64,7 +64,7 @@ public class QnA {
 
 	
 	 @JsonIgnore // tostring과 유사, JSON만들때 무한loop 방지
-	 @OneToMany(mappedBy = "qid", cascade = CascadeType.ALL, fetch =FetchType.LAZY)
+	 @OneToMany(mappedBy = "qna", cascade = CascadeType.ALL, fetch =FetchType.LAZY)
 	 List<QnAReply> qreplies;
 	 
 

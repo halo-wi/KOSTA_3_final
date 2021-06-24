@@ -5,9 +5,8 @@ var replyManager =(function(){
 	var getAll = function(obj, callback){	
 		console.log("get All..."+obj);
 
-		$.getJSON("/qreplies/board/"+obj, callback)
-		
-		
+		$.getJSON("/qreplies/QnA/"+obj, callback)
+	
 	};
 	
 	var add = function(obj, callback){
@@ -35,7 +34,7 @@ var replyManager =(function(){
 
 	
 	var remove = function(obj, callback){
-		console.log("remove...");
+		console.log(obj);
 		$.ajax({
 			url:"/qreplies/"+obj["qid"]+"/"+obj["qrid"],
 			type:"delete",

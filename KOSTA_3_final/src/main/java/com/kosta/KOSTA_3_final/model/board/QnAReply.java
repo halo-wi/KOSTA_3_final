@@ -20,6 +20,7 @@ import com.kosta.KOSTA_3_final.model.user.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,6 +33,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Entity
 @Builder
+@EqualsAndHashCode(of = "qrid")
 @Table(name = "tp_question_board_reply")
 //문의게시판_댓글VO
 public class QnAReply {
@@ -45,7 +47,7 @@ public class QnAReply {
 	
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
-	QnA qid;
+	QnA qna;
 	
 	
 	@ManyToOne
