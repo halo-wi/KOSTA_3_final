@@ -1,5 +1,7 @@
 package com.kosta.KOSTA_3_final.security;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import com.kosta.KOSTA_3_final.service.user.UserService;
 import lombok.extern.java.Log;
@@ -18,6 +22,10 @@ import lombok.extern.java.Log;
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
 	UserService UserService; 
+	
+	@Autowired
+	DataSource datasource;
+	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();   //Spring Security에서 제공하는 비밀번호 암호화 객체
@@ -48,7 +56,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 .invalidateHttpSession(true)  // 세션 지우기
 .and().csrf().disable();  //csrf(크로스사이트 위조요청에 대한 설정) 토큰 비활성화 (test시에는 disable권장)            
 http.exceptionHandling().accessDeniedPage("/accessFail"); // 403 예외처리 핸들링   권한이 없는 대상이 접속을시도했을 때
-http.rememberMe().key("ReMemberUcha").userDetailsService(UserService);//로그인 유지 기능
+http.rememberMe().key("RememberU").userDetailsService(UserService).tokenRepository(tokenRepository()).tokenValiditySeconds(60*60*24);//로그인 유지 기능
 	}
+	
+	@Bean
+    public PersistentTokenRepository tokenRepository() {
+        JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+        jdbcTokenRepository.setDataSource(datasource);
+        return jdbcTokenRepository;
+    }
 
 }

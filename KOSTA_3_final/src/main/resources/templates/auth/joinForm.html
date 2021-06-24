@@ -51,7 +51,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
                     <div class="menu-wrapper">
                         <!-- Logo -->
                         <div class="logo">
-                            <a href="index.html"><img src="../../assets/img/logo/logo.png" alt=""></a>
+                            <a href="/index"><img src="../../assets/img/logo/logo.png" alt=""></a>
                         </div>
                         <!-- Main-menu -->
                         <div class="main-menu d-none d-lg-block">
@@ -62,8 +62,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
                                     <li><a href="/payments/packList">구독서비스</a></li>
                                     <li class="hot"><a href="#">마이페이지</a>
                                         <ul class="submenu">
-                                            <li><a href="shop.html"> Product list</a></li>
-                                            <li><a href="product_details.html"> Product Details</a></li>
+                                            <li><a href="/mypage/profile"> 마이페이지</a></li>
                                         </ul>
                                     </li>
                                     <li><a href="blog.html">Blog</a>
@@ -141,7 +140,6 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <div class='left'>주소</div>
 <input type="text" 	id="postnumber" name="postnumber" value=""  readonly/>
 <input type="text" 	id="address" name="address" value="" placeholder="우편 번호 검색을 눌러주세요" readonly/>
-
 <input type="button" onclick="Postcode()" value="우편번호 찾기"><br>
 <input type="text" id='addressdetail' name="addressdetail" placeholder="상세 주소 입력">
  </div>
@@ -152,6 +150,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 	class="compare"><span class="compare-text"
 	style="display: none">불일치</span>
  </section>
+ <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 <input class="btn" type="submit" value="회원 가입">
 </form>
                                     </div>
@@ -285,6 +284,9 @@ $(".sendMail").click(function() {// 메일 입력 유효성 검사
 		    	  if(data==true){
 		    		  alert("이미 존재하는 이메일입니다.")
 		    	  }else{
+		    		 
+
+		    		 
 		$.ajax({
 			type : 'post',
 			url : '/auth/CheckMail',
