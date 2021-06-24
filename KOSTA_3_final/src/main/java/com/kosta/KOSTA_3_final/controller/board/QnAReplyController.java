@@ -32,17 +32,18 @@ public class QnAReplyController {
 	}
 	
 	//댓글상세보기
-		@GetMapping("{qid}")
-		public ResponseEntity<QnAReply> viewReply(@PathVariable Long qid) {
+	@GetMapping("{qid}")
+	public ResponseEntity<QnAReply> viewReply(@PathVariable Long qid) {
 				
-				return new ResponseEntity<>(service.selectById(qid), HttpStatus.OK);
-			}
+		return new ResponseEntity<>(service.selectById(qid), HttpStatus.OK);
+	}
 	
 	
 	
 	//특정 보드에 댓글등록, 입려 후 다시 조회
 	@PostMapping("/{qid}")
 	public ResponseEntity<List<QnAReply>> addRep(@PathVariable Long qid, @RequestBody QnAReply reply) {
+		
 		
 		QnA qnA = QnA.builder().qid(qid).build();
 		reply.setQid(qnA);

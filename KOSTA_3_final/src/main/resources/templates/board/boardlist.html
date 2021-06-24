@@ -36,11 +36,12 @@
 			<th>작성일</th>
 		</tr>
 		<tr th:each="board:${boardResult.content}">
-			<td><a th:href="@{/board/boarddetail(bid=${board.bid})}"
-				th:text="${board.bid}"></a></td>
-			<td><a class="boardLink" th:text="${board.btitle}"
-				th:href="@{/board/boarddetail(bid=${board.bid})}"></a> <span
-				class="badge">[[${board.replies.size()}]]</span></td>
+		
+			<td><a th:href="@{/board/boarddetail(bid=${board.bid})}" th:text="${board.bid}"></a></td>
+			<td><a th:href="@{/board/boarddetail(bid=${board.bid})}" class="boardLink" th:text="${board.btitle}"></a> 
+				
+				
+				<span class="badge">[[${board.replies.size()}]]</span></td>
 			<td>
 				<!-- 문자열의 한계치를 설정하고, length가 한계치 이상이라면 잘라낸후 …으로 표시해준다. -->
 				<div class="email"

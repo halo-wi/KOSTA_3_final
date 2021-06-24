@@ -34,22 +34,24 @@
 				<th>작성일</th>
 			</tr>
 			<tr th:each="qna:${qnaResult.content}">
-				<td><a th:href="@{/qna/qnadetail(qid=${qna.qid})}"
+
+				<td><a th:href="@{/board/qnadetail(qid=${qna.qid})}"
 					th:text="${qna.qid}"></a></td>
-				<td><a class="qnaLink" th:text="${qna.qtitle}"
-					th:href="@{/qna/qnadetail(qid=${qna.qid})}"></a> <span
-					class="badge" th:if="${qna.qreplies.size()}!=0" >답변완료</span></td>
+				<td><a th:href="@{/board/qnadetail(qid=${qna.qid})}"
+					th:text="${qna.qtitle}"></a> <span class="badge"
+					th:if="${qna.qreplies.size()}!=0">답변완료</span></td>
 				<td>
 					<!-- 문자열의 한계치를 설정하고, length가 한계치 이상이라면 잘라낸후 …으로 표시해준다. -->
-					<div class="email"
-						th:text="${qna.customer.customerName}"></div>
+					<div class="customerName" th:text="${qna.customer.customerName}"></div>
 				</td>
-				<td th:text="${qna.qupdateDate}"></td>
+				<td>
+					<div th:text="${qna.qupdateDate}"></div>
+				</td>
 			</tr>
 		</table>
 
 		<!-- 페이징 처리 -->
-		<form id="f1" th:action="@{/qna/qnalist}" method="get">
+		<form id="f1" th:action="@{/board/qnalist}" method="get">
 			<input type="hidden" name="page" th:value=${result.currentPageNum}>
 			<input type="hidden" name="size"
 				th:value=${result.currentPage.pageSize}> <input
@@ -69,8 +71,49 @@
 			</ul>
 		</nav>
 	</div>
+
+	<script>
+	$(function() {
+		var today = new Date();
+		$("tr td:last-child div")
+				.each(
+						function(index, item) {
+
+							var aa = new Date($(item).html());
+							var time = today - aa;
+							console.log(item);
+
+							time = Math.ceil(time / 1000);
+							if (time < 60) {
+								$(item).html(time+'초 전');
+
+							} else {
+								time = Math.ceil(time / 60);
+								if (time < 60) {
+									$(item).html(time+'분 전');
+
+								} else {
+									time = Math.ceil(time / 60);
+									if (time < 24) {
+										$(item).html(time+'시간 전');
+
+									} else {
+										$(item).html((aa.getMonth() + 1 >= 10 ? aa.getMonth() + 1 : '0'
+											+ (aa.getMonth() + 1))
+											+ "-" + aa.getDate());
+
+									}
+
+								}
+							}
+
+						});
+	});
 	
-		<script>
+	
+	</script>
+
+	<script>
 			$(function() {
 				
 
@@ -88,19 +131,8 @@
 					formObj.find("[name='keyword']").val(keywordStr);
 					formObj.submit();
 				});
-
-				$(".qnaLink")
-						.click(
-								function(e) {
-									e.preventDefault();
-									var bid = $(this).attr("href");
-									formObj.attr("action",
-											"[[@{/qna/qnadetail}]]");
-									formObj
-											.append("<input type='hidden' name='bid' value=' " +bid +"'>");
-									formObj.submit();
-								});
 			});
+
 		</script>
 	</th:block>
 </body>
