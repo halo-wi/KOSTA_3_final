@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				.anyRequest().authenticated() // 나머지 요청들은 권한의 종류에 상관 없이 권한이 있어야 접근 가능
 				.and().formLogin() // form 기반으로 인증을 하도록 한다. 로그인 정보는 기본적으로 HttpSession을 이용
 				.loginPage("/login") // 로그인 페이지 링크 .... post의 이름이 같다면 loginProcessingUrl생략 
-				.failureUrl("/auth/joinForm") //로그인 실패시 회원 가입 페이지로
+				.failureUrl("/login?error") //로그인 실패시 회원 가입 페이지로
                 //스프링시큐리티가 해당주소로 오는 요청을 가로채서 대신한다. 
 .defaultSuccessUrl("/index") // 로그인 성공 후 리다이렉트 주소				
 .permitAll()

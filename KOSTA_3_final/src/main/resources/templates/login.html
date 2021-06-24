@@ -140,13 +140,16 @@ xmlns:th="http://www.thymeleaf.org"
                                             <input type="checkbox" id="f-option" name="selector">
                                             <label for="f-option" >로그인 유지</label>
                                         </div>
+                                         <div th:if="${param.error}" class="alert alert-error">    
+                    				<p class="lost_pass">존재하지 않는 이메일이나 비밀번호입니다</p>
+                           				 </div>
                                         <button type="submit" value="submit" class="btn_3">
                                             log in
                                         </button>
                                         <a class="lost_pass" href="/auth/passwordFind">비밀번호를 잊으셨나요?</a>
                                     </div>
                                 </form>
-                            </div>
+                                
                         </div>
                     </div>
                 </div>
