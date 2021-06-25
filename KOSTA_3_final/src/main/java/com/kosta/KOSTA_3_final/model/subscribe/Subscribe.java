@@ -69,4 +69,5 @@ public class Subscribe {
    @Column(name="sub_check",columnDefinition = "integer default 1")
    int subCheck;
    
+
 }

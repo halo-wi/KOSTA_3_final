@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.firewall.DefaultHttpFirewall;
+import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -33,8 +35,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override  //WebSecurity를 통해 HTTP 요청에 대한 웹 기반 보안을 구성
 	public void configure(WebSecurity web) throws Exception {
 		// 파일 기준은 resources/static 디렉터리의 하위 파일 목록은 인증 무시 ( = 항상통과 )
+
+		web.httpFirewall(allowUrlEncodedSlashHttpFirewall());
 		web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/lib/**","/assets/**");
+
 	}
+	
+	@Bean
+	public HttpFirewall allowUrlEncodedSlashHttpFirewall() {
+		DefaultHttpFirewall firewall = new DefaultHttpFirewall();
+		firewall.setAllowUrlEncodedSlash(true);
+		return firewall;
+	}
+	
 	protected void configure(HttpSecurity http) throws Exception {
 		log.info("security config..........");
 		// antMatchers url 패턴에 대한 접근허용

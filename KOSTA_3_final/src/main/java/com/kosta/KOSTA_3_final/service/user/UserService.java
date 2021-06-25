@@ -1,9 +1,6 @@
 package com.kosta.KOSTA_3_final.service.user;
 
-
-
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
@@ -18,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kosta.KOSTA_3_final.model.user.EmailDTO;
 import com.kosta.KOSTA_3_final.model.user.Member;
-import com.kosta.KOSTA_3_final.persistance.user.UserPersistance;
+import com.kosta.KOSTA_3_final.persistance.user.MemberRepository;
 import com.kosta.KOSTA_3_final.security.UserSecurity;
 
 
@@ -28,7 +25,7 @@ import com.kosta.KOSTA_3_final.security.UserSecurity;
 public class UserService implements UserDetailsService{
 	
 	@Autowired
-	UserPersistance repo;
+	MemberRepository repo;
 	@Autowired
 	PasswordEncoder passwordEncoder;
 	@Autowired 
