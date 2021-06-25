@@ -37,10 +37,10 @@ public class PackageVO {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "package_id")
 	long packageId;
-
+  
 	@Column(name = "package_name")
 	public String packageName;
-
+	
 	@Column(name = "package_type")
 	int packageType;
 
