@@ -12,7 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -29,7 +28,7 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "customer")
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -43,6 +42,7 @@ public class BoardReply {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="board_reply_id")
 	Long rid;
+	
 	@Column(name="board_reply")
 	String reply; //댓글내용
 	
@@ -50,9 +50,6 @@ public class BoardReply {
 	@JoinColumn(name = "customer_id")
 	Member customer; // FK, 댓글 작성자. issue : User에서도 양방향으로 참조해야할까? <본인댓글조회 기능 시 필요> , 변수명에 대해 의논
 
-	@CreationTimestamp
-	@Column(name="reg_date")
-	Timestamp rregdate;
 
 	@UpdateTimestamp
 	@Column(name="update_date")

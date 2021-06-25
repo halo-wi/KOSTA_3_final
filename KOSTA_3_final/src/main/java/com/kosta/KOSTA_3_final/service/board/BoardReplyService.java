@@ -3,6 +3,8 @@ package com.kosta.KOSTA_3_final.service.board;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.kosta.KOSTA_3_final.model.board.Board;
@@ -18,7 +20,7 @@ public class BoardReplyService {
 	
 	
 	public List<BoardReply> selectAll(Board board) {
-		return (List<BoardReply>) persistance.findByBoard(board);
+		return (List<BoardReply>) persistance.findByBoard(board, Sort.by(Direction.ASC, "rid"));
 	}
 	
 	public BoardReply selectById(Long rid) {
@@ -40,6 +42,5 @@ public class BoardReplyService {
 		return ret;
 	}
 	
-	
-	
+
 }

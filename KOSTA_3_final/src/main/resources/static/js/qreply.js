@@ -5,16 +5,15 @@ var replyManager =(function(){
 	var getAll = function(obj, callback){	
 		console.log("get All..."+obj);
 
-		$.getJSON("/replies/board/"+obj, callback)
-		
-		
+		$.getJSON("/qreplies/QnA/"+obj, callback)
+	
 	};
 	
 	var add = function(obj, callback){
 	
-		console.log("add...");
+		console.log(obj);
 		$.ajax({
-			url:"/replies/" + obj["bid"],
+			url:"/qreplies/" + obj["qid"],
 			data: obj,
 			type: "post",
 			success:callback  
@@ -25,7 +24,7 @@ var replyManager =(function(){
 	var update = function(obj, callback){
 		console.log(obj);
 		$.ajax({
-			url:"/replies/" + obj["bid"] + "/"+ obj["rid"],
+			url:"/qreplies/" + obj["qid"] + "/"+ obj["qrid"],
 			data:  obj,
 			type: "put",
  			success:callback
@@ -35,9 +34,9 @@ var replyManager =(function(){
 
 	
 	var remove = function(obj, callback){
-		console.log("remove...");
+		console.log(obj);
 		$.ajax({
-			url:"/replies/"+obj["bid"]+"/"+obj["rid"],
+			url:"/qreplies/"+obj["qid"]+"/"+obj["qrid"],
 			type:"delete",
 			success:callback
 		});

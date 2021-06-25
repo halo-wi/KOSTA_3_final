@@ -1,6 +1,7 @@
 package com.kosta.KOSTA_3_final.service.user;
 
 
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kosta.KOSTA_3_final.model.user.EmailDTO;
 import com.kosta.KOSTA_3_final.model.user.Member;
@@ -47,6 +49,12 @@ public class UserService implements UserDetailsService{
 		return repo.findByEmail(email).get();
 		
 	}
+	
+	public Member getMemberInfoById(int customerId) {
+		return repo.findById(customerId).get();
+		
+	}
+	
 
 	
 	 public EmailDTO createMailAndChangePassword(String email, String customerName){

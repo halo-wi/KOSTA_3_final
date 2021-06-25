@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,6 +17,8 @@ import com.kosta.KOSTA_3_final.model.board.Board;
 import com.kosta.KOSTA_3_final.model.board.BoardReply;
 import com.kosta.KOSTA_3_final.persistance.board.BoardReplyPersistance;
 import com.kosta.KOSTA_3_final.service.board.BoardReplyService;
+import com.kosta.KOSTA_3_final.service.board.BoardService;
+import com.kosta.KOSTA_3_final.service.user.UserService;
 
 
 @RestController
@@ -28,7 +29,13 @@ public class BoardReplyController {
 	BoardReplyService service;
 	
 	@Autowired
+	BoardService boardService;
+	
+	@Autowired
 	BoardReplyPersistance persistance;
+	
+	@Autowired
+	UserService userService;
 	
 	//특정 보드 번호에 해당하는 모든 댓글 조회
 	@GetMapping("/board/{bid}")
@@ -48,10 +55,12 @@ public class BoardReplyController {
 	
 	//특정 보드에 댓글등록, 입려 후 다시 조회
 	@PostMapping("/{bid}")
-	public ResponseEntity<List<BoardReply>> addReply(@PathVariable("bid")Long bid, @RequestBody BoardReply reply) {
+	public ResponseEntity<List<BoardReply>> addReply(@PathVariable("bid")Long bid, BoardReply reply, String email) {
+		System.out.println("e:"+email);
 		
 		Board board = Board.builder().bid(bid).build();
 		reply.setBoard(board);
+		reply.setCustomer(userService.getMemberInfo(email));
 		service.updateOrInsert(reply);
 		return new ResponseEntity<>(service.selectAll(board), HttpStatus.CREATED);
 	}
@@ -68,17 +77,22 @@ public class BoardReplyController {
 		return new ResponseEntity<>(service.selectAll(board), HttpStatus.OK);
 	}
 	
-	//수정
-	@PutMapping("/{bid}")
-	public ResponseEntity<List<BoardReply>> updateRep(@PathVariable Long bid, @RequestBody BoardReply reply) {
-		
-		Board board = Board.builder().bid(bid).build();
-		reply.setBoard(board);
-		service.updateOrInsert(reply);
+	//수정  {bid: "48", reply: "fewafe", customer: "25", rid: "90"}
+	@PutMapping("/{bid}/{rid}")
+	public ResponseEntity<List<BoardReply>> updateRep(@PathVariable Long bid,
+			  String customer, @PathVariable Long rid, String reply) {
+		System.out.println("reply:" + reply);
+		BoardReply breply = new BoardReply();
+		Board board = boardService.selectById(bid);
+		breply.setBoard(board);
+		breply.setCustomer(userService.getMemberInfoById(Integer.parseInt(customer)));
+		breply.setRid(rid);
+		breply.setReply(reply);
+		System.out.println(breply);
+		service.updateOrInsert(breply);
 		
 		return new ResponseEntity<>(service.selectAll(board), HttpStatus.OK);
 	}
-	
-	
+
 
 }

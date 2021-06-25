@@ -1,65 +1,52 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout/layout1}">
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script th:src="@{/js/qreply.js}"></script>
 <head>
 <meta charset="UTF-8">
 <title>상세보기</title>
 </head>
 <body>
 
-	<div class="panel panel-default" layout:fragment="bcontent1">
+	<div class="panel panel-default" layout:fragment="content1">
 		<h1 class="panel-heading">qna 상세보기</h1>
 		<div class="panel-body">
 
-			<form id="myfrm" class="form-inline" th:action="@{/qna/update}"
-				method="post">
+			<form id="myfrm" class="form-inline">
+				
 				<input type="hidden" id="qid" name="qid" th:value="${qna.qid}">
-				<input type="hidden" id="qreDate" name="qregDate"
-					th:value="${qna.qregDate}">
+				<input type="hidden" id="qreDate" name="qregDate" th:value="${qna.qregDate}">
 				<div class="form-group">
-					<label for="qtitle">title:</label> <br> <input type="text"
-						class="form-control" id="qtitle" name="qtitle"
-						th:value="${qna.qtitle}">
-
+					
+					
+					<label for="qtitle">title:</label>
+					<h3 id="qtitle">[[${qna.qtitle}]]</h3>
 
 				</div>
+				<br> 
+				<label for="qupdateDate">작성일:</label>
+				<div class="qupdateDate" th:text="${#dates.format(qna.qupdateDate, 'yyyy-MM-dd')}"></div>
+				<br> 
+				<label for="email">작성자:</label> <input type="hidden" id="email" name="email" th:value="${qna.customer.email}">
+				
+				<div class="name" th:text="${qna.customer.customerName}"></div>
 				<br> <br>
 				<div class="form-group">
-					<label for="qcontent">content:</label><br>
-					<textarea class="form-group" rows="3" cols="" id="qcontent"
-						name="qcontent">
-						[[${qna.qcontent}]]
-					</textarea>
+					<label for="qcontent">content:</label>
+					<br>
+					<div id="qcontent" style="border: black solid 1px; width: 300px; height: 100%;"> [[${qna.qcontent}]]</div>
 				</div>
 				<br> <br> <br>
 
-
-
-				<div class="form-group">
-					<label for="bregdate">날짜:</label> <br> <input type="date"
-						class="form-control" id="qregDate" name="qregDate"
-						th:value="${#dates.format(qna.qregDate, 'yyyy-MM-dd')}">
+				<div th:if="${qna.customer.email}==${#authentication.name}">
+					<a th:href="@{/board/qnadelete(qid=${qna.qid})}">삭제하기</a>
 				</div>
-				<br> <br> <br>
-
-				<div class="form-group">
-					<label for="email">email:</label> <br> <input type="text"
-						class="form-control" id="email" name="email"
-						th:value="${qna.email}">
-				</div>
-				<br> <br> <br>
-
-
-
-
-				<div class="pull-right">
-					<a href="javascript:call()" class="btn btn-warning modbtn2">수정하기</a>
-					<a th:href="@{/qna/delete(qid=${qna.qid})}"
-						class="btn btn-warning delbtn2">삭제하기</a> <a
-						th:href="@{/board/qnalist(page=${pagevo.page},size=${pagevo.size},type=${pagevo.type},keyword=${pagevo.keyword})}"
-						class="btn btn-warning modbtn2">목록보기</a>
-				</div>
+				<a th:href="@{/board/qnalist(page=${pagevo.page},size=${pagevo.size},type=${pagevo.type},keyword=${pagevo.keyword})}"
+					class="btn btn-warning modbtn2">목록보기</a>
 
 				<input type="hidden" name="page" th:value=${pagevo.page}> 
 				<input type="hidden" name="size" th:value=${pagevo.size}> 
@@ -69,51 +56,39 @@
 			</form>
 
 
-			<!-- Modal -->
-			<div id="myModal" class="modal fade" role="dialog">
-				<div class="modal-dialog">
+			<!--############################### 댓글 ##########################################-->
+			<div class='container'>
 
-			
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<h4 class="modal-title">Modal Header</h4>
-						</div>
-						<div class="modal-body">
-							<label>댓글내용</label> <input type="text" name="replyText"
-								class="form-control"> <label>작성자</label> <input
-								type="text" name="replyer" class="form-control">
+				<table class="table table-striped table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>답변</th>
+							<th>작성자</th>
+							<th>작성일</th>
+						</tr>
+					</thead>
 
-						</div>
-						<div class="modal-footer">
-							<button type="button" id="modalButton" class="btn btn-default"
-								data-dismiss="modal">입력/수정</button>
-							<button type="button" id="delButton" class="btn btn-danger"
-								data-dismiss="modal">Delete</button>
-							<button type="button" class="btn btn-default"
-								data-dismiss="modal">Close</button>
-						</div>
-					</div>
+					<tbody id="Table">
 
-				</div>
-			</div>
-			<!-- 댓글 넣기 -->
-			<div>
-				<button data-toggle="modal" data-target="#myModal"
-					class="btn btn-warning" id="addReply">댓글추가</button>
-			</div>
-			<table class="table table-striped table-bordered table-hover">
-				<thead>
+					</tbody>
 					<tr>
-						<th>댓글번호</th>
-						<th>내용</th>
-						<th>작성자</th>
+						<td>
+							<input placeholder="댓글 내용" id="replyADD">
+						</td>
+						<td>
+							<input type="hidden" value="${#authentication.name}" id="emailADD">
+						</td>
+						<td>
+							<button type='button' onclick='add(this);' sec:authorize="hasRole('ADMIN')">
+								댓글추가</button>
+							
+						</td>
 					</tr>
-				</thead>
-				<tbody id="replyTable" data-toggle="modal" data-target="#myModal">
+				</table>
 
-				</tbody>
-			</table>
+			</div>
+
+
 
 
 
@@ -128,96 +103,161 @@
 		</div>
 
 	</div>
-	<th:block layout:fragment="script1">
-		<script th:src="@{/js/external.js}"></script>
+
+
+
+	<!-- Modal -->
+	<div id="myModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+
+
+		</div>
+	</div>
+
+
+	<th:block layout:fragment="script">
+		<script th:inline="javascript">
+		
+
+			
+		$(function(e) {
+
+				(function() {
+					console.log(replyManager);
+					replyManager.getAll("[[${qna.qid}]]", printList);
+
+				})();
+
+			});
+			function printList(rList) {
+				console.log(rList);
+				var authName = [[${#authentication.name}]];
+				console.log("'" + authName + "'");
+				var str = "";
+				$
+						.each(
+								rList,
+								function(idx, item) {
+									str += "<tr>";
+
+									str += "<td>" + item["qreply"] + "</td>";
+									str += "<td>"
+											+ item["admin"]["customerName"];
+									str += "<td>"
+											+ formatDate(item["qrupdateDate"])
+											+ "</td> <td>";
+									if (item['admin']['email'] == authName) {
+										str += "<button  onclick='call(this);' id='modify' > 댓글수정 </button>"
+												+ "<span style=' display : none;'>"
+												+ item["qrid"]
+												+ "</span>"
+												+ "<span style=' display : none;'>"
+												+ item["admin"]["customer_id"]
+												+ "</span>"
+												+ "<button  onclick='del(this);' id='modify'> 삭제 </button>";
+									}
+									str += "</td> </tr>";
+								});
+				$("#Table").html(str);
+
+			};
+
+			function formatDate(t) {
+				var date = new Date(t)
+				return (date.getMonth() + 1 >= 10 ? date.getMonth() + 1 : '0'
+						+ (date.getMonth() + 1))
+						+ "-" + date.getDate()
+
+			};
+		</script>
 		<script>
-			var mode = "";
-			$("#addReply").click(function() {
+			function del(item) {
 
-				$("input[name='replyText']").val("");
-				$("input[name='replyer']").val("");
-				$("#myModal").show();
-				$(".modal-title").text("댓글을 추가합니다");
-				mode = "ADD";
-			});
+				var qrid = $(item).parent().children("span:nth-child(2)");
 
-			$("#modalButton").click(function() {
-
-				var replyText = $("input[name='replyText']");
-				var replyer = $("input[name='replyer']");
 				var obj = {
 					"qid" : "[[${qna.qid}]]",
-					"reply" : replyText.val(),
-					"replyer" : replyer.val()
-				};
-
-				if (mode == "ADD") {
-					replyManager.add(obj, printList);
-					alert("입력완료");
-				} else if (mode == "MOD") {
-					obj["rno"] = rno;
-					replyManager.update(obj, printList);
-					alert("수정완료");
-				}
-				$("#myModal").hide();
-				replyText.val("");
-				replyer.val("");
-
-			});
-
-			$("#delButton").click(function() {
-
-				var replyText = $("input[name='replyText']");
-				var replyer = $("input[name='replyer']");
-				var obj = {
-					"qid" : "[[${qna.qid}]]",
-					"rno" : rno
+					"qrid" : qrid.html()
 				};
 				replyManager.remove(obj, printList);
 				alert("삭제완료");
-				$("#myModrenal").hide();
-				replyText.val("");
-				replyer.val("");
-
-			});
-
-			$("#replyTable").on("click", "tr", function() {
-				mode = "MOD";
-				alert(mode);
-				var tds = $(this).find("td");
-				rno = tds[0].innerHTML;
-				var reply = tds[1].innerHTML;
-				var replyer = tds[2].innerHTML;
-
-				$("input[name='replyText']").val(reply);
-				$("input[name='replyer']").val(replyer);
-				$("#myModal").show();
-				$(".modal-title").text("댓글 수정 또는 삭제 작업");
-
-			});
-
-			//console.log(replyManager);
-			replyManager.getAll("[[${qna.qid}]]", printList);
-
-			function printList(rList) {
-				console.log(rList);
-				var str = "";
-				$.each(rList, function(idx, item) {
-					str += "<tr>";
-					str += "<td>" + item["rno"] + "</td>";
-					str += "<td>" + item["reply"] + "</td>";
-					str += "<td>" + item["replyer"] + "</td>";
-
-					str += "</tr>";
-				});
-				$("#replyTable").html(str);
 
 			};
 
-			function call() {
+			function call(item) {
+				item.disabled = true;
+				console.log(item);
+				var reply = $(item).parent().parent().children(
+						"td:nth-child(1)");
+				var email = $(item).parent().parent().children(
+						"td:nth-child(2)");
+				var customer = $(item).parent().children("span:nth-child(3)")
+						.html();
+				var rid = $(item).parent().children("span:nth-child(2)").html();
+
+				var mod = "<tr>"
+						+ "<td><input id ='replyId'  value='"
+						+ reply.html()
+						+ "'></td>"
+						+ "<td>"
+						+ email.html()
+						+ "</td>"
+						+ "<td> 수정중 </td>"
+						+ "<td><button type='button' onclick='modReply(this);' id='save'>저장</button>"
+						+ "<span style=' display : none;'>" + rid + "</span>"
+						+ "<span style=' display : none;'>" + customer
+						+ "</span>" + "</td></tr>";
+
+				$(item).parent().parent().after(mod);
+			}
+			// 댓글수정
+			function modReply(item) {
+				
+				var rid = $(item).parent().children("span:nth-child(2)");
+				var customer = $(item).parent().children("span:nth-child(3)");
+				var obj = {
+					"qid" : "[[${qna.qid}]]",
+					"reply" : $("#replyId").val(),
+					"customer" : customer.html(),
+					"rid" : rid.html(),
+				};
+				console.log(obj);
+
+				replyManager.update(obj, printList);
+				alert("수정완료");
+
+			};
+
+			function add(item) {
+					
+				var authName = '[[${#authentication.name}]]';				
+				console.log(authName);
+				var obj = {
+						"qid" : "[[${qna.qid}]]",
+						"qreply" : $("#replyADD").val(),
+						"email" : authName
+				};
+				console.log(obj);
+					replyManager.add(obj, printList);
+			};
+			
+			function boardMod() {
+				
+				$('#bcontent').contents().unwrap().wrap( '<textarea name="bcontent"> </textarea>' );
+				$('#btitle').contents().unwrap().wrap( '<textarea name="btitle"> </textarea>' );
+				$('#contentButton').after("<input type='button' onclick='modifyBoard(this);' value='수정완료'>");
+			
+				
+			};
+			
+			function modifyBoard(item, callback) {
+				
 				var myfrm = $("#myfrm");
 				myfrm.submit();
-			};
+			} 
+			
 		</script>
 	</th:block>
 </body>

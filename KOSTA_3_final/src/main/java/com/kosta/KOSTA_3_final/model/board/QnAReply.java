@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,11 +16,13 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kosta.KOSTA_3_final.model.user.Member;
 
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,11 +30,12 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "admin")
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Builder
+@EqualsAndHashCode(of = "qrid")
 @Table(name = "tp_question_board_reply")
 //문의게시판_댓글VO
 public class QnAReply {
@@ -43,14 +47,13 @@ public class QnAReply {
 	@Column(name="question_reply")
 	String qreply;
 	
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
+	QnA qna;
+	
+	
 	@ManyToOne
-	@JoinColumn(name = "question_id")
-	QnA qid;
-	
-	
-	
-	@ManyToOne
-	@JoinColumn(name = "customer_id")
+	@JoinColumn(name = "custcomer_id")
 	Member admin;
 	
 	
