@@ -1,0 +1,8 @@
+<div class="product" th:each="productlist:${productlist}">
+	<img class="product_img" src="/images/고래밥.jpg">
+	<div class="product_name" th:text="${productlist.productName}"></div>
+	<div class="product_price" th:text="${productlist.price}" style="display:none"></div>
+	<div class="product_id" th:text="${productlist.productId}" style="display:none"></div>
+</div>
+
+

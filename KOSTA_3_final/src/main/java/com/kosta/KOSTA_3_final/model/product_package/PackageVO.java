@@ -26,7 +26,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@ToString
+@ToString(exclude = {"reviews","subscribes","ppList"})
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -37,17 +37,18 @@ public class PackageVO {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "package_id")
 	int packageid;
-	
+
 	@Column(name = "package_name")
-	String packagename;
+	public String packageName;
+
 	int price;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "pack", cascade = CascadeType.ALL) //, fetch = FetchType.EAGER
+	@OneToMany(mappedBy = "pack", cascade = CascadeType.ALL)
 	List<Review> reviews;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "pack", cascade = CascadeType.ALL) //, fetch = FetchType.EAGER
+	@OneToMany(mappedBy = "pack", cascade = CascadeType.ALL) 
 	List<Subscribe> subscribes;
 	
 	

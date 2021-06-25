@@ -12,3 +12,4 @@ public interface UserPersistance extends CrudRepository<Member, Integer>{
 
 	
 }
+
