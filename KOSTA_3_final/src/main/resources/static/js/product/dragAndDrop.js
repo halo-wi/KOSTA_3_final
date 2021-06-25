@@ -61,6 +61,7 @@ let basket = {
 		
         document.querySelector('#sum_p_num').textContent = '상품갯수: ' + this.totalCount.formatNumber() + '개';
         document.querySelector('#sum_p_price').textContent = '합계금액: ' + this.totalPrice.formatNumber() + '원';
+        document.querySelector('#package_price').setAttribute('value',salePrice(this.totalPrice));
         
         // 합계금액이 0원일 때 할인금액란을 없앤다. 
         if(this.totalPrice == 0) {
@@ -188,7 +189,7 @@ function drop() {
 					+"</div>"
 					+"<div id='qty_num' class='num'>"
 					+"<div class='updown'>"
-					+"<input type='text' name='product_qty' id='p_num"+indexCounter+"' size='2'"
+					+"<input type='text' name='productQty' id='p_num"+indexCounter+"' size='2'"
 					+"maxlength='4' class='p_num' value='1'"
 					+"onkeyup='javascript:basket.changePNum("+indexCounter+");'>" 
 					+"<span onclick='javascript:basket.changePNum("+indexCounter+");'>"
@@ -207,7 +208,7 @@ function drop() {
 					+"onclick='javascript:basket.delItem();'>삭제</a>"
 					+"</div>"
 					+"</div>"
-					+"<input type='hidden' name='product_id' value='"+$(ui.draggable).find(".product_id").text()+"'>"
+					+"<input type='hidden' name='productId' value='"+$(ui.draggable).find(".product_id").text()+"'>"
 					+"<div class='check_div' style='display:none'>"
 				+"</div>");
 				rowFind();
@@ -223,10 +224,19 @@ function drop() {
 
 $(function() {
  	
- 	$(".category_name").on("click",function() {
+ 	$(".category_name, #search_product").on("click",function() {
 		var typeStr = $('.category_name').attr("name");
-		var keywordStr = $(this).val();
-
+		var keywordStr;
+		if($(this).hasClass('category_name')) {
+			
+			keywordStr = $(this).val();
+			
+		} else {
+			
+			/*typeStr = $('#search_type option:selected').val();*/
+			typeStr = 'product';
+			keywordStr = $('#search_keyword').val();
+		}
 		$.ajax({
 			type:"GET",
 			url:"/product/productList",
@@ -247,6 +257,8 @@ $(function() {
  	drop();
  	
  	$('#package_buy_btn').click(function() {
+		alert("click");
+		alert($("#package_price").val());
 		if($("#package_price").val() > 0) {
 			alert("submit");
 			$('#orderform').submit();
@@ -255,4 +267,5 @@ $(function() {
 			alert("상품을 선택해주세요.");			
 		}
 	});
+
 });

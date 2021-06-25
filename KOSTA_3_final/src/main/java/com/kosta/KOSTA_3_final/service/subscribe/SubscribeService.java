@@ -14,9 +14,7 @@ import com.kosta.KOSTA_3_final.persistance.user.MemberRepository;
 
 @Service
 public class SubscribeService {
-	@Autowired
-	SubscribeRepository subRepo;
-	
+
 	@Autowired
 	MemberRepository memberRepo;
 	
@@ -44,4 +42,5 @@ public class SubscribeService {
 		subRepo.save(sub);
 		
 	}
+
 }

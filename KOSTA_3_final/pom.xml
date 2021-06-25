@@ -25,17 +25,44 @@
 		</repository>
 	</repositories>
 	<dependencies>
+
 	<dependency>
     <groupId>commons-codec</groupId>
     <artifactId>commons-codec</artifactId>
 	</dependency>
 
- 
-
+		
+		
 		<dependency>
 			<groupId>com.github.iamport</groupId>
 			<artifactId>iamport-rest-client-java</artifactId>
 			<version>0.2.14</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
+		</dependency>
+		<dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+        </dependency>
+		
+
+
+ 
+
+
+			<groupId>com.querydsl</groupId>
+			<artifactId>querydsl-apt</artifactId>
+			 
+
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.querydsl/querydsl-jpa -->
+		<dependency>
+			<groupId>com.querydsl</groupId>
+			<artifactId>querydsl-jpa</artifactId>
+			 
 		</dependency>
 
 		<dependency>

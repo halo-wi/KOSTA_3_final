@@ -53,6 +53,8 @@ public class Member {
 	String password;
 	String phone_number;
 	String address;
+	String postnumber;
+	String addressdetail;
 	@Enumerated(EnumType.STRING)
 	UserRoleEnumType auth;
 	

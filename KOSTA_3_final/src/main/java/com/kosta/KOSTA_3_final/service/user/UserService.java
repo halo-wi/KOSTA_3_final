@@ -1,6 +1,6 @@
 package com.kosta.KOSTA_3_final.service.user;
 
-
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
@@ -46,6 +46,12 @@ public class UserService implements UserDetailsService{
 		return repo.findByEmail(email).get();
 		
 	}
+	
+	public Member getMemberInfoById(int customerId) {
+		return repo.findById(customerId).get();
+		
+	}
+	
 
 	
 	 public EmailDTO createMailAndChangePassword(String email, String customerName){
@@ -99,6 +105,9 @@ public class UserService implements UserDetailsService{
         }
     }
 	
+	public boolean emailchk(String email) {
+	return  repo.existsByEmail(email);
+	}
 	
 	
 	@Override
