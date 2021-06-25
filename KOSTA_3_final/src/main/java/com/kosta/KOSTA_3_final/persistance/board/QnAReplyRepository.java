@@ -9,5 +9,5 @@ import com.kosta.KOSTA_3_final.model.board.QnAReply;
 
 
 public interface QnAReplyRepository extends CrudRepository<QnAReply, Long>{
-	public List<QnAReply> findByQid(Long qid);
+	public List<QnAReply> findByQna(QnA qna);
 }

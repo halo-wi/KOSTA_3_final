@@ -1,9 +1,11 @@
 <!doctype html>
-<html lang="zxx">
+<html lang="zxx"
+xmlns:th="http://www.thymeleaf.org"
+>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Watch shop | eCommers</title>
+    <title>로그인</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -23,7 +25,7 @@
         <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <header>
+      <header>
         <!-- Header Start -->
         <div class="header-area">
             <div class="main-header header-sticky">
@@ -31,19 +33,18 @@
                     <div class="menu-wrapper">
                         <!-- Logo -->
                         <div class="logo">
-                            <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+                            <a href="/index"><img src="assets/img/logo/logo.png" alt=""></a>
                         </div>
                         <!-- Main-menu -->
                         <div class="main-menu d-none d-lg-block">
                             <nav>                                                
                                 <ul id="navigation">  
-                                    <li><a href="index.html">Home</a></li>
-                                    <li><a href="shop.html">shop</a></li>
-                                    <li><a href="about.html">about</a></li>
-                                    <li class="hot"><a href="#">Latest</a>
+                                    <li><a href="/index">Home</a></li>
+                                    <li><a href="shop.html">과자모음</a></li>
+                                    <li><a href="/payments/packList">구독서비스</a></li>
+                                    <li class="hot"><a href="#">마이페이지</a>
                                         <ul class="submenu">
-                                            <li><a href="shop.html"> Product list</a></li>
-                                            <li><a href="product_details.html"> Product Details</a></li>
+                                            <li><a href="/mypage/profile"> 마이페이지</a></li>
                                         </ul>
                                     </li>
                                     <li><a href="blog.html">Blog</a>
@@ -54,7 +55,7 @@
                                     </li>
                                     <li><a href="#">Pages</a>
                                         <ul class="submenu">
-                                            <li><a href="login.html">Login</a></li>
+                                            <li><a href="/login">로그인</a></li>
                                             <li><a href="cart.html">Cart</a></li>
                                             <li><a href="elements.html">Element</a></li>
                                             <li><a href="confirmation.html">Confirmation</a></li>
@@ -73,7 +74,7 @@
                                         <span class="flaticon-search"></span>
                                     </div>
                                 </li>
-                                <li> <a href="login.html"><span class="flaticon-user"></span></a></li>
+                                <li> <a href="/login"><span class="flaticon-user"></span></a></li>
                                 <li><a href="cart.html"><span class="flaticon-shopping-cart"></span></a> </li>
                             </ul>
                         </div>
@@ -85,8 +86,9 @@
                 </div>
             </div>
         </div>
+        </header>
         <!-- Header End -->
-    </header>
+
     <main>
         <!-- Hero Area Start-->
         <div class="slider-area ">
@@ -110,39 +112,44 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="login_part_text text-center">
                             <div class="login_part_text_iner">
-                                <h2>New to our Shop?</h2>
-                                <p>There are advances being made in science and technology
-                                    everyday, and a good example of this is the</p>
-                                <a href="#" class="btn_3">Create an Account</a>
+                                <h2>저희 사이트에 처음이신가요?</h2>
+                                <p>간식 구독 서비스는 회원제로 운영되고 있습니다.
+                                    가입을 통해 혜택을 누려보세요</p>
+                                <a href="/auth/joinForm" class="btn_3">회원 가입</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6">
                         <div class="login_part_form">
                             <div class="login_part_form_iner">
-                                <h3>Welcome Back ! <br>
-                                    Please Sign in now</h3>
-                                <form class="row contact_form" action="#" method="post" novalidate="novalidate">
+                                <h3>어서오세요 ! <br>
+                                    지금 로그인해주세요</h3>
+                                <form class="row contact_form" action="/login" method="post" novalidate="novalidate">
                                     <div class="col-md-12 form-group p_star">
-                                        <input type="text" class="form-control" id="name" name="name" value=""
+                                        <input type="text" class="form-control" id="username" name="username" value=""
                                             placeholder="Username">
                                     </div>
                                     <div class="col-md-12 form-group p_star">
                                         <input type="password" class="form-control" id="password" name="password" value=""
                                             placeholder="Password">
                                     </div>
+                                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
                                     <div class="col-md-12 form-group">
-                                        <div class="creat_account d-flex align-items-center">
+                                        <div class="creat_account d-flex align-items-center" >
                                             <input type="checkbox" id="f-option" name="selector">
-                                            <label for="f-option">Remember me</label>
+                                            <label for="f-option" >로그인 유지</label>
                                         </div>
+                                         <div th:if="${param.error}" class="alert alert-error">    
+                    				<p class="lost_pass">존재하지 않는 이메일이나 비밀번호입니다</p>
+                           				 </div>
                                         <button type="submit" value="submit" class="btn_3">
                                             log in
                                         </button>
-                                        <a class="lost_pass" href="#">forget password?</a>
+                                        <a class="lost_pass" href="/auth/passwordFind">비밀번호를 잊으셨나요?</a>
                                     </div>
                                 </form>
-                            </div>
+                                
                         </div>
                     </div>
                 </div>
@@ -160,7 +167,7 @@
                             <div class="single-footer-caption mb-30">
                                 <!-- logo -->
                                 <div class="footer-logo">
-                                    <a href="index.html"><img src="assets/img/logo/logo2_footer.png" alt=""></a>
+                                    <a href="/Home"><img src="assets/img/logo/logo2_footer.png" alt=""></a>
                                 </div>
                                 <div class="footer-tittle">
                                     <div class="footer-pera">
