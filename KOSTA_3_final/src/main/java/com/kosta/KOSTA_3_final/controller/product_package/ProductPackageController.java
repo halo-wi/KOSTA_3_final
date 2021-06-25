@@ -17,12 +17,13 @@ public class ProductPackageController {
 	@Autowired
 	ProductPackageService productService;
 	
-	@GetMapping("/product/customPackaging2")
-	public String selectProduct(Model model) {
+
+	@GetMapping("/product/customPackaging3")
+	public String selectProduct1(Model model) {
 		model.addAttribute("categorylist", productService.selectCategoryAll());
 		model.addAttribute("productlist", productService.selectProductAll());
 		
-		return "/product/customPackaging2";
+		return "/product/customPackaging3";
 	}
 	
 	@GetMapping("/product/productList")
@@ -36,7 +37,7 @@ public class ProductPackageController {
 	public String insertPackage(Model model, @ModelAttribute ProductListVO productList) {
 		productService.insertPackage(productList);
 		
-		return "redirect:/product/customPackaging2";
+		return "redirect:/product/customPackaging3";
 	}
 
 	

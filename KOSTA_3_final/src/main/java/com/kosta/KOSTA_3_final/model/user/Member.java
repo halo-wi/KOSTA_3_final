@@ -45,7 +45,7 @@ public class Member {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	Integer customer_id;
+	long customer_id;
 	@Column(name = "customer_name")
 	String customerName;
 	@Column(unique = true)

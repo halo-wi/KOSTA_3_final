@@ -8,10 +8,5 @@ import com.kosta.KOSTA_3_final.persistance.subscribe.SubscribeRepository;
 
 @Service
 public class SubscribeService {
-	@Autowired
-	SubscribeRepository subRepo;
 	
-	public PackageVO findById(int packageId) {
-		return subRepo.findById(packageId).get();
-	}
 }
