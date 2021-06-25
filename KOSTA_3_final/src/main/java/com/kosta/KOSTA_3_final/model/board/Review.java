@@ -44,8 +44,4 @@ public class Review {
 	
 	int score; //별점 모양으로 출력
 	String review;
-	
-	
-	
-
 }

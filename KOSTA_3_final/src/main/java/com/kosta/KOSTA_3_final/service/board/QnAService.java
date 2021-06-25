@@ -23,6 +23,22 @@ public class QnAService {
 		return result;
 	}
 	
+	public Page<QnA> selectByUser(PageVO pvo, Integer id) {
+		
+		Predicate p = repository.makePredicate2(pvo.getType(),pvo.getKeyword(), id);
+		
+		Pageable pageable = pvo.makePaging(0, "qid");
+		Page<QnA> result = repository.findAll(p, pageable);
+		return result;
+		
+		
+//		Predicate p = repository.makePredicate(pvo.getType(),pvo.getKeyword());
+//		
+//		Pageable pageable = pvo.makePaging(0, "qid");
+//		Page<QnA> result = repository.findByUser(p, pageable, id);
+//		return result;
+	}
+	
 	public QnA selectById(Long qid) {
 		return repository.findById(qid).get();
 	}
