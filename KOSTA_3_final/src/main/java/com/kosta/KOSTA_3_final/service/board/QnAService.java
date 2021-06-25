@@ -18,7 +18,7 @@ public class QnAService {
 	public Page<QnA> selectAll(PageVO pvo) {
 		Predicate p = repository.makePredicate(pvo.getType(),pvo.getKeyword());
 		
-		Pageable pageable = pvo.makePaging(0, "board_id");
+		Pageable pageable = pvo.makePaging(0, "qid");
 		Page<QnA> result = repository.findAll(p, pageable);
 		return result;
 	}

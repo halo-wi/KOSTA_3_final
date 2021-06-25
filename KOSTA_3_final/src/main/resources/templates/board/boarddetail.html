@@ -27,43 +27,40 @@
 					th:value="${board.bregdate}">
 				<div class="form-group">
 					<label for="btitle">title:</label>
-					<article>[[${board.btitle}]]</article>
+					<h3 id="btitle">[[${board.btitle}]]</h3>
 				</div>
-				<label for="bregdate">작성일:</label>
-				<div class="bregdate"
-					th:text="${#dates.format(board.bregdate, 'yyyy-MM-dd')}"></div>
-				<br> <label for="bregdate">작성자:</label>
+				<br>
+				<label for="bupdatedate">작성일:</label>
+				<div class="bupdatedate"
+					th:text="${#dates.format(board.bupdatedate, 'yyyy-MM-dd')}"></div>
+				
+				
+				<br> <label for="email">작성자:</label>
+				<input type="hidden" id="email" name="email" th:value="${board.customer.email}">
+				
+				
 				<div class="email"
 					th:text="${#strings.abbreviate(board.customer.email,7)}"></div>
 				<br>
-				<div class="form-group">
+				<div class="form-group" id="contentButton">
 					<label for="bcontent">content:</label><br>
+					
 					<div id="bcontent"
-						style="border: black solid 1px; width: 300px; height: 100%">
-						[[${board.bcontent}]]</div>
+						style="border: black solid 1px; width: 300px; height: 100%;">
+						[[${board.bcontent}]]
+					</div>
 				</div>
 				<br> <br> <br>
 
-
-				<div class="pull-right">
-
 					<div th:if="${board.customer.email}==${#authentication.name}">
-						<a href="javascript:call()" class="btn btn-warning modbtn2">수정하기</a>
-						<a th:href="@{/board/delete(bid=${board.bid})}"
-							class="btn btn-warning delbtn2">삭제하기</a>
+						<a href="javascript:boardMod()" >수정하기</a>
+						<a th:href="@{/board/delete(bid=${board.bid})}">삭제하기</a>
 					</div>
-
-				</div>
-
-				<input type="hidden" name="page" th:value=${pagevo.page}> <input
-					type="hidden" name="size" th:value=${pagevo.size}> <input
-					type="hidden" name="type" th:value=${pagevo.type}> <input
-					type="hidden" name="keyword" th:value=${pagevo.keyword}>
 
 			</form>
 
 
-<!-- ############################################### 댓글 #################################################-->
+			<!-- ############################################### 댓글 #################################################-->
 
 
 			<div class='container'>
@@ -76,10 +73,23 @@
 							<th>작성일</th>
 						</tr>
 					</thead>
+
 					<tbody id="Table">
 
 					</tbody>
+					<tr>
+						<td>
+							<input placeholder="댓글 내용" id="replyADD">
+						</td>
+						<td>
+							<input type="hidden" value="${#authentication.name}" id="emailADD">
+						</td>
+						<td>
+							<button type='button' onclick='add(this);'>댓글추가</button>
+						</td>
+					</tr>
 				</table>
+
 			</div>
 
 
@@ -105,17 +115,10 @@
 		<div class="modal-dialog">
 
 			<!-- Modal content-->
-		
+
 
 		</div>
 	</div>
-
-	<!-- 댓글 넣기 -->
-	<div>
-		<button data-toggle="modal" data-target="#myModal"
-			class="btn btn-warning" id="addReply">댓글추가</button>
-	</div>
-
 
 
 	<a th:href="@{/board/boardlist(page=${pagevo.page},size=${pagevo.size},type=${pagevo.type},keyword=${pagevo.keyword})}"
@@ -123,159 +126,151 @@
 
 
 
-
-
-
-
 	<th:block layout:fragment="script">
 		<script th:src="@{/js/reply.js}"></script>
 		<script th:inline="javascript">
-			$(document)
-					.ready(
-							function(e) {
+		
 
-								(function() {
-									console.log(replyManager);
-									replyManager.getAll("[[${board.bid}]]",
-											printList);
+			
+		$(function(e) {
 
-								})();
+				(function() {
+					console.log(replyManager);
+					replyManager.getAll("[[${board.bid}]]", printList);
 
-								function printList(rList) {
-									console.log(rList);
-									var str = "";
-									$
-											.each(
-													rList,
-													function(idx, item) {
-														str += "<tr>";
-														
-														str += "<td>"
-																+ item["reply"]
-																+ "</td>";
-														str += "<td>"
-																+ item["customer"]["email"]
-																		.substr(0, 4)
-																+ "***"
-																+ "</td>";
-														str += "<td>"
-																+ formatDate(item["rupdatedate"])
-																+ "</td>";
-														str += "<td>"
-																+ "<button type='button' onclick='call(this);' id='modify'> 댓글수정 </button>"
-																+ "</td>";
-														str += "</tr>";
-													});
-									$("#Table").html(str);
+				})();
 
-								};
+			});
+			function printList(rList) {
+				console.log(rList);
+				var authName = [[${#authentication.name}]];
+				console.log("'" + authName + "'");
+				var str = "";
+				$
+						.each(
+								rList,
+								function(idx, item) {
+									str += "<tr>";
 
-								function formatDate(t) {
-									var date = new Date(t)
-									return (date.getMonth() + 1 >= 10 ? date
-											.getMonth() + 1 : '0'
-											+ (date.getMonth() + 1))
-											+ "-" + date.getDate()
-
-								};
-								
-								
-								
-								
-								
-								
-								
-
-								
-								
-
-								$("#modalButton").click(function() {
-
-									var reply = $("input[name='reply']");
-									var email = $("input[name='email']");
-									var obj = {
-										"bid" : "[[${board.bid}]]",
-										"reply" : reply.val(),
-										"email" : email.val()
-									};
-
-									if (mode == "ADD") {
-										replyManager.add(obj, printList);
-									} else if (mode == "MOD") {
-										obj["rid"] = rid;
-										replyManager.update(obj, printList);
-										alert("수정완료");
+									str += "<td>" + item["reply"] + "</td>";
+									str += "<td>"
+											+ item["customer"]["email"].substr(
+													0, 4) + "***" + "</td>";
+									str += "<td>"
+											+ formatDate(item["rupdatedate"])
+											+ "</td> <td>";
+											console.log("'" + item['customer']['email'] + "'");	
+									if (item['customer']['email'] == authName) {
+										console.log("yes");
+										str += "<button  onclick='call(this);' id='modify' > 댓글수정 </button>"
+												+ "<span style=' display : none;'>"
+												+ item["rid"]
+												+ "</span>"
+												+ "<span style=' display : none;'>"
+												+ item["customer"]["customer_id"]
+												+ "</span>"
+												+ "<button  onclick='del(this);' id='modify'> 삭제 </button>";
 									}
-									$("#myModal").hide();
-									replyText.val("");
-									replyer.val("");
-
+									str += "</td> </tr>";
 								});
+				$("#Table").html(str);
 
-								$("#delButton").click(function() {
+			};
 
-									var reply = $("input[name='reply']");
-									var email = $("input[name='email']");
-									var obj = {
-										"bid" : "[[${board.bid}]]",
-										"rid" : rid
-									};
-									replyManager.remove(obj, printList);
-									alert("삭제완료");
-									$("#myModrenal").hide();
-									reply.val("");
-									email.val("");
+			function formatDate(t) {
+				var date = new Date(t)
+				return (date.getMonth() + 1 >= 10 ? date.getMonth() + 1 : '0'
+						+ (date.getMonth() + 1))
+						+ "-" + date.getDate()
 
-								});
-
-								
-
-								function call() {
-									var myfrm = $("#myfrm");
-									myfrm.submit();
-								}
-								;
-
-							});
+			};
 		</script>
 		<script>
-		
-			function call(item){
-				const target =  document.getElementById('modify');
-				target.disabled = true;
-					console.log(item);
-					var reply = $(item).parent().parent().children("td:nth-child(1)");
-					var email = $(item).parent().parent().children("td:nth-child(2)");
-					
-					var mod = "<tr>"
-					 +"<td><input value='"+ reply.html()+"'></td>"
-					 +"<td>"+ email.html() +"</td>" 
-					 +"<td> 수정중 </td>" 
-					 +"<td><button type='button' onclick='addReply(this); id='save'>저장</button></td></tr>";
-					 $(item).parent().parent().after(mod);
-				
-			}
-			
-			function addReply(item){
-				
-				var reply = $(item).parent().parent().children("td:nth-child(1)").html();
-				var email = $(item).parent().parent().children("td:nth-child(2)").html();
-				
-				
-				var replyText = $("input[name='reply']");
-				var replyer = $("input[name='email']");
+			function del(item) {
+
+				var rid = $(item).parent().children("span:nth-child(2)");
+
 				var obj = {
 					"bid" : "[[${board.bid}]]",
-					"reply" : replyText.val(),
-					"replyer" : replyer.val()
+					"rid" : rid.html()
 				};
-	
-				obj["rid"] = rid;
+				replyManager.remove(obj, printList);
+				alert("삭제완료");
+
+			};
+
+			function call(item) {
+				item.disabled = true;
+				console.log(item);
+				var reply = $(item).parent().parent().children(
+						"td:nth-child(1)");
+				var email = $(item).parent().parent().children(
+						"td:nth-child(2)");
+				var customer = $(item).parent().children("span:nth-child(3)")
+						.html();
+				var rid = $(item).parent().children("span:nth-child(2)").html();
+
+				var mod = "<tr>"
+						+ "<td><input id ='replyId'  value='"
+						+ reply.html()
+						+ "'></td>"
+						+ "<td>"
+						+ email.html()
+						+ "</td>"
+						+ "<td> 수정중 </td>"
+						+ "<td><button type='button' onclick='modReply(this);' id='save'>저장</button>"
+						+ "<span style=' display : none;'>" + rid + "</span>"
+						+ "<span style=' display : none;'>" + customer
+						+ "</span>" + "</td></tr>";
+
+				$(item).parent().parent().after(mod);
+			}
+			// 댓글수정
+			function modReply(item) {
+				
+				var rid = $(item).parent().children("span:nth-child(2)");
+				var customer = $(item).parent().children("span:nth-child(3)");
+				var obj = {
+					"bid" : "[[${board.bid}]]",
+					"reply" : $("#replyId").val(),
+					"customer" : customer.html(),
+					"rid" : rid.html(),
+				};
+				console.log(obj);
+
 				replyManager.update(obj, printList);
 				alert("수정완료");
-			
+
 			};
-		
+
+			function add(item) {
+
+				var authName = '[[${#authentication.name}]]';				
+
+				var obj = {
+						"bid" : "[[${board.bid}]]",
+						"reply" : $("#replyADD").val(),
+						"email" : authName
+				};
+				console.log(obj);
+					replyManager.add(obj, printList);
+			};
+			
+			function boardMod() {
+				
+				$('#bcontent').contents().unwrap().wrap( '<textarea name="bcontent"> </textarea>' );
+				$('#btitle').contents().unwrap().wrap( '<textarea name="btitle"> </textarea>' );
+				$('#contentButton').after("<input type='button' onclick='modifyBoard(this);' value='수정완료'>");
+			
+				
+			};
+			
+			function modifyBoard(item, callback) {
+				
+				var myfrm = $("#myfrm");
+				myfrm.submit();
+			} 
+			
 		</script>
 	</th:block>
 </body>

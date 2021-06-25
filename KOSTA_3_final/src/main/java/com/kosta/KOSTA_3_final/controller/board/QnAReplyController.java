@@ -14,40 +14,47 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kosta.KOSTA_3_final.model.board.Board;
+import com.kosta.KOSTA_3_final.model.board.BoardReply;
 import com.kosta.KOSTA_3_final.model.board.QnA;
 import com.kosta.KOSTA_3_final.model.board.QnAReply;
 import com.kosta.KOSTA_3_final.service.board.QnAReplyService;
+import com.kosta.KOSTA_3_final.service.user.UserService;
 
 @RestController
-@RequestMapping("/replies/*")
+@RequestMapping("/qreplies/*")
 public class QnAReplyController {
 	
 	@Autowired
 	QnAReplyService service;
 	
+	@Autowired
+	UserService userService;
+	
 	@GetMapping("/QnA/{qid}")
 	public ResponseEntity<List<QnAReply>> selectAll(@PathVariable Long qid) {
-		QnA qnA = QnA.builder().qid(qid).build();
-		return new ResponseEntity<>(service.selectAll(qid), HttpStatus.OK);
+		QnA qna = QnA.builder().qid(qid).build();
+		return new ResponseEntity<>(service.selectAll(qna), HttpStatus.OK);
 	}
 	
 	//댓글상세보기
-		@GetMapping("{qid}")
-		public ResponseEntity<QnAReply> viewReply(@PathVariable Long qid) {
-				
-				return new ResponseEntity<>(service.selectById(qid), HttpStatus.OK);
-			}
+	@GetMapping("{qrid}")
+	public ResponseEntity<QnAReply> viewReply(@PathVariable Long qrid) {	
+		return new ResponseEntity<>(service.selectById(qrid), HttpStatus.OK);
+	}
 	
 	
 	
 	//특정 보드에 댓글등록, 입려 후 다시 조회
 	@PostMapping("/{qid}")
-	public ResponseEntity<List<QnAReply>> addRep(@PathVariable Long qid, @RequestBody QnAReply reply) {
+	public ResponseEntity<List<QnAReply>> addapply(@PathVariable("qid")Long qid, QnAReply qreply, String email) {
+		System.out.println("e:"+email);
 		
-		QnA qnA = QnA.builder().qid(qid).build();
-		reply.setQid(qnA);
-		service.updateOrInsert(reply);
-		return new ResponseEntity<>(service.selectAll(qid), HttpStatus.CREATED);
+		QnA qna = QnA.builder().qid(qid).build();
+		qreply.setQna(qna);
+		qreply.setAdmin(userService.getMemberInfo(email));
+		service.updateOrInsert(qreply);
+		return new ResponseEntity<>(service.selectAll(qna), HttpStatus.CREATED);
 	}
 	
 		
@@ -59,18 +66,7 @@ public class QnAReplyController {
 		service.delete(qrid);
 		QnA qnA = QnA.builder().qid(qid).build();
 		
-		return new ResponseEntity<>(service.selectAll(qid), HttpStatus.OK);
-	}
-	
-	//수정
-	@PutMapping("/{qid}")
-	public ResponseEntity<List<QnAReply>> updateRep(@PathVariable Long qid, @RequestBody QnAReply reply) {
-		
-		QnA qnA = QnA.builder().qid(qid).build();
-		reply.setQid(qnA);
-		service.updateOrInsert(reply);
-		
-		return new ResponseEntity<>(service.selectAll(qid), HttpStatus.OK);
+		return new ResponseEntity<>(service.selectAll(qnA), HttpStatus.OK);
 	}
 	
 }
