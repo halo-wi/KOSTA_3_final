@@ -1,8 +1,14 @@
 package com.kosta.KOSTA_3_final.service.user;
 
 
+
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -102,6 +108,9 @@ public class UserService implements UserDetailsService{
         }
     }
 	
+	public boolean emailchk(String email) {
+	return  repo.existsByEmail(email);
+	}
 	
 	
 	@Override
