@@ -4,6 +4,8 @@ import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,7 @@ import com.kosta.KOSTA_3_final.model.board.PageMake;
 import com.kosta.KOSTA_3_final.model.board.PageVO;
 import com.kosta.KOSTA_3_final.model.board.QnA;
 import com.kosta.KOSTA_3_final.model.user.Member;
+
 import com.kosta.KOSTA_3_final.service.board.QnAService;
 import com.kosta.KOSTA_3_final.service.user.UserService;
 
@@ -25,15 +28,28 @@ public class QnAController {
 	
 	@GetMapping("/board/qnalist")
 	public void selectAll(Model model, PageVO pagevo) {
-		Page<QnA> result = service.selectAll(pagevo);
 		
-		System.out.println("한페이지의 사이즈"+result.getSize());
-		System.out.println("전체페이지"+result.getTotalPages());
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		String email = ((User) principal).getUsername();
+		String auth = uservice.getMemberInfo(email).getAuth().name();
+		Integer id = uservice.getMemberInfo(email).getCustomer_id();
+		System.out.println(email+auth);
+		
+		
+		Page<QnA> result;
+		
+		if(auth.equals("ADMIN")) {
+			result = service.selectAll(pagevo);
+		}
+		
+		else {
+			result = service.selectByUser(pagevo, id);
+		}
 		
 		model.addAttribute("qnaResult", result);
 		model.addAttribute("pagevo", pagevo);
 		model.addAttribute("result", new PageMake<>(result));
-		
 	}
 	
 	

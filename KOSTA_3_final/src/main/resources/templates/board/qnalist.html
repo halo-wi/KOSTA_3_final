@@ -15,7 +15,6 @@
 				<option>전체</option>
 				<option value="qtitle" th:selected="${pagevo.type=='qtitle'}">제목</option>
 				<option value="qcontent" th:selected="${pagevo.type=='qcontent'}">내용</option>
-				<option value="email" th:selected="${pagevo.type=='user.email'}">작성자</option>
 			</select> <input type="text" id="searchKeyword">
 			<button id="searchBtn">조건검색</button>
 		</div>
@@ -35,13 +34,10 @@
 			</tr>
 			<tr th:each="qna:${qnaResult.content}">
 
-				<td><a th:href="@{/board/qnadetail(qid=${qna.qid})}"
-					th:text="${qna.qid}"></a></td>
-				<td><a th:href="@{/board/qnadetail(qid=${qna.qid})}"
-					th:text="${qna.qtitle}"></a> <span class="badge"
-					th:if="${qna.qreplies.size()}!=0">답변완료</span></td>
+				<td><a th:href="@{/board/qnadetail(qid=${qna.qid})}" th:text="${qna.qid}"></a></td>
+				<td><a th:href="@{/board/qnadetail(qid=${qna.qid})}" th:text="${qna.qtitle}"></a> 
+				<span class="badge" th:if="${qna.qreplies.size()}!=0">답변완료</span></td>
 				<td>
-					<!-- 문자열의 한계치를 설정하고, length가 한계치 이상이라면 잘라낸후 …으로 표시해준다. -->
 					<div class="customerName" th:text="${qna.customer.customerName}"></div>
 				</td>
 				<td>
