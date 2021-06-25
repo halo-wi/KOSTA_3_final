@@ -25,26 +25,22 @@
 		</repository>
 	</repositories>
 	<dependencies>
+	<dependency>
+    <groupId>commons-codec</groupId>
+    <artifactId>commons-codec</artifactId>
+	</dependency>
+
+ 
 
 		<dependency>
-
-			<groupId>com.querydsl</groupId>
-			<artifactId>querydsl-apt</artifactId>
-			<version>4.2.1</version>
-
+			<groupId>com.github.iamport</groupId>
+			<artifactId>iamport-rest-client-java</artifactId>
+			<version>0.2.14</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.querydsl/querydsl-jpa -->
-		<dependency>
-			<groupId>com.querydsl</groupId>
-			<artifactId>querydsl-jpa</artifactId>
-			<version>4.2.1</version>
-	
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/nz.net.ultraq.thymeleaf/thymeleaf-layout-dialect -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
 
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
 		</dependency>
 		<dependency>
             <groupId>org.apache.httpcomponents</groupId>
@@ -126,9 +122,17 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-starter-mail</artifactId>
-      </dependency>
+  			<groupId>com.google.code.gson</groupId>
+  			<artifactId>gson</artifactId>
+
+		</dependency>
+		
+		<dependency>
+   		 	<groupId>com.fasterxml.jackson.core</groupId>
+    		<artifactId>jackson-databind</artifactId>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>

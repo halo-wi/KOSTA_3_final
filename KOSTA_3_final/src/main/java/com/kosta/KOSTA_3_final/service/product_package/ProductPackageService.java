@@ -53,25 +53,33 @@ public class ProductPackageService {
 	public void insertPackage(ProductListVO productList) {
 		// 따로 클래스로 만들자
 		PackageVO packageVO = PackageVO.builder().
-				package_name("남후승package"). // 이름도 login한 사람의 이름+"package" 로 사용
-				price(productList.getPackage_price()). 
+				packageName("남후승package"). // 이름도 login한 사람의 이름+"package" 로 사용
+				price(productList.getPackagePrice()).
+				packageType(1).
 				build();
+//		PackageVO packageVO = PackageVO.builder().
+//				packageId(12114).
+//				packageName("남후승package"). // 이름도 login한 사람의 이름+"package" 로 사용
+//				price(productList.getPackagePrice()).
+//				packageType(1).
+//				build();
 		
+		//System.out.println("여기!"+ packageVO.getPackageId());
 		packageRepo.save(packageVO);
-		System.out.println(packageVO.getPackage_id());
+		//System.out.println(packageVO.getPackageId());
 		// 따로 클래스로 만들자
 		
 		 
 		// package_id를 어떻게 생성할 것인지 -> PackageVO의 @GeneratedValue를 없앨 것인지
 		// product_id를 어떻게 넣을 것인지 -> Product_PackageVO의 @GeneratedValue를 없앨 것인지  
 		 
-		IntStream.range(0, productList.getProduct_id().length).forEach(idx->{
+		IntStream.range(0, productList.getProductId().length).forEach(idx->{
 			
-			Product p = productRepo.findById(productList.getProduct_id()[idx]).get();
-			PackageVO packageVO1 = packageRepo.findById(packageVO.getPackage_id()).get();
+			Product p = productRepo.findById(productList.getProductId()[idx]).get();
+			PackageVO packageVO1 = packageRepo.findById(packageVO.getPackageId()).get();
 			
 			Product_Package productPackage = Product_Package.builder().
-					product_qty(productList.getProduct_qty()[idx]).
+					product_qty(productList.getProductQty()[idx]).
 					product(p).
 					pack(packageVO1).
 					build();

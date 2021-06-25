@@ -5,15 +5,18 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.kosta.KOSTA_3_final.model.product_package.PackageVO;
 import com.kosta.KOSTA_3_final.model.product_package.QPackageVO;
+import com.kosta.KOSTA_3_final.model.subscribe.QSubscribe;
+import com.kosta.KOSTA_3_final.model.subscribe.Subscribe;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 
-public interface SubscribeRepository extends CrudRepository<PackageVO, Integer>, QuerydslPredicateExecutor<PackageVO> {
+public interface SubscribeRepository extends CrudRepository<Subscribe, Long>, QuerydslPredicateExecutor<Subscribe> {
+	
 	
 	  public default Predicate makePredicate(String type, String keyword) {
 	  BooleanBuilder builder = new BooleanBuilder(); 
-	  QPackageVO packages =QPackageVO.packageVO;
-	  builder.and(packages.packageId.gt(0));
+	  QSubscribe subscribes = QSubscribe.subscribe;
+	  builder.and(subscribes.subscribeId.gt(0));
 	  
 	  return builder; 
 	  }

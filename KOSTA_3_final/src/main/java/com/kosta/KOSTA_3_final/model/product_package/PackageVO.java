@@ -34,13 +34,15 @@ import lombok.ToString;
 public class PackageVO {
 
 	@Id
-
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "package_id")
-	int packageid;
+	long packageId;
   
 	@Column(name = "package_name")
 	public String packageName;
+	
+	@Column(name = "package_type")
+	int packageType;
 
 	int price;
 	

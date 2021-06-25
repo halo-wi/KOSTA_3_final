@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
@@ -148,15 +149,16 @@
 </head>
 <body>
 
-
-	<div class="panel panel-default" layout:fragment="content1">
+<header th:replace="/fragments/header::header1"></header> <!-- 헤더입니다. -->
+	<div layout:fragment="content1">
+	
 		<h2>주문 패키지 정보</h2>
 		<p th:text="'패키지이름 : '+${pack.packageName}"></p>
 		<p th:text="'가격 : '+${pack.price}"></p>
 		<hr>
 
 		<h2>주문자정보</h2>
-		<p>[[${#authentication.principal.user}]]</p>
+		<p>[[${#authentication.principal.member}]]</p>
 		<hr>
 
 		<h2>배송지 정보</h2>
@@ -171,7 +173,7 @@
 		</span>
 		<form id="a" class="form1" style="display: '';">
 			받는사람 : <input class="customerName" type="text"
-				th:value="${#authentication.principal.user.customerName}"><br>
+				th:value="${#authentication.principal.member.customerName}"><br>
 
 			주소<input type="text" id="sample4_postcode" placeholder="우편번호">
 			<input type="button" onclick="sample4_execDaumPostcode()"

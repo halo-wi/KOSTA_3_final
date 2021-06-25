@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.test.annotation.Commit;
 
 import com.kosta.KOSTA_3_final.model.product_package.PackageVO;
+import com.kosta.KOSTA_3_final.model.subscribe.Subscribe;
 import com.kosta.KOSTA_3_final.persistance.subscribe.SubscribeRepository;
 
 import lombok.extern.java.Log;
@@ -29,7 +30,7 @@ public class PackageSubscribeTest {
 	@Transactional
 	public void testList1() {
 		Pageable pageable = PageRequest.of(0, 10, Direction.DESC,"packageId");
-		Page<PackageVO> result = repo.findAll(repo.makePredicate(null, null),pageable);
+		Page<Subscribe> result = repo.findAll(repo.makePredicate(null, null),pageable);
 		
 		log.info("page: "+result.getPageable());
 		log.info("----------------------------------");

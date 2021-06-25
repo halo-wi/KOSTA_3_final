@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +13,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -34,31 +39,34 @@ import lombok.ToString;
 @NoArgsConstructor
 @Entity
 @Builder
-@Table(name = "tp_subscribe" )
+@Table(name = "tp_subscribe")
 
 
 //구독
 public class Subscribe {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	int subscribe_id;
-	int package_id;
-	
-	@ManyToOne
-	@JoinColumn(name = "customer_id")
-	Member customer;
-	
-	@ManyToOne
-	@JoinColumn(name = "package_id", insertable = false, updatable = false)
-	PackageVO pack;
-	
-	
-	@JsonIgnore
-	@OneToMany(mappedBy = "subscribe", cascade = CascadeType.ALL)
-	List<Deilvery> delivery;
-	
-	
-	Date payment_date;
-	int sub_check;//0 or 1
-	
+   @Id
+   @Column(name="subscribe_id")
+   long subscribeId;
+   
+   
+   @ManyToOne
+   @JoinColumn(name = "customer_id")
+   Member customer;
+   
+   @ManyToOne
+   @JoinColumn(name = "package_id")
+   public PackageVO pack;
+   
+   
+   @JsonIgnore
+   @OneToMany(mappedBy = "subscribe", cascade = CascadeType.ALL)
+   List<Deilvery> delivery;
+   
+   @CreationTimestamp
+   @Column(name="payment_date")
+   Date paymentDate;
+   
+   @Column(name="sub_check",columnDefinition = "integer default 1")
+   int subCheck;
+   
 }

@@ -3,48 +3,48 @@ package com.kosta.KOSTA_3_final.model.product_package;
 import java.util.Arrays;
 
 public class ProductListVO {
-	private int package_id;
-	private int package_price;
-	private String package_name;
+	private int packageId;
+	private int packagePrice;
+	private String packageName;
 	private int[] productId;
-	private int[] product_qty;
+	private int[] productQty;
 	
 	
 	@Override
 	public String toString() {
-		return "ProductListVO [package_id=" + package_id + ", package_price=" + package_price + ", package_name=" + package_name
-				+ ", product_id=" + Arrays.toString(productId) + ", product_qty=" + Arrays.toString(product_qty) + "]";
+		return "ProductListVO [package_id=" + packageId + ", package_price=" + packagePrice + ", package_name=" + packageName
+				+ ", product_id=" + Arrays.toString(productId) + ", product_qty=" + Arrays.toString(productQty) + "]";
 	}
 	
-	public int getPackage_id() {
-		return package_id;
+	public int getPackageId() {
+		return packageId;
 	}
-	public void setPackage_id(int package_id) {
-		this.package_id = package_id;
+	public void setPackageId(int package_id) {
+		this.packageId = package_id;
 	}
-	public int getPackage_price() {
-		return package_price;
+	public int getPackagePrice() {
+		return packagePrice;
 	}
-	public void setPackage_price(int package_price) {
-		this.package_price = package_price;
+	public void setPackagePrice(int package_price) {
+		this.packagePrice = package_price;
 	}
-	public String getPackage_name() {
-		return package_name;
+	public String getPackageName() {
+		return packageName;
 	}
-	public void setPackage_name(String package_name) {
-		this.package_name = package_name;
+	public void setPackageName(String package_name) {
+		this.packageName = package_name;
 	}
-	public int[] getProduct_id() {
+	public int[] getProductId() {
 		return productId;
 	}
-	public void setProduct_id(int[] product_id) {
+	public void setProductId(int[] product_id) {
 		this.productId = product_id;
 	}
-	public int[] getProduct_qty() {
-		return product_qty;
+	public int[] getProductQty() {
+		return productQty;
 	}
-	public void setProduct_qty(int[] product_qty) {
-		this.product_qty = product_qty;
+	public void setProductQty(int[] product_qty) {
+		this.productQty = product_qty;
 	}
 	
 	
