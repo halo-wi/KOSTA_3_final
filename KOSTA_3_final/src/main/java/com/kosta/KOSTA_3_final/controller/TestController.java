@@ -31,6 +31,7 @@ import com.kosta.KOSTA_3_final.persistance.subscribe.SubscribeRepository;
 import com.kosta.KOSTA_3_final.service.product_package.ProductPackageService;
 import com.kosta.KOSTA_3_final.service.subscribe.GetPayementStatus;
 import com.kosta.KOSTA_3_final.service.subscribe.ImportPay;
+import com.kosta.KOSTA_3_final.service.subscribe.ReqPaymentScheduler;
 import com.kosta.KOSTA_3_final.service.subscribe.RequestSubPayment;
 import com.kosta.KOSTA_3_final.service.subscribe.SchedulePayment;
 import com.kosta.KOSTA_3_final.service.subscribe.SubscribeService;
@@ -64,7 +65,9 @@ public class TestController {
 	SchedulePayment setSchedulePay;
 	@Autowired
 	GetPayementStatus getPayementStatus;
-
+	@Autowired
+	ReqPaymentScheduler scheduler;
+	
 	/*
 	 * @GetMapping("/payments/subPayment") public void subPayment(Model model, Long
 	 * pno) { // 정기결제 model.addAttribute("pack", subscribeService.findById(pno)); }
@@ -82,7 +85,8 @@ public class TestController {
 		log.info("requestPayment post-----------------");
 		log.info(getPayementStatus.paymentStatus(merchant_uid));
 		if(getPayementStatus.paymentStatus(merchant_uid).equals("paid")) {
-			setSchedulePay.schedulePay(customer_uid, price);
+			scheduler.startScheduler(customer_uid,price);
+		
 		}
 		
 		
