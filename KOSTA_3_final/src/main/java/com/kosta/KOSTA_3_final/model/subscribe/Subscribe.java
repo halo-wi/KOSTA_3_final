@@ -57,11 +57,7 @@ public class Subscribe {
    @JoinColumn(name = "package_id")
    public PackageVO pack;
    
-   
-   @JsonIgnore
-   @OneToMany(mappedBy = "subscribe", cascade = CascadeType.ALL)
-   List<Deilvery> delivery;
-   
+
    @CreationTimestamp
    @Column(name="payment_date")
    Date paymentDate;

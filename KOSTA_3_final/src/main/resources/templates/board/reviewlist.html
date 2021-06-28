@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <head>
 <meta charset="UTF-8">
@@ -20,6 +21,7 @@
 		<button id="searchBtn">조건검색</button>
 	</div>
 	
+	
 	<h3><a th:href="@{/board/reviewregister}">글쓰기</a></h3>
 	
 	<table>
@@ -33,6 +35,9 @@
          </td>
          <td>
          	<span th:text="${review.pack}" ></span>
+         </td>
+         <td>
+         	<span th:text="${review.review}" ></span>
          </td>
          <td> 
         	 <span th:text="${review.score}" ></span>

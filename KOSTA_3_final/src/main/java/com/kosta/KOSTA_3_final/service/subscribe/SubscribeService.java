@@ -21,6 +21,8 @@ public class SubscribeService {
 	@Autowired
 	PackageRepository packRepo;
 	
+	@Autowired
+	SubscribeRepository subRepo;
 	
 	
 	

@@ -35,7 +35,7 @@ public class Review {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "review_id")
-	int reviewId;
+	Long reviewId;
 	
 	@ManyToOne
 	@JoinColumn(name = "package_id")
