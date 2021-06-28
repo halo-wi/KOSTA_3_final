@@ -1,5 +1,8 @@
 package com.kosta.KOSTA_3_final.persistance.board;
 
+import java.util.List;
+
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
@@ -33,6 +36,6 @@ public interface ReviewRepository extends CrudRepository<Review, Long>, Querydsl
 			return builder;
 		}
 
-
-
+	 @Query(value = "select AVG(SCORE) from ONELINEBOARD where PACKAGE_ID = packageId" , nativeQuery = true)
+	 public List<Integer> scoreAvg(Long packageId);
 }

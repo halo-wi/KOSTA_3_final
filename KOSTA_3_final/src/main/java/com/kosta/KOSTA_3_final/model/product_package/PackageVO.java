@@ -39,7 +39,7 @@ public class PackageVO {
 	long packageId;
   
 	@Column(name = "package_name")
-	public String packageName;
+	String packageName;
 	
 	@Column(name = "package_type")
 	int packageType;

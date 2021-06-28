@@ -3,6 +3,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<link rel="stylesheet" type="text/css" href=/css/board/star.css>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -28,20 +29,43 @@
       <tr> 
        <th>번호</th><th>패키지</th><th>한줄평</th><th>별점</th><th>작성자</th>
       </tr>
-      <tr th:each="review:${reviewResult.content}">
+      <tr th:each="review, row:${reviewResult.content}">
          <td>
          <!-- ============= -->
             <span th:text="${review.reviewId}"></span>
          </td>
          <td>
-         	<span th:text="${review.pack}" ></span>
+         	<span th:text="${review.pack.packageName}" ></span>
          </td>
          <td>
          	<span th:text="${review.review}" ></span>
          </td>
          <td> 
-        	 <span th:text="${review.score}" ></span>
+         
+         	<div id="score">
+        	 <span th:value="${review.score}" ></span>
+        	 </div>
+        	 <div class="startRadio">
+        	 
+     
+	<label class="startRadio__box" for="score" th:each="num:${#numbers.sequence(1,10)}"> 
+		<input type="radio" th:name="'score' + ${row}" th:value="${num}" th:checked="${review.score==num}?true:false" disabled="disabled">
+		<span class="startRadio__img"><span class="blind" th:text="${num}"></span></span>
+	</label>
+</div>
+        	 
+        	 
+        	 
+        	 
+        	 
          </td>
+         
+         
+         
+         
+         
+         
+         
          <td >
          <!-- 문자열의 한계치를 설정하고, length가 한계치 이상이라면 잘라낸후 …으로 표시해준다. -->
          	<div class = "email" th:text="${#strings.abbreviate(review.customer.email,7)}"> </div>
@@ -92,5 +116,16 @@
 			});
 
 		</script>
+		<script>
+			var score = $("#score").children().val();
+			
+			console.log(score);
+			
+			
+			$("input:radio[name='score']:radio[value='"+score+"']").prop('checked', true); 
+			
+		
+		</script>
+		
 </body>
 </html>
