@@ -2,6 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+
+<link rel="stylesheet" id="header_css" href="//sir.kr/css/header.css?v=6">
+<link rel="stylesheet" id="default_css" href="//sir.kr/css/default.css?v=16">
+<link rel="stylesheet" href="//sir.kr/css/font-awesome.min.css">
+<link rel="canonical" href="https://sir.kr/cm_free">
+<link rel="stylesheet" href="//sir.kr/css/font-style.css?v=5">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css">
+<link rel="stylesheet" href="//sir.kr/css/jquery.bxslider.css?v=2">
+
+
 <head>
 <meta charset="UTF-8">
 <title>board</title>
@@ -12,7 +23,7 @@
 
 
 	<img alt="이미지" th:src="@{/images/고래밥.jpg}" width="100px" height=100px>
-	<div>
+	<div id="1bo_head">
 		<select id="searchType">
 			<option>전체</option>
 			<option value="btitle" th:selected="${pagevo.type=='btitle'}">제목</option>
