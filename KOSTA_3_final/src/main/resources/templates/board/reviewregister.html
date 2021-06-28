@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<link rel="stylesheet" type="text/css" href=/css/board/star.css>
+
+<head>
+<meta charset="UTF-8">
+<title>리뷰</title>
+</head>
+<body>
+
+
+	<h1 class="panel-heading">리뷰</h1>
+	<div class="panel-body">
+
+		<form th:action="@{reviewregister}" method="post">
+
+
+
+			<div class="form-group">
+				<label for="pack"> 패키지 </label><br>
+					<select id= "pack" name="pack">
+						<option value="">----- 패키지를 선택하세요-----</option>
+						<option th:value="${review.pack}" th:text = "${review.pack.packageName}"  th:each="review:${subscribes}"></option>
+
+					</select>
+			</div>
+
+			<div class="form-group">
+				<label for="review">content:</label><br>
+				<textarea class="form-group" rows="3" cols="" name="review"></textarea>
+			</div>
+			<br>
+			<br>
+			<div class="form-group">
+				
+				
+				
+				
+<div class="startRadio">
+	<label class="startRadio__box" for="score"> 별점:
+		<input type="radio" name="score" id="">
+		<span class="startRadio__img"><span class="blind">1</span></span>
+	</label>
+	<label class="startRadio__box">
+		<input type="radio" name="score" id="">
+		<span class="startRadio__img"><span class="blind">2</span></span>
+	</label>
+	<label class="startRadio__box">
+		<input type="radio" name="score" id="">
+		<span class="startRadio__img"><span class="blind">3</span></span>
+	</label>
+	<label class="startRadio__box">
+		<input type="radio" name="score" id="">
+		<span class="startRadio__img"><span class="blind">4</span></span>
+	</label>
+	<label class="startRadio__box">
+		<input type="radio" name="score" id="">
+		<span class="startRadio__img"><span class="blind">5</span></span>
+	</label>
+	<label class="startRadio__box">
+		<input type="radio" name="score" id="">
+		<span class="startRadio__img"><span class="blind">6</span></span>
+	</label>
+	<label class="startRadio__box">
+		<input type="radio" name="score" id="">
+		<span class="startRadio__img"><span class="blind">7</span></span>
+	</label>
+	<label class="startRadio__box">
+		<input type="radio" name="score" id="">
+		<span class="startRadio__img"><span class="blind">8</span></span>
+	</label>
+	<label class="startRadio__box">
+		<input type="radio" name="score" id="">
+		<span class="startRadio__img"><span class="blind">9</span></span>
+	</label>
+	<label class="startRadio__box">
+		<input type="radio" name="score" id="">
+		<span class="startRadio__img"><span class="blind">10</span></span>
+	</label>
+</div>
+				
+				
+				
+				
+				
+				
+				
+				
+			</div>
+			<br>
+			<div class="form-group">
+				<p sec:authentication="name" ></p> 
+			</div>
+			<br>
+			<br>
+			<br>
+			<button id="btn-submit" type="submit">등록하기</button>
+			<button type="reset">reset</button>
+		</form>
+
+	</div>
+
+<script th:inline="javascript">
+/* $(function() {
+	
+	console.log($('#pack').val())
+	
+ if ($('#pack').val()==""){
+	 var btn = document.getElementById('btn-submit');
+	 btn.disabled = 'disabled';
+ }
+}); */
+
+
+
+
+
+
+
+
+</script>
+
+
+</body>
+</html>
