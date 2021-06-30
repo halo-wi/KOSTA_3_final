@@ -43,7 +43,7 @@ public interface QnARepository extends CrudRepository<QnA, Long>, QuerydslPredic
 		public default Predicate makePredicate2(String type, String keyword, int cid) {
 			BooleanBuilder builder = (BooleanBuilder)makePredicate(type, keyword);
 			QQnA QnA = QQnA.qnA;
-			builder.and(QnA.customer.customer_id.eq(cid)); 
+			builder.and(QnA.customer.customer_id.eq((long) cid)); 
 			return builder;
 		}
 }

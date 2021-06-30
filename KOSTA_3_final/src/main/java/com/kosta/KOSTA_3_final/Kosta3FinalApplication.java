@@ -1,21 +1,23 @@
 package com.kosta.KOSTA_3_final;
 
+import java.io.IOException;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Scanner;
+import org.springframework.scheduling.annotation.EnableScheduling;
+
+
 @SpringBootApplication
+@EnableScheduling
 @ComponentScan(basePackages = {"com.kosta"})
 public class Kosta3FinalApplication {
 
 	public static void main(String[] args) throws IOException {
 		SpringApplication.run(Kosta3FinalApplication.class, args);
-	
+
+
+
 			}
 	}
 
