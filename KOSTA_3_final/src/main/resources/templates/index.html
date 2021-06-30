@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="zxx">
+<html xmlns:th="http://www.thymeleaf.org" class="no-js" lang="zxx" >
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -43,8 +43,9 @@
                 <div class="container-fluid">
                     <div class="menu-wrapper">
                         <!-- Logo -->
-                        <div class="logo">
-                            <a href="/index"><img src="assets/img/logo/logo.png" alt=""></a>
+                        <div >
+                            <p style="color: black !important;"><a style="color:black !important;" href="/index">
+                            <img src="/images/snackLogo.jpg" width=200px;></a></p>
                         </div>
                         <!-- Main-menu -->
                         <div class="main-menu d-none d-lg-block">
@@ -55,22 +56,7 @@
                                     <li><a href="/shop">구독서비스</a></li>
                                     <li class="hot"><a href="/product_details">상세보기</a>
                                     </li>
-                                    <li><a href="/board/boardlist">게시판</a>
-                                        <ul class="submenu">
-                                         	<li><a href="/board/boardlist">게시판</a></li>
-                                            <li><a href="/board/qnalist">qna</a></li>
-                                            <li><a href="/board/reviewlist">후기모음</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">회원정보</a>
-                                        <ul class="submenu">
-                                            <li><a href="/login">로그인</a></li>
-                                            <li><a href="/logout">로그아웃</a></li>
-                                            <li><a href="/mypage/profile">마이페이지</a></li>
-                                            <li><a href="confirmation.html">Confirmation</a></li>
-                                            <li><a href="checkout.html">Product Checkout</a></li>
-                                        </ul>
-                                    </li>
+                                  
                                     <li><a href="contact.html">Contact</a></li>
                                 </ul>
                             </nav>
@@ -98,7 +84,7 @@
         <!-- Header End -->
     </header>
     <main>
-        <!--? slider Area Start -->
+ <!--? slider Area Start -->
         <div class="slider-area ">
             <div class="slider-active">
                 <!-- Single Slider -->
@@ -107,11 +93,11 @@
                         <div class="row justify-content-between align-items-center">
                             <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
                                 <div class="hero__caption">
-                                    <h1 data-animation="fadeInLeft" data-delay=".4s" data-duration="2000ms">최고의 간식 구독 서비스</h1>
-                                    <p data-animation="fadeInLeft" data-delay=".7s" data-duration="2000ms">최고의 패키지들이 기다리고 있습니다.</p>
+                                    <h1 data-animation="fadeInLeft" data-delay=".4s" data-duration="2000ms">다양한 간식을구독해보세요!</h1>
+                                    <p data-animation="fadeInLeft" data-delay=".7s" data-duration="2000ms">설명문구 </p>
                                     <!-- Hero-btn -->
                                     <div class="hero__btn" data-animation="fadeInLeft" data-delay=".8s" data-duration="2000ms">
-                                        <a href="/shop" class="btn hero-btn">Shop Now</a>
+                                        <a href="industries.html" class="btn hero-btn">Shop Now</a>
                                     </div>
                                 </div>
                             </div>
@@ -119,7 +105,6 @@
                                 <div class="hero__img" data-animation="bounceIn" data-delay=".4s">
                                     <img src="/images/muchpak.jpg"  style ="width : 300px; height : 500px; margin-right :100px;" alt="" class=" heartbeat">
                                     
-
                                 </div>
                             </div>
                         </div>
@@ -131,19 +116,17 @@
                         <div class="row justify-content-between align-items-center">
                             <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
                                 <div class="hero__caption">
-                                    <h1 data-animation="fadeInLeft" data-delay=".4s" data-duration="2000ms">최고의 간식 구독 서비스</h1>
-                                    <p data-animation="fadeInLeft" data-delay=".7s" data-duration="2000ms">최고의 패키지들이 기다리고 있습니다.</p>
+                                    <h1 data-animation="fadeInLeft" data-delay=".4s" data-duration="2000ms">원하는 간식들을 골라 나만의 패키지로!</h1>
+                                    <p data-animation="fadeInLeft" data-delay=".7s" data-duration="2000ms">설명문구</p>
                                     <!-- Hero-btn -->
                                     <div class="hero__btn" data-animation="fadeInLeft" data-delay=".8s" data-duration="2000ms">
-                                        <a href="/shop" class="btn hero-btn">Shop Now</a>
+                                        <a href="industries.html" class="btn hero-btn">Shop Now</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4 d-none d-sm-block">
                                 <div class="hero__img" data-animation="bounceIn" data-delay=".4s">
-
                                     <img src="/images/muchpak.jpg" alt="" class=" heartbeat">
-
                                 </div>
                             </div>
                         </div>
@@ -152,40 +135,7 @@
             </div>
         </div>
         <!-- slider Area End-->
-
-        <!--? Gallery Area Start -->
-        <div class="gallery-area">
-            <div class="container-fluid p-0 fix">
-                <div class="row">
-                    <div class="col-xl-6 col-lg-4 col-md-6 col-sm-6">
-                        <div class="single-gallery mb-30">
-                            <div class="gallery-img big-img" style="background-image: url(assets/img/gallery/mainimg.jpg);"></div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                        <div class="single-gallery mb-30">
-                            <div class="gallery-img big-img" style="background-image: url(assets/img/gallery/maintrial.jpg);"></div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-md-12">
-                        <div class="row">
-                            <div class="col-xl-12 col-lg-12 col-md-6 col-sm-6">
-                                <div class="single-gallery mb-30">
-                                    <div class="gallery-img small-img" style="background-image: url(assets/img/gallery/mainsmall1.png);"></div>
-                                </div>
-                            </div>
-                            <div class="col-xl-12 col-lg-12  col-md-6 col-sm-6">
-                                <div class="single-gallery mb-30">
-                                    <div class="gallery-img small-img" style="background-image: url(assets/img/gallery/mainsmall2.png);"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <!-- Gallery Area End -->
+     
         <!--? Popular Items Start -->
         <div class="popular-items section-padding30">
             <div class="container">
@@ -198,109 +148,26 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
-                        <div class="single-popular-items mb-50 text-center">
+                <div class="row" th:each="pack, packState2:${plist}" style="display: inline-block; margin-left:10px;">
+                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6" style="display: inline;">
+                        <div class="single-popular-items mb-50 text-center" style="margin-left:50px; width:300px; text-align: center;">
                             <div class="popular-img">
-                                <img src="assets/img/gallery/popular1.png" alt="">
-                                <div class="img-cap">
-                                    <span>Add to cart</span>
+                           <img th:src="|assets/img/gallery/${pack.img}.jpg|"  alt="">
+                               
+                                <div class="img-cap"> 
+                                    <span>상세 정보</span>
                                 </div>
                                 <div class="favorit-items">
                                     <span class="flaticon-heart"></span>
                                 </div>
                             </div>
-                            <div class="popular-caption">
-                                <h3><a href="product_details.html">패키지 1</a></h3>
-                                <span>(가격)</span>
+                            <div class="popular-caption" style="text-align: center;">
+                                <h3><a href="product_details.html" th:text="${pack.packageName}"></a></h3>
+                                <span  th:text="${pack.price}">(가격)</span>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
-                        <div class="single-popular-items mb-50 text-center">
-                            <div class="popular-img">
-                                <img src="assets/img/gallery/popular2.png" alt="">
-                                <div class="img-cap">
-                                    <span>Add to cart</span>
-                                </div>
-                                <div class="favorit-items">
-                                    <span class="flaticon-heart"></span>
-                                </div>
-                            </div>
-                            <div class="popular-caption">
-                                <h3><a href="product_details.html">패키지 2</a></h3>
-                                <span>(가격)</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
-                        <div class="single-popular-items mb-50 text-center">
-                            <div class="popular-img">
-                                <img src="assets/img/gallery/popular3.png" alt="">
-                                <div class="img-cap">
-                                    <span>Add to cart</span>
-                                </div>
-                                <div class="favorit-items">
-                                    <span class="flaticon-heart"></span>
-                                </div>
-                            </div>
-                            <div class="popular-caption">
-                                <h3><a href="product_details.html">패키지 3</a></h3>
-                                <span>(가격)</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
-                        <div class="single-popular-items mb-50 text-center">
-                            <div class="popular-img">
-                                <img src="assets/img/gallery/popular4.png" alt="">
-                                <div class="img-cap">
-                                    <span>Add to cart</span>
-                                </div>
-                                <div class="favorit-items">
-                                    <span class="flaticon-heart"></span>
-                                </div>
-                            </div>
-                            <div class="popular-caption">
-                                <h3><a href="product_details.html">패키지 4</a></h3>
-                                <span>(가격)</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
-                        <div class="single-popular-items mb-50 text-center">
-                            <div class="popular-img">
-                                <img src="assets/img/gallery/popular5.png" alt="">
-                                <div class="img-cap">
-                                    <span>Add to cart</span>
-                                </div>
-                                <div class="favorit-items">
-                                    <span class="flaticon-heart"></span>
-                                </div>
-                            </div>
-                            <div class="popular-caption">
-                                <h3><a href="product_details.html">패키지 5</a></h3>
-                                <span>(가격)</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
-                        <div class="single-popular-items mb-50 text-center">
-                            <div class="popular-img">
-                                <img src="assets/img/gallery/popular6.png" alt="">
-                                <div class="img-cap">
-                                    <span>Add to cart</span>
-                                </div>
-                                <div class="favorit-items">
-                                    <span class="flaticon-heart"></span>
-                                </div>
-                            </div>
-                            <div class="popular-caption">
-                                <h3><a href="product_details.html">패키지 6</a></h3>
-                                <span>(가격)</span>
-                            </div>
-                        </div>
-                    </div>
+                   
                 </div>
                 <!-- Button -->
                 <div class="row justify-content-center">

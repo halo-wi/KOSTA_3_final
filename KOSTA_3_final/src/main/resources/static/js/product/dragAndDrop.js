@@ -222,6 +222,11 @@ function drop() {
 	});
 }
 
+// 목록 삭제
+function productRowDelete(row) {
+	$(row).parent().parent().remove();
+}
+
 $(function() {
  	
  	$(".category_name, #search_product").on("click",function() {
@@ -267,5 +272,31 @@ $(function() {
 			alert("상품을 선택해주세요.");			
 		}
 	});
-
+	
+	
+	// 제품 insert
+ 	$('#product_add').click(function() {
+		alert("submit");
+		$('#add_product_form').submit();
+	});
+	
+	// 권한에 따라 show, hide 할 html 태그들
+	if($('#auth').val()=="ADMIN") {
+		// 패키지 상세설명 숨기기
+		$('#custom_poster').hide();
+		$('#package_buy_btn').hide();
+		$('#package_make').show();
+	} else {
+		$('#custom_poster').show();
+		$('#add_product').hide();
+		$('#package_make').hide();
+	}
+	$("#add_product_row_table").hide();
+	
+	
+	// 목록 추가
+	$('#add_list').click(function() {
+		$('#add_product_tbody').append($("#add_product_row_table tbody").html());
+	});
+		
 });
