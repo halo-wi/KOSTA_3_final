@@ -11,8 +11,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.kosta.KOSTA_3_final.model.user.EmailDTO;
 import com.kosta.KOSTA_3_final.model.user.Member;
 import com.kosta.KOSTA_3_final.persistance.user.MemberRepository;
@@ -48,7 +46,7 @@ public class UserService implements UserDetailsService{
 	}
 	
 	public Member getMemberInfoById(int customerId) {
-		return repo.findById(customerId).get();
+		return repo.findById((long) customerId).get();
 		
 	}
 	

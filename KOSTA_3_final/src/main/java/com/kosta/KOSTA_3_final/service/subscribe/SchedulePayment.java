@@ -33,7 +33,7 @@ public class SchedulePayment {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.KOREA);
 
-		cal.add(Calendar.MINUTE, +2);
+		cal.add(Calendar.MINUTE, +3);
 		String date = sdf.format(cal.getTime());
 		
 		try {
@@ -74,7 +74,7 @@ public class SchedulePayment {
 		 String json = str.toJson(reqJson); 
 		 System.out.println(json);
 		 HttpEntity<String> entity = new HttpEntity<>(json, headers);
-		 System.out.println(json + "예약요청");
+		 System.out.println(json + "예약요청이아닌 스케줄 결제요청");
 		 return restTemplate.postForObject("https://api.iamport.kr/subscribe/payments/schedule", entity, String.class);
 		 
 		 
