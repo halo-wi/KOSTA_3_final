@@ -27,12 +27,13 @@ public class SubscribeService {
 	
 	
 	public PackageVO findById(Long packageId) {
+		System.out.println(packageId+"findById!!!!");
 		return packRepo.findById(packageId).get();
 	}
 	
 	public void insertSubscribe(long package_id, long customer_id ){
 		PackageVO pack=   packRepo.findById(package_id).get();
-		System.out.println(pack);
+		
 		Member member = memberRepo.findById(customer_id).get();
 		Subscribe sub = Subscribe.builder()
 				.subscribeId(new Date().getTime())

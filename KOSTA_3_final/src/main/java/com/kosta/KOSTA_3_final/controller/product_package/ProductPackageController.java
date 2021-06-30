@@ -1,11 +1,19 @@
 package com.kosta.KOSTA_3_final.controller.product_package;
 
 
+import java.io.File;
+import java.io.IOException;
+
+import javax.swing.filechooser.FileSystemView;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kosta.KOSTA_3_final.model.product_package.ProductListVO;
 import com.kosta.KOSTA_3_final.service.product_package.ProductPackageService;
@@ -26,6 +34,16 @@ public class ProductPackageController {
 		return "/product/customPackaging3";
 	}
 	
+	@GetMapping("/product/adminMakeProductAndPackage")
+	public String adminMakeProductAndPackage(Model model) {
+		model.addAttribute("admin_check", "admin");
+		model.addAttribute("categorylist", productService.selectCategoryAll());
+		model.addAttribute("productlist", productService.selectProductAll());
+		model.addAttribute("companylist", productService.selectCompanyAll());
+		
+		return "/product/customPackaging4";
+	}
+	
 	@GetMapping("/product/productList")
 	public String selectProduct(Model model, String type, String keyword) {
 		model.addAttribute("productlist", productService.selectProductAll(type, keyword));
@@ -39,7 +57,15 @@ public class ProductPackageController {
 		
 		return "redirect:/product/customPackaging3";
 	}
-
+	
+	@PostMapping("/product/adminProductInsert")
+	public String adminInsertProduct(Model model, @ModelAttribute ProductListVO productList) throws Exception {
+		//productService.adminInsertProduct(productList);
+		System.out.println(productList);
+	    
+		return "redirect:/product/adminMakeProductAndPackage";
+	}
+	
 	
 
 }
