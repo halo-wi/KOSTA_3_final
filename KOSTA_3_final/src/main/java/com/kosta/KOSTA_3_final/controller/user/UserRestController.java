@@ -82,9 +82,9 @@ public class UserRestController {
 	}
 
 	@PostMapping("/auth/passwordFind/sendmail")
-		public @ResponseBody void sendEmail(String email, String customerName){
+		public @ResponseBody void sendEmail(String email){
 		//임시 비밀 번호 생성
-		 EmailDTO dto = service.createMailAndChangePassword(email, customerName);
+		 EmailDTO dto = service.createMailAndChangePassword(email);
 		 //메세지 생성
 	     MimeMessage msg=sender.createMimeMessage();
 			MimeMessageHelper helper=new MimeMessageHelper(msg);
