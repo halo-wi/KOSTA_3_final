@@ -52,6 +52,7 @@ public class QnA {
 	@Column(name = "question_content")
 	String qcontent;
 
+
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
 	Member customer; // 문의글 작성자

@@ -34,6 +34,7 @@ public class QnAReplyController {
 	@GetMapping("/QnA/{qid}")
 	public ResponseEntity<List<QnAReply>> selectAll(@PathVariable Long qid) {
 		QnA qna = QnA.builder().qid(qid).build();
+		System.out.println("???:"+ service.selectAll(qna));
 		return new ResponseEntity<>(service.selectAll(qna), HttpStatus.OK);
 	}
 	
