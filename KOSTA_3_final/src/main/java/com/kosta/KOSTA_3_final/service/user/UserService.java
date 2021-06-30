@@ -11,8 +11,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.kosta.KOSTA_3_final.model.user.EmailDTO;
 import com.kosta.KOSTA_3_final.model.user.Member;
 import com.kosta.KOSTA_3_final.persistance.user.MemberRepository;
@@ -48,13 +46,13 @@ public class UserService implements UserDetailsService{
 	}
 	
 	public Member getMemberInfoById(int customerId) {
-		return repo.findById(customerId).get();
+		return repo.findById((long) customerId).get();
 		
 	}
 	
 
 	
-	 public EmailDTO createMailAndChangePassword(String email, String customerName){
+	 public EmailDTO createMailAndChangePassword(String email){
 	     //메일 본문 생성 및 비번 바꾸기   
 		 String str = getTempPassword();
 	        EmailDTO dto = new EmailDTO();
@@ -89,7 +87,7 @@ public class UserService implements UserDetailsService{
 		  String pw = passwordEncoder.encode(str);
 	        String name=repo.findByEmail(userEmail).get().getCustomerName();
 	       System.out.println(name);
-	        Member id = repo.findByCustomerName(name);
+	        Member id = repo.findByCustomerNameAndEmail(name, userEmail);
 	       id.setPassword(pw);
 	        repo.save(id);
 	    }
