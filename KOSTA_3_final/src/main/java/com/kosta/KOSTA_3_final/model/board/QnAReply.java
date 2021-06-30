@@ -15,8 +15,6 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kosta.KOSTA_3_final.model.user.Member;
 
 
@@ -38,7 +36,7 @@ import lombok.ToString;
 @EqualsAndHashCode(of = "qrid")
 @Table(name = "tp_question_board_reply")
 //문의게시판_댓글VO
-public class QnAReply {
+public class QnAReply{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="question_reply_id")
@@ -47,13 +45,11 @@ public class QnAReply {
 	@Column(name="question_reply")
 	String qreply;
 	
-	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	QnA qna;
 	
-	
 	@ManyToOne
-	@JoinColumn(name = "custcomer_id")
+	@JoinColumn(name = "customer_id")
 	Member admin;
 	
 	

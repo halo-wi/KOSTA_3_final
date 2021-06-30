@@ -1,68 +1,65 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layout/layout2}">
 
-<link rel="stylesheet" id="header_css" href="//sir.kr/css/header.css?v=6">
-<link rel="stylesheet" id="default_css" href="//sir.kr/css/default.css?v=16">
-<link rel="stylesheet" href="//sir.kr/css/font-awesome.min.css">
-<link rel="canonical" href="https://sir.kr/cm_free">
-<link rel="stylesheet" href="//sir.kr/css/font-style.css?v=5">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css">
-<link rel="stylesheet" href="//sir.kr/css/jquery.bxslider.css?v=2">
-
 
 <head>
 <meta charset="UTF-8">
-<title>상세보기</title>
+<title>스낵24-자유게사판</title>
 </head>
 <body>
-	<div class="panel panel-defualt" layout:fragment="content1"></div>
-	<th:block layout:fragment="script1">
-	</th:block>
-
-
-	<div class="panel panel-default" layout:fragment="bcontent1">
-		<h1 class="panel-heading">Board 상세보기</h1>
+	
+	<div id="con_If" layout:fragment="content1">
+		<h1 class="pg_tit">자유게시판</h1>
 		<div class="panel-body">
 
-			<form id="myfrm" class="form-inline" th:action="@{/board/update}"
+			<article class="sir_vbo">
+			
+			<form id="myfrm" th:action="@{/board/update}"
 				method="post">
+				<header class="vbo_head">
+				
 				<input type="hidden" id="bid" name="bid" th:value="${board.bid}">
-				<input type="hidden" id="redate" name="bregdate"
-					th:value="${board.bregdate}">
-				<div class="form-group">
-					<label for="btitle">title:</label>
-					<h3 id="btitle">[[${board.btitle}]]</h3>
-				</div>
-				<br>
-				<label for="bupdatedate">작성일:</label>
-				<div class="bupdatedate"
-					th:text="${#dates.format(board.bupdatedate, 'yyyy-MM-dd')}"></div>
-				
-				
-				<br> <label for="email">작성자:</label>
+				<input type="hidden" id="redate" name="bregdate" th:value="${board.bregdate}">
+				<label for="email"></label>
 				<input type="hidden" id="email" name="email" th:value="${board.customer.email}">
+
+					<label for="btitle"></label>
+					<strong id="head_title">[[${board.btitle}]]</strong>
 				
+				<ul id="head_info">
 				
-				<div class="email"
-					th:text="${#strings.abbreviate(board.customer.email,7)}"></div>
-				<br>
+				<li id="info_name">작성자:<span class="sv_wrap" th:text="${#strings.abbreviate(board.customer.email,7)}"></span></li>
+
+				<li id="info_date">작성일:<time th:text="${#dates.format(board.bupdatedate, 'yyyy-MM-dd')}"></time></li>
+			
+				</ul>
+				
+				<div id="head_img"> <img th:src="@{/images/고래밥.jpg}"> </div>
+				
+				</header>
+				
+				<section id="vbo_con">
+				
 				<div class="form-group" id="contentButton">
-					<label for="bcontent">content:</label><br>
+					<label for="bcontent"></label><br>
 					
-					<div id="bcontent"
-						style="border: black solid 1px; width: 300px; height: 100%;">
+					<div id="bcontent" class="con_inner">
 						[[${board.bcontent}]]
 					</div>
+					<div style="clear:both;"></div>
+					
 				</div>
+				
+				</section>
+				
 				<br> <br> <br>
 
-					<div th:if="${board.customer.email}==${#authentication.name}">
+					<div th:if="${board.customer.email}==${#authentication.name}" style="float: right;">
 						<a href="javascript:boardMod()" >수정하기</a>
-						<a th:href="@{/board/delete(bid=${board.bid})}">삭제하기</a>
+						<a th:href="@{/board/delete(bid=${board.bid})}" >삭제하기</a>
 					</div>
 
 			</form>
@@ -70,39 +67,45 @@
 
 			<!-- ############################################### 댓글 #################################################-->
 
-
+	<section id="vcmt_anchor" class="vbo_vcmt vbo_vcmt_chat ">
 			<div class='container'>
 
-				<table class="table table-striped table-bordered table-hover">
+
+				<article class="vcmt">
+				<table style="margin: auto; width: 100%">
 					<thead>
 						<tr>
-							<th>내용</th>
-							<th>작성자</th>
+							<th style="width: 60%">내용</th>
+							<th style="width: 20%">작성자</th>
 							<th>작성일</th>
 						</tr>
 					</thead>
-
 					<tbody id="Table">
 
 					</tbody>
 					<tr>
 						<td>
-							<input placeholder="댓글 내용" id="replyADD">
-						</td>
-						<td>
-							<input type="hidden" value="${#authentication.name}" id="emailADD">
+							<input placeholder="댓글 내용" id="replyADD" class="vcmt_content">
 						</td>
 						<td>
 							<button type='button' onclick='add(this);'>댓글추가</button>
 						</td>
+						<td>
+						<input type="hidden" value="${#authentication.name}" id="emailADD">
+							
+						</td>
 					</tr>
 				</table>
+				
+				</article>
+				
 
 			</div>
+			
+</section>
 
 
-
-
+</article>
 
 			<!-- 페이징 처리 -->
 			<form id="f1" action="" method="get">
@@ -114,31 +117,18 @@
 
 		</div>
 
-	</div>
+	
 
-
-
-	<!-- Modal -->
-	<div id="myModal" class="modal fade" role="dialog">
-		<div class="modal-dialog">
-
-			<!-- Modal content-->
-
-
-		</div>
-	</div>
 
 
 	<a th:href="@{/board/boardlist(page=${pagevo.page},size=${pagevo.size},type=${pagevo.type},keyword=${pagevo.keyword})}"
-		class="btn btn-warning modbtn2">목록보기</a>
-
-
-
-	<th:block layout:fragment="script">
+		class="btn btn-warning modbtn2" 
+		style="font-size: 10px; padding: 15px 7px;">목록보기</a>
+		
+		
 		<script th:src="@{/js/reply.js}"></script>
 		<script th:inline="javascript">
 		
-
 			
 		$(function(e) {
 
@@ -162,7 +152,7 @@
 
 									str += "<td>" + item["reply"] + "</td>";
 									str += "<td>"
-											+ item["customer"]["email"].substr(
+											+ item['customer']['email'].substr(
 													0, 4) + "***" + "</td>";
 									str += "<td>"
 											+ formatDate(item["rupdatedate"])
@@ -170,7 +160,7 @@
 											console.log("'" + item['customer']['email'] + "'");	
 									if (item['customer']['email'] == authName) {
 										console.log("yes");
-										str += "<button  onclick='call(this);' id='modify' > 댓글수정 </button>"
+										str += "<button  onclick='call(this);' id='modify'> 수정 </button>"
 												+ "<span style=' display : none;'>"
 												+ item["rid"]
 												+ "</span>"
@@ -193,7 +183,7 @@
 
 			};
 		</script>
-		<script>
+		<script th:inline="javascript">
 			function del(item) {
 
 				var rid = $(item).parent().children("span:nth-child(2)");
@@ -253,8 +243,8 @@
 
 			function add(item) {
 
-				var authName = '[[${#authentication.name}]]';				
-
+				var authName = [[${#authentication.name}]];				
+				console.log(authName);
 				var obj = {
 						"bid" : "[[${board.bid}]]",
 						"reply" : $("#replyADD").val(),
@@ -280,6 +270,7 @@
 			} 
 			
 		</script>
-	</th:block>
+		
+</div>
 </body>
 </html>

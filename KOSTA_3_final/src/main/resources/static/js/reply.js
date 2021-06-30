@@ -1,18 +1,19 @@
 
 
 var replyManager =(function(){
+	
+	console.log("replyManager...");
 
 	var getAll = function(obj, callback){	
 		console.log("get All..."+obj);
 
 		$.getJSON("/replies/board/"+obj, callback)
 		
-		
 	};
 	
 	var add = function(obj, callback){
 	
-		console.log("add...");
+		console.log(obj);
 		$.ajax({
 			url:"/replies/" + obj["bid"],
 			data: obj,

@@ -67,7 +67,7 @@ public class ReviewController {
 	}
 
 	  @GetMapping("/board/reviewdelete")
-	  public String qnaDelete(Long reviewId) {
+	  public String reviewDelete(Long reviewId) {
 		  return "redirect:/board/reviewlist";
 				 
 	  }

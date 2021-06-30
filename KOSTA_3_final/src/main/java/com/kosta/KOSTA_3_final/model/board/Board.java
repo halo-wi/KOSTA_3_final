@@ -42,6 +42,7 @@ import lombok.ToString;
 @EqualsAndHashCode(of = "bid")
 @Table(name = "tp_bulletin_board")
 public class Board {
+	
 	@Id // 필수PK
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="board_id")
@@ -51,7 +52,6 @@ public class Board {
 	
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
-
 	Member customer; //댓글작성자
 
 	
