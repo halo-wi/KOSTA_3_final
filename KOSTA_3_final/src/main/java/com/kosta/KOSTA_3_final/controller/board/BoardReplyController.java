@@ -47,7 +47,6 @@ public class BoardReplyController {
 	//댓글상세보기
 		@GetMapping("{rid}")
 		public ResponseEntity<BoardReply> viewReply(@PathVariable Long rid) {
-				
 				return new ResponseEntity<>(service.selectById(rid), HttpStatus.OK);
 			}
 	

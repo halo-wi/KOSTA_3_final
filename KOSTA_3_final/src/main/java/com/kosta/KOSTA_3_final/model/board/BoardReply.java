@@ -46,6 +46,7 @@ public class BoardReply {
 	@Column(name="board_reply")
 	String reply; //댓글내용
 	
+	
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
 	Member customer; // FK, 댓글 작성자. issue : User에서도 양방향으로 참조해야할까? <본인댓글조회 기능 시 필요> , 변수명에 대해 의논
@@ -57,7 +58,7 @@ public class BoardReply {
 
 	// 여러개의 댓글은 하나의 게시글을 참조한다.
 	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	Board board; // FK
 
 }

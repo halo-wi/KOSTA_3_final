@@ -42,7 +42,6 @@ public class UserService implements UserDetailsService{
 
 	public Member getMemberInfo(String email) {
 		return repo.findByEmail(email).get();
-		
 	}
 	
 	public Member getMemberInfoById(int customerId) {

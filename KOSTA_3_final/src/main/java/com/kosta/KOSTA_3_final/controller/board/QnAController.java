@@ -33,7 +33,7 @@ public class QnAController {
 		
 		String email = ((User) principal).getUsername();
 		String auth = uservice.getMemberInfo(email).getAuth().name();
-		Integer id = uservice.getMemberInfo(email).getCustomer_id();
+		Integer id = (int) uservice.getMemberInfo(email).getCustomer_id();
 		System.out.println(email+auth);
 		
 		

@@ -20,7 +20,7 @@ import com.kosta.KOSTA_3_final.model.board.PageVO;
 import com.kosta.KOSTA_3_final.model.user.Member;
 import com.kosta.KOSTA_3_final.persistance.board.BoardPersistance;
 import com.kosta.KOSTA_3_final.persistance.board.BoardReplyPersistance;
-import com.kosta.KOSTA_3_final.persistance.user.UserPersistance;
+import com.kosta.KOSTA_3_final.persistance.user.MemberRepository;
 import com.kosta.KOSTA_3_final.service.user.UserService;
 import com.querydsl.core.types.Predicate;
 
@@ -35,7 +35,7 @@ class Kosta3FinalApplicationTests {
 	@Autowired
 	BoardReplyPersistance replyPersistance;
 	@Autowired
-	UserPersistance userPersistance;
+	MemberRepository userPersistance;
 	
 
 	//@Test
