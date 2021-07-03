@@ -43,43 +43,27 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 </head>
 <body>
-      <header>
+       <header>
         <!-- Header Start -->
         <div class="header-area">
             <div class="main-header header-sticky">
                 <div class="container-fluid">
                     <div class="menu-wrapper">
                         <!-- Logo -->
-                        <div class="logo">
-                            <a href="/index"><img src="../../assets/img/logo/logo.png" alt=""></a>
+                        <div >
+                            <p style="color: black !important;"><a style="color:black !important;" href="/index">
+                            <img src="/images/snackLogo.jpg" width=200px;></a></p>
                         </div>
                         <!-- Main-menu -->
                         <div class="main-menu d-none d-lg-block">
                             <nav>                                                
                                 <ul id="navigation">  
                                     <li><a href="/index">Home</a></li>
-                                    <li><a href="shop.html">과자모음</a></li>
-                                    <li><a href="/payments/packList">구독서비스</a></li>
-                                    <li class="hot"><a href="#">마이페이지</a>
-                                        <ul class="submenu">
-                                            <li><a href="/mypage/profile"> 마이페이지</a></li>
-                                        </ul>
+                                    <li><a href="/product/customPackaging3">과자모음</a></li>
+                                    <li><a href="/shop">구독서비스</a></li>
+                                    <li class="hot"><a href="/product_details">상세보기</a>
                                     </li>
-                                    <li><a href="blog.html">Blog</a>
-                                        <ul class="submenu">
-                                            <li><a href="blog.html">Blog</a></li>
-                                            <li><a href="blog-details.html">Blog Details</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">Pages</a>
-                                        <ul class="submenu">
-                                            <li><a href="/login">로그인</a></li>
-                                            <li><a href="cart.html">Cart</a></li>
-                                            <li><a href="elements.html">Element</a></li>
-                                            <li><a href="confirmation.html">Confirmation</a></li>
-                                            <li><a href="checkout.html">Product Checkout</a></li>
-                                        </ul>
-                                    </li>
+                                  
                                     <li><a href="contact.html">Contact</a></li>
                                 </ul>
                             </nav>
@@ -104,8 +88,8 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
                 </div>
             </div>
         </div>
-        </header>
         <!-- Header End -->
+    </header>
 
  <main>
 
@@ -138,13 +122,13 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 </div>
  <div class="col-md-12 form-group p_star">
 <div class='left'>주소</div>
-<input type="text" 	id="postnumber" name="postnumber" value=""  readonly/>
+<input type="text" 	id="postnumber" name="postnumber" value=""  readonly/><br>
 <input type="text" 	id="address" name="address" value="" placeholder="우편 번호 검색을 눌러주세요" readonly/>
 <input type="button" onclick="Postcode()" value="우편번호 찾기"><br>
 <input type="text" id='addressdetail' name="addressdetail" placeholder="상세 주소 입력">
  </div>
 
-<input type="hidden" id="auth" name="auth" value="ADMIN"/>
+<input type="hidden" id="auth" name="auth" value="USER"/>
  <section class="check-section">
   <input type="text" placeholder="인증 키 입력" style="display: none;"
 	class="compare"><span class="compare-text"
