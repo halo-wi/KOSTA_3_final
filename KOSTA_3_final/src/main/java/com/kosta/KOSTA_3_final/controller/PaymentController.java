@@ -69,18 +69,23 @@ public class PaymentController {
 	ReqPaymentScheduler scheduler;
 	@Autowired
 	PackageId packageId;
+	@Autowired
+	RequestSubPayment reqSubpay;
 
 	@PostMapping("/payment1")
 	public @ResponseBody void getImportToken(@RequestParam Map<String, Object> map)
 			throws JsonMappingException, JsonProcessingException {
 		int customer_uid = Integer.parseInt((String) map.get("customer_uid"));
 		int price = Integer.parseInt((String) map.get("price"));
-		long merchant_uid =  Long.parseLong((String) map.get("merchant_uid"));     //parseLong 배움
+		long merchant_uid =  Long.parseLong((String) map.get("merchant_uid"));  
+		reqSubpay.requestSubPay(customer_uid,merchant_uid, price);
+		scheduler.startScheduler(customer_uid,price);
 
-		if(getPayementStatus.paymentStatus(merchant_uid).equals("paid")) {
-			scheduler.startScheduler(customer_uid,price);
 		}
-	}
+	
+	
+	
+	
 	 @GetMapping("/payment") public void payment(Model model, Long pno) {
 	  model.addAttribute("pack", subscribeService.findById(pno));
 	 }
@@ -96,22 +101,22 @@ public class PaymentController {
 		 
 	@GetMapping("/shop")
 	public void packlist(Model model) {
-		model.addAttribute("plist", packRepo.findAll());
-
+		model.addAttribute("plist", packRepo.findByPackageType(0));
 	}
 
 	@GetMapping("/index")
 	public void index(Model model) {
-		model.addAttribute("plist", packRepo.findByPackageType(0));	
-		System.out.println(packRepo.findByPackageType(0));
-		
+		model.addAttribute("plist", packRepo.findByPackageType2(0));	
 	}
 
 	@GetMapping("/product_details")
 	public void product_details(Model model, Long pno) {
 		model.addAttribute("pack", subscribeService.findById(pno));
 		model.addAttribute("plist", packRepo.findAll());
+		model.addAttribute("productList", packService.findProductbyPackageNo(pno));
 	}
+	
+	
 
 	@Autowired
 	SubscribeService subService;

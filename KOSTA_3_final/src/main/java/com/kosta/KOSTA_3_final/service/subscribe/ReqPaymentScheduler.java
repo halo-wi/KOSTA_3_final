@@ -35,3 +35,4 @@ public class ReqPaymentScheduler {
         // 작업 주기 설정 
         return new PeriodicTrigger(1, TimeUnit.DAYS);
     }
+}
