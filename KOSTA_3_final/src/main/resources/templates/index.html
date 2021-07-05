@@ -21,6 +21,51 @@
     <link rel="stylesheet" href="assets/css/slick.css">
     <link rel="stylesheet" href="assets/css/nice-select.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    
+    
+    <style>
+    .video-background {
+
+        background: #000;
+
+        position: fixed;
+
+        top: 0; right: 0; bottom: 0; left: 0;
+
+        z-index: -99;
+
+    }
+
+    .video-foreground,
+
+    .video-background iframe {
+
+        position: absolute;
+
+        top: 0;
+
+        left: 0;
+
+        width: 100%;
+
+        height: 100%;
+
+        pointer-events: none;
+
+    }
+
+    @media (min-aspect-ratio: 16/9) {
+
+    .video-foreground { height: 300%; top: -100%; }
+
+    }
+
+    @media (max-aspect-ratio: 16/9) {
+
+    .video-foreground { width: 300%; left: -100%; }
+
+    }
+    </style>
 </head>
 
 <body>
@@ -102,7 +147,7 @@
                                 </div>
                             </div>
                             <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4 d-none d-sm-block">
-                                <div class="hero__img" data-animation="bounceIn" data-delay=".4s">
+                                <div class="hero__img" data-animation="bounceIn" data-delay="1s">
                                     <img src="/images/muchpak.jpg"  style ="width : 300px; height : 500px; margin-right :100px;" alt="" class=" heartbeat">
                                     
                                 </div>
@@ -150,7 +195,7 @@
                 </div>
                 <div class="row" th:each="pack, packState2:${plist}" style="display: inline-block; margin-left:10px;">
                     <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6" style="display: inline;">
-                        <div class="single-popular-items mb-50 text-center" style="margin-left:50px; width:300px; text-align: center;">
+                        <div class="single-popular-items mb-50 text-center" style="margin-left:50px; width:300px; height:auto; text-align: center;">
                             <div class="popular-img">
                            <img th:src="|assets/img/gallery/${pack.img}.jpg|"  alt="">
                                
@@ -163,7 +208,7 @@
                             </div>
                             <div class="popular-caption" style="text-align: center;">
                                 <h3><a href="product_details.html" th:text="${pack.packageName}"></a></h3>
-                                <span  th:text="${pack.price}">(가격)</span>
+                                <span  th:text="|${pack.price}원|">(가격)</span>
                             </div>
                         </div>
                     </div>
@@ -339,7 +384,7 @@
     <script src="./assets/js/mail-script.js"></script>
     <script src="./assets/js/jquery.ajaxchimp.min.js"></script>
     
-    <!-- Jquery Plugins, main Jquery -->	
+    <!-- Jquery Plugins, main Jquery -->   
     <script src="./assets/js/plugins.js"></script>
     <script src="./assets/js/main.js"></script>
     

@@ -1,5 +1,3 @@
-
-
 var replyManager =(function(){
 
 	var getAll = function(obj, callback){	
