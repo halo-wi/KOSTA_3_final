@@ -37,26 +37,26 @@ public class PackageVO {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "package_id")
 	long packageId;
-  
+
 	@Column(name = "package_name")
 	String packageName;
-	
+
 	@Column(name = "package_type")
 	int packageType;
 
 	int price;
-	
+
+
 	String img;
-	
 	@JsonIgnore
 	@OneToMany(mappedBy = "pack", cascade = CascadeType.ALL)
 	List<Review> reviews;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "pack", cascade = CascadeType.ALL) 
 	List<Subscribe> subscribes;
-	
-	
+
+
 	@OneToMany(mappedBy = "pack")
 	List<Product_Package> ppList;
 }
