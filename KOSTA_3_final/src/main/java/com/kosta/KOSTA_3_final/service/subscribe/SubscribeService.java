@@ -27,7 +27,7 @@ public class SubscribeService {
 	
 	
 	public PackageVO findById(Long packageId) {
-		System.out.println(packageId+"findById!!!!");
+	
 		return packRepo.findById(packageId).get();
 	}
 	
@@ -41,7 +41,6 @@ public class SubscribeService {
 				.customer(member)
 				.build();
 		
-		System.out.println(sub+"insert하는 정보");
 		subRepo.save(sub);
 		
 	}
