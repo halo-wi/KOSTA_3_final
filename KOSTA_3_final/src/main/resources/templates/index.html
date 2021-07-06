@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="assets/css/slick.css">
     <link rel="stylesheet" href="assets/css/nice-select.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href=/css/board/star.css>
 
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap'); 
@@ -247,6 +248,13 @@ button.learn-more:active::before {
                             <div class="popular-caption" style="text-align: center;">
                                 <h3><a href="product_details.html" th:text="${pack.packageName}"></a></h3>
                                 <span  th:text="|${pack.price}원|">(가격)</span>
+                            </div>
+                             <div class="startRadio">
+                             
+                                <label class="startRadio__box" for="score" th:each="num:${#numbers.sequence(1,10)}"> 
+									<input type="radio" th:name="'score' + ${packState2}" th:value="${num}" th:checked="${pack.score==num}?true:false" disabled="disabled">
+									<span class="startRadio__img"><span class="blind" th:text="${num}"></span></span>
+								</label>
                             </div>
                         </div>
                     </div>

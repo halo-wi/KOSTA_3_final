@@ -54,16 +54,18 @@ layout:decorate="~{layout/layout2}">
        <th>번호</th><th>패키지</th><th>한줄평</th><th>별점</th><th>작성자</th>
       </tr>
       <tr th:each="review, row:${reviewResult.content}" class="lbo_li li_bg0 lbo_like" style="z-index:30;">
-         <td style="width: 40%">
+         <td >
          <!-- ============= -->
-           
-           <span th:text="${review.review}" ></span>
+             <span th:text="${review.reviewId}"></span>
+         
          </td>
          <td>
-          <span th:text="${review.reviewId}"></span>
+           <span th:text="${review.pack.packageName}" ></span>
+        
          </td>
-         <td>
-         	<span th:text="${review.pack.packageName}" ></span>
+         <td  style="width: 40%">
+         <span th:text="${review.review}" ></span>
+         	
          </td>
          <td> 
          
