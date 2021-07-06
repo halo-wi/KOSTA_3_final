@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		// 파일 기준은 resources/static 디렉터리의 하위 파일 목록은 인증 무시 ( = 항상통과 )
 
 		web.httpFirewall(allowUrlEncodedSlashHttpFirewall());
-		web.ignoring().antMatchers("/css/**", "/js/**", "/images/**", "/lib/**","/assets/**");
+		web.ignoring().antMatchers("/css/**", "/js/**", "/images/**", "/lib/**","/assets/**","/error");
 
 	}
 	

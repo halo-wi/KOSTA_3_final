@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
 layout:decorate="~{layout/layout1}">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <title>Insert title here</title>
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 	function arrow(){
 
@@ -48,60 +51,90 @@ layout:decorate="~{layout/layout1}">
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <!-- 주소찾기 -->
 <script>
-    function sample4_execDaumPostcode() {
-        new daum.Postcode({
-            oncomplete: function(data) {
-                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+function Postcode1() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
-                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
-                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                var roadAddr = data.roadAddress; // 도로명 주소 변수
-                var extraRoadAddr = ''; // 참고 항목 변수
+            // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+            var roadAddr = data.address; // 도로명 주소 변수
+            var extraRoadAddr = ''; // 참고 항목 변수
 
-                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                    extraRoadAddr += data.bname;
-                }
-                // 건물명이 있고, 공동주택일 경우 추가한다.
-                if(data.buildingName !== '' && data.apartment === 'Y'){
-                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                }
-                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-                if(extraRoadAddr !== ''){
-                    extraRoadAddr = ' (' + extraRoadAddr + ')';
-                }
-
-                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('sample4_postcode').value = data.zonecode;
-                document.getElementById("sample4_roadAddress").value = roadAddr;
-                document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
-                
-                // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
-                if(roadAddr !== ''){
-                    document.getElementById("sample4_extraAddress").value = extraRoadAddr;
-                } else {
-                    document.getElementById("sample4_extraAddress").value = '';
-                }
-
-                var guideTextBox = document.getElementById("guide");
-                // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
-                if(data.autoRoadAddress) {
-                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
-                    guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
-                    guideTextBox.style.display = 'block';
-
-                } else if(data.autoJibunAddress) {
-                    var expJibunAddr = data.autoJibunAddress;
-                    guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
-                    guideTextBox.style.display = 'block';
-                } else {
-                    guideTextBox.innerHTML = '';
-                    guideTextBox.style.display = 'none';
-                }
+            // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+            // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+            if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                extraRoadAddr += data.bname;
             }
-        }).open();
-    };
+            // 건물명이 있고, 공동주택일 경우 추가한다.
+            if(data.buildingName !== '' && data.apartment === 'Y'){
+               extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+            }
+            // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+            if(extraRoadAddr !== ''){
+                extraRoadAddr = ' (' + extraRoadAddr + ')';
+            }
+
+            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+            document.getElementsByClassName('postnumber1')[0].value = ' ' +data.zonecode;
+            document.getElementsByClassName('postnumber1')[1].value = ' ' +data.zonecode;
+            document.getElementsByClassName("address1")[0].value = ' ' +roadAddr;
+            document.getElementsByClassName("address1")[1].value = ' ' +roadAddr;
+            document.getElementsByClassName("address1")[0].value += ' ' +data.jibunAddress;
+            document.getElementsByClassName("address1")[1].value += ' ' +data.jibunAddress;
+            
+            // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+            if(roadAddr !== ''){
+                document.getElementsByClassName("address1").value += ' ' +extraRoadAddr;
+            } else {
+               
+            }
+        }
+    }).open();
+}
+
+    </script>
+    
+    <script>
+function Postcode2() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+            // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+            var roadAddr = data.address; // 도로명 주소 변수
+            var extraRoadAddr = ''; // 참고 항목 변수
+
+            // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+            // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+            if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                extraRoadAddr += data.bname;
+            }
+            // 건물명이 있고, 공동주택일 경우 추가한다.
+            if(data.buildingName !== '' && data.apartment === 'Y'){
+               extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+            }
+            // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+            if(extraRoadAddr !== ''){
+                extraRoadAddr = ' (' + extraRoadAddr + ')';
+            }
+
+            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+            document.getElementById('postnumber2').value = ' ' +data.zonecode;
+            document.getElementById("address2").value = ' ' +roadAddr;
+            document.getElementById("address2").value += ' ' +data.jibunAddress;
+            
+            // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+            if(roadAddr !== ''){
+                document.getElementById("address2").value += ' ' +extraRoadAddr;
+            } else {
+               
+            }
+        }
+    }).open();
+}
+
     </script>
 
 <style>
@@ -176,7 +209,8 @@ button:hover {
 	width: 18px; 
 	height: 18px; 
 	margin-left:4px;  
-	margin-bottom: 5px; 
+	margin-bottom: 5px;
+	transition : transform 1s; 
 }
 
 
@@ -218,13 +252,52 @@ table{
 
 th, td{
 	width: 200px;
-	margin:50px;
+	/* margin:50px; */
+	text-align: center;
 }
 
 #findAddress{
 	width:150px;
 	margin:50px;
 }
+.postnumber1{
+	margin-left:10%;
+	width: 210px;
+	
+}
+#postnobtn1{
+	width: 130px;
+}
+.address1{
+	margin-left: 23.2%;
+	margin-top: 5px;
+	width: 500px;
+}
+.addressdetail1{
+	margin-left: 23.2%;
+	margin-top: 5px;
+}
+
+
+
+#postnumber2{
+	margin-left:10%;
+	width: 210px;
+	
+}
+#postnobtn2{
+	width: 130px;
+}
+#address2{
+	margin-left: 23.2%;
+	margin-top: 5px;
+	width: 500px;
+}
+#addressdetail2{
+	margin-left: 23.2%;
+	margin-top: 5px;
+}
+
 </style>	
 </head>
 <body>
@@ -245,35 +318,35 @@ th, td{
 						<span style = "float:right;"><img id="downArrow" src="/images/downarrow.png" onclick="arrow()"></span>
 						<span id = "orderInfo" style="float: right;">[[${#authentication.principal.member.customerName}]]&nbsp; ([[${#authentication.principal.member.email}]])</span>
                  		<input type="hidden" id="customer_id" th:value="${#authentication.principal.member.customer_id}">
+                 		<input type="hidden" id="customer_email" th:value="${#authentication.principal.member.email}">
+                 		<input type="hidden" id="customer_phone" th:value="${#authentication.principal.member.phone_number}">
+                 		<input type="hidden" id="customer_name" th:value="${#authentication.principal.member.customerName}">
                  		<input type="hidden" id="package_id" th:value="${pack.packageId}">
                  		<input type="hidden" id="package_price" th:value="${pack.price}">
                  	</div> 
                      <hr>
                  	<div class="UserInfo">
-                 		<form>
+                 		<form style="width:800px;">
                  			<ul>
                  				<li id="myli"><div class="list_name">주문자</div>  <input class="payment_form" type="text" th:value="${#authentication.principal.member.customerName}" style="border-radius: 1px;"></li>
                  				<li id="myli"><div class="list_name">이메일</div> <input class="payment_form" type="email" th:value="${#authentication.principal.member.email}"></li>
 	                 			<li id="myli"><div class="list_name">휴대전화</div> <input class="payment_form" type="text" th:value="${#authentication.principal.member.phone_number}"></li>
 	                 			<li id="myli"><div class="list_name">주소</div> 
-	                 			 <div class="findAddress">
-				
-									<input type="text" 	id="postnumber" name="postnumber" value=""  readonly/>
-									<input type="text" 	id="address" name="address" value="" placeholder="우편 번호 검색을 눌러주세요" readonly/>
-									<input type="button" onclick="Postcode()" value="우편번호 찾기"><br>
-									<input type="text" id='addressdetail' name="addressdetail" placeholder="상세 주소 입력">
-								 </div>
+	                 				<input type="text" class="postnumber1" name="postnumber1"  th:value="${#authentication.principal.member.postnumber}" readonly/>
+	                 				<input type="button" id="postnobtn1" onclick="Postcode1()" value="우편번호 찾기"><br>
+	                 				<input type="text"  class="address1" name="address1" th:value="${#authentication.principal.member.address}" readonly/><br>
+									<input type="text" class='addressdetail1' name="addressdetail1" th:value="${#authentication.principal.member.addressdetail}">
 								</li>
                  			</ul>
 	                 	</form>
 	                
-	                 <hr>
+	     
 	                  </div>
                  	<br><br>
                 	<h3 style="display: inline;">배송지 정보</h3>
                 	<hr>
                  	<div>
-                  		<form>
+                  		<form style="width:800px;">
 	                 		<ul>
 	                 			<li id="myli"><div class="list_name">배송지 선택</div><input type="radio" checked="checked" id = "selectDelivery1"  name = "selectDelivery" onchange="setDisplay()"> 주문자 정보와 동일
 	                 			<input type="radio" id = "selectDelivery2" name = "selectDelivery" onchange="setDisplay()"> 새 배송지 입력
@@ -284,7 +357,12 @@ th, td{
 	                 				<li id="myli"><div class="list_name">이메일</div> <input class="payment_form" type="email" th:value="${#authentication.principal.member.email}"></li>
 		                 			<li id="myli"><div class="list_name">휴대전화</div> <input class="payment_form" type="text" th:value="${#authentication.principal.member.phone_number}"></li>
 		                 			
-		                 			<li id="myli"><div class="list_name">주소</div>  <input class="payment_form" type="text" th:value="${#authentication.principal.member.address}"></li>
+		                 			<li id="myli"><div class="list_name">주소</div> 
+		                 				<input  type="text" class="postnumber1" name="postnumber1"  th:value="${#authentication.principal.member.postnumber}" readonly/>
+		                 				
+		                 				<input  type="text"  class="address1" name="address1" th:value="${#authentication.principal.member.address}" readonly/><br>
+										<input  type="text" class='addressdetail1' name="addressdetail1" th:value="${#authentication.principal.member.addressdetail}">
+									</li>
 		                 		</ul>
 	                 			</div>
 	                 			<div id="new_address">
@@ -293,7 +371,12 @@ th, td{
 	                 				<li id="myli"><div class="list_name">이메일</div> <input class="payment_form" type="email"></li>
 		                 			<li id="myli"><div class="list_name">휴대전화</div> <input class="payment_form" type="text"></li>
 		                 			
-		                 			<li id="myli"><div class="list_name">주소</div>  <input class="payment_form" type="text" th:value="${#authentication.principal.member.address}"></li>
+		                 			<li id="myli"><div class="list_name">주소</div> 
+		                 				<input type="text" id="postnumber2" name="postnumber2" value="" readonly/>
+		                 				<input type="button" id="postnobtn2" onclick="Postcode2()" value="우편번호 찾기"><br>
+		                 				<input type="text"  id="address2" name="address2" value=""  readonly/><br>
+									<input type="text" id='addressdetail2' name="addressdetail2" >
+									</li>
 		                 		</ul>
 	                 			</div>
 	                 		</ul>
@@ -312,7 +395,7 @@ th, td{
                 	 		<th>주문금액</th>
                 	 	</tr>
                 	 	<tr>
-                	 		<td><img src="/images/고래밥.jpg"></td>
+                	 		<td><img th:src="|assets/img/gallery/${pack.img}.jpg|"  style = "width:200px; height:auto;" alt=""></td>
                 	 		<td th:text="${pack.packageName}">
                 	 		<td>무료</td>
                 	 		<td th:text="${pack.price}">
@@ -332,21 +415,34 @@ th, td{
 </div>
 <script>
 	function kakaopay(){
-		alert('hfahjdgahlkdj');
 		var IMP = window.IMP; // 생략가능
+		var merchantid = new Date().getTime();
 		IMP.init('imp41751598'); 
 		IMP.request_pay({
 			pay_method : 'card', // 결제창 호출단계에서의 pay_method는 아무런 역할을 하지 못하며, 구매자가 카카오페이 앱 내에서 신용카드 vs 카카오머니 중 실제 선택한 값으로 추후 정정됩니다.
-			merchant_uid : new Date().getTime(),
-			name : 'test05',
-			amount : 2000, 
+			merchant_uid : merchantid,
+			name : 'snack24',
+			amount : 0, 
 			customer_uid : $('#customer_id').val(), //customer_uid 파라메터가 있어야 빌링키 발급이 정상적으로 이뤄집니다.
-			buyer_email : 'iamport@siot.do',
-			buyer_name : '아임포트',
-			buyer_tel : '02-1234-1234'
+			buyer_email : $('#customer_email').val(),
+			buyer_name : $('#customer_name').val(),
+			buyer_tel : $('#customer_phone').val()
 		}, function(rsp) {
 			if ( rsp.success ) {
 				alert('빌링키 발급 성공 : ' +$('#customer_id').val());
+				$.ajax({
+					url:'/payment1',
+					type : 'POST',
+					data:{
+						"customer_uid" : $('#customer_id').val(),
+						"price" : $('#package_price').val(), 
+						"merchant_uid" : merchantid
+					},
+					success:function(result) {
+						window.location.href = "/index";
+
+					}
+				});
 				$.ajax({
 					url:'/insertSubscribe',
 					data:{
@@ -354,28 +450,16 @@ th, td{
 						customer_id : $('#customer_id').val()
 					},
 					success:function(result) {
-						alert('정기결제 등록'+result);
+
 					}
 				});
-				
-			    alert($('#customer_id').val());
-				$.ajax({
-					url:'/payment1',
-					type : 'POST',
-					data:{
-						"customer_uid" : $('#customer_id').val(),
-						"price" : $('#package_price').val(), 
-						"merchant_uid" : new Date().getTime()
-					},
-					success:function(result) {
-						alert('다음 결제 예약');
-					}
-				});
+			
 			} else {
-				alert('빌링키 발급 실패');
+				alert('정기결제 등록이 취소되었습니다');
 				}
 			});
 	}	
+	
 
 </script>
 </div>

@@ -36,9 +36,28 @@
 #qty_num {
 	padding-top: 8px;
 }
+.product_delete_btn {
+	position: absolute;
+	border-radius: 100%;
+    border: none;
+    width: 20px;
+    height: 21px;
+    padding: 0px;
+    font-size: 13px;
+}
+.product_delete_btn:hover {
+	/* border: 1px solid #989799; */
+	background: #989799;
+}
+.product_delete_btn:active {
+	background: black;
+	color: white;
+}
 #product_img {
 	padding-top: 2px;
+    height: 127px;
 }
+
 .basketdiv_text {
 	text-align: center;
     padding: 85px;
@@ -86,7 +105,7 @@
 }
 .product_name {
 	text-align: left;
-	
+
 }
 .product_price {
 	margin-left: 0px;
@@ -103,7 +122,54 @@
     scrollbar-width: none; /* Firefox */
 }
 .basketdiv_list::-webkit-scrollbar {
-    /* display: none; */ /* Chrome, Safari, Opera*/
+    /* display: none; /* Chrome, Safari, Opera*/
+}
+#make_package_name, #make_package_price, #make_package_img {
+	width: 300px;
+    height: 48px;
+}
+#package_make {
+	display: inline-block;
+}
+.package_price_name_list li:nth-child(1), .package_price_name_list li:nth-child(2), .package_price_name_list li:nth-child(3) {
+	font-size: 20px;
+}
+.add_package_h1, .add_product_h1 {
+	background: url(http://cu.bgfretail.com/images/common/th_bg_view.gif) repeat-x 0 0;
+	border-top: 1px solid gray;
+    padding-top: 20px;
+    padding-bottom: 9px;
+    border-bottom: 1px solid gray;
+    text-align: center;
+
+}
+#add_list {
+	float: right;
+}
+#add_product {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+#add_product_div_head, #add_product_div_row {
+	display: grid;
+    grid-template-columns: 1fr 1fr 1fr 0.5fr 1fr 0.35fr;
+}
+#add_product_div_head {
+	margin-top: 60px;
+	margin-bottom: 20px;
+	border-bottom: 1px solid gray;
+	padding-bottom: 10px;
+	text-align: center;
+	font-weight: bold;
+}
+#add_product_div_row {
+	margin-bottom: 11px;
+}
+#product_price_add {
+	width: 100%;
+}
+#product_image_add {
+	margin: auto 5px;
 }
 hr {
 	margin-top: 20px;
@@ -135,7 +201,9 @@ hr {
 	/* display:none;  */
 }
 
+
 .product {
+	position: relative;
 	margin: 0 auto;
     width: 131px;
     height: 100px;
@@ -153,6 +221,28 @@ hr {
 .deleteBtn {
 	margin-right: 9px;
 	float: right;
+}
+#move_btn {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+}
+.move_btn {
+	color: gray;
+    background: white;
+    border: 0.5px solid gray;
+    height: 75px;
+    margin-bottom: 8px;
+} 
+.move_btn:hover {
+	color: white;
+	background: gray;
+}
+
+.move_btn:nth-child(1) {
+	border-left: none;
+}
+.move_btn:nth-child(-n+3) {
+	border-right: none;
 }
 
 /* grid�� ����ؾ��� */
@@ -181,7 +271,7 @@ hr {
 .category:nth-child(-n+5)>.category_name {
 	border-bottom: none;
 }
-	
+
 .category {
 	display: inline-grid;
 }
@@ -507,4 +597,3 @@ hr {
 	    margin: 0 auto;
 	}
 }
-

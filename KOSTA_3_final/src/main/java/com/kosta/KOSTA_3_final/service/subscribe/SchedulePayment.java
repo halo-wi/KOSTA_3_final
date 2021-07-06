@@ -74,7 +74,6 @@ public class SchedulePayment {
 		 String json = str.toJson(reqJson); 
 		 System.out.println(json);
 		 HttpEntity<String> entity = new HttpEntity<>(json, headers);
-		 System.out.println(json + "예약요청이아닌 스케줄 결제요청");
 		 return restTemplate.postForObject("https://api.iamport.kr/subscribe/payments/schedule", entity, String.class);
 		 
 		 
