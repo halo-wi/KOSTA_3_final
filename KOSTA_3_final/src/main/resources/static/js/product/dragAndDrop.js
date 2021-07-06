@@ -22,7 +22,7 @@ let basket = {
             item.parentElement.parentElement.parentElement.remove();
         });
         //AJAX 서버 업데이트 전송
-    
+
         //전송 처리 결과가 성공이면
         this.reCalc();
         this.updateUI();
@@ -34,7 +34,7 @@ let basket = {
             item.remove();
           });
           //AJAX 서버 업데이트 전송
-        
+
           //전송 처리 결과가 성공이면
           this.totalCount = 0;
           this.totalPrice = 0;
@@ -58,18 +58,18 @@ let basket = {
     },
     //화면 업데이트
     updateUI: function () {
-		
+
         document.querySelector('#sum_p_num').textContent = '상품갯수: ' + this.totalCount.formatNumber() + '개';
         document.querySelector('#sum_p_price').textContent = '합계금액: ' + this.totalPrice.formatNumber() + '원';
         document.querySelector('#package_price').setAttribute('value',salePrice(this.totalPrice));
-        
+
         // 합계금액이 0원일 때 할인금액란을 없앤다. 
         if(this.totalPrice == 0) {
 	        document.querySelector('#sale_p_price').textContent = '';	
 		} else {
 	        document.querySelector('#sale_p_price').textContent = '할인금액: ' + salePrice(this.totalPrice).formatNumber() + '원';			
 		}
-		
+
 		// 0원 이상이면 합계 금액에 줄긋기
         textDeco();
     },
@@ -79,7 +79,7 @@ let basket = {
         var item = document.querySelector('#p_num'+pos);
         var p_num = parseInt(item.getAttribute('value'));
         var newval = event.target.classList.contains('up') ? p_num+1 : event.target.classList.contains('down') ? p_num-1 : event.target.value;
-        
+
         if (parseInt(newval) < 1 || parseInt(newval) > 99) { return false; }
 
         item.setAttribute('value', newval);
@@ -116,17 +116,20 @@ function resetIndex() { // count reset
 
 // 할인가 계산
 function salePrice(totalPrice) {
-	
+
 	var result = 0;
-	
-	if(totalPrice >= 30000 && totalPrice < 50000) {
-		result = totalPrice*0.90;
-	}else if(totalPrice >= 50000) {
-		result = totalPrice*0.85;		
-	}else {
-		result = totalPrice*0.95;
+	if(($('#auth').val()=="ADMIN") && ($('#auth_url').val()=="admin")) {
+		result = totalPrice*0.85;
+	} else {
+		if(totalPrice >= 30000 && totalPrice < 50000) {
+			result = totalPrice*0.90;
+		}else if(totalPrice >= 50000) {
+			result = totalPrice*0.85;		
+		}else {
+			result = totalPrice*0.95;
+		}
 	}
-	
+
 	return result;
 }
 
@@ -224,20 +227,56 @@ function drop() {
 
 // 목록 삭제
 function productRowDelete(row) {
-	$(row).parent().parent().remove();
+	$(row).parent().remove();
+}
+
+// 클릭 시 패키지 정보를 form으로 전송 후 db에 저장하는 버튼
+function packageAdd() {
+	alert($("#package_price").val());
+	if($("#package_price").val() > 0) {
+		alert("submit");
+		$('#orderform').submit();
+
+	}else {
+		alert("상품을 선택해주세요.");			
+	}
+}
+
+// 어드민 패키지/제품 페이지에서 클릭 시 각 기능의 위치로 이동시키는 기능
+function fnMove(seq){
+    var offset = $("." + seq).offset();
+    $('html, body').animate({scrollTop : offset.top-215}, 1000);
+}
+
+// 관리자 페이지 제품 삭제
+function adminProductDelete(productId) {
+	//alert("dd");
+	//window.confirm("제품을 삭제하시겠습니까?");
+
+	var product_id = $(productId).parent().children(".product_id").text();
+
+	$.ajax({
+		url:"/product/adminProductDelete",
+		data: {
+			productId: product_id
+		},
+		success: function() {
+			location.reload();
+		}
+	});
 }
 
 $(function() {
- 	
+ 	// 카테고리 클릭/검색 기능
  	$(".category_name, #search_product").on("click",function() {
 		var typeStr = $('.category_name').attr("name");
 		var keywordStr;
 		if($(this).hasClass('category_name')) {
-			
+
 			keywordStr = $(this).val();
-			
+
 		} else {
-			
+
 			/*typeStr = $('#search_type option:selected').val();*/
 			typeStr = 'product';
 			keywordStr = $('#search_keyword').val();
@@ -256,47 +295,55 @@ $(function() {
 				drag();
 		    }
 		})
-		
+
 	});
  	drag();
  	drop();
- 	
- 	$('#package_buy_btn').click(function() {
-		alert("click");
-		alert($("#package_price").val());
-		if($("#package_price").val() > 0) {
-			alert("submit");
-			$('#orderform').submit();
 
-		}else {
-			alert("상품을 선택해주세요.");			
-		}
-	});
-	
-	
+ 	// 커스텀 패키지 추가
+ 	$('#package_buy_btn').click(function() {
+		packageAdd();
+	});	
+
 	// 제품 insert
  	$('#product_add').click(function() {
 		alert("submit");
 		$('#add_product_form').submit();
 	});
-	
+
 	// 권한에 따라 show, hide 할 html 태그들
-	if($('#auth').val()=="ADMIN") {
+	if(($('#auth').val()=="ADMIN") && ($('#auth_url').val()=="admin")) {
 		// 패키지 상세설명 숨기기
 		$('#custom_poster').hide();
 		$('#package_buy_btn').hide();
 		$('#package_make').show();
+		$("#orderform").attr("action", "/product/customInsert");
+		$("#package_type").attr("value", "0");
+		$('#package_name').attr("disabled", true);
+		$('#package_price').attr("disabled", true);
+
 	} else {
+
+		$('.product_delete_btn').hide();
 		$('#custom_poster').show();
 		$('#add_product').hide();
 		$('#package_make').hide();
+		$('.package_price_name_list').hide();
+		$('#make_package_name').attr("disabled", true);
+		$('#make_package_price').attr("disabled", true);
+		$('#make_package_img').attr("disabled", true);
+		$('#move_btn').hide();
+		$('.add_package_h1').hide();
 	}
-	$("#add_product_row_table").hide();
-	
-	
+	$(".add_product_div_body").hide();
+
+	// 관리자 패키지 추가
+	$('#package_make').click(function() {
+		packageAdd();
+	});
+
 	// 목록 추가
 	$('#add_list').click(function() {
-		$('#add_product_tbody').append($("#add_product_row_table tbody").html());
+		$('#add_product_div_body').append($(".add_product_div_body").html());
 	});
-		
 });
