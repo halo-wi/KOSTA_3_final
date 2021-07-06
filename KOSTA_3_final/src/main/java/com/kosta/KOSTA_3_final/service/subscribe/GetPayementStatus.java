@@ -25,10 +25,10 @@ public class GetPayementStatus {
 	@Setter(onMethod_ = @Autowired)
 	private ImportPay pay;
 	
-	public String paymentStatus(long merchant_uid) throws JsonMappingException, JsonProcessingException {
+	public String paymentStatus(long merchantUid) throws JsonMappingException, JsonProcessingException {
 		String token = pay.getToken();
+		String merchant_uid = Long.toString(merchantUid);
 		
-
 		//getToken에서 얻은 response에서 필요한 값만 추출
 		 Gson str = new Gson(); 
 		 token = token.substring(token.indexOf("response") +10); 
@@ -36,8 +36,8 @@ public class GetPayementStatus {
 		 GetTokenVO vo = str.fromJson(token, GetTokenVO.class);
 		 String access_token = vo.getAccess_token();
 		 
-		 String url = "https://api.iamport.kr/subscribe/payments/schedule/1624504620";
-
+		 String url = "https://api.iamport.kr/subscribe/payments/schedule/"+merchant_uid;
+		 System.out.println(url);
 		 RestTemplate restTemplate = new RestTemplate();
 		
 		HttpHeaders headers = new HttpHeaders();

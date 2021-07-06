@@ -41,6 +41,7 @@
 	<div class="panel-body" layout:fragment="content1">
 
 		<form th:action="@{reviewregister}" method="post">
+
 		
 <table  style="margin:5% auto;">
                 <tr>
@@ -56,8 +57,9 @@
                         <tr>
                         <td>패키지</td>
                         <td><select id= "pack" name="pack">
+
 						<option value="">----- 패키지를 선택하세요-----</option>
-						<option th:value="${review.pack}" th:text = "${review.pack.packageName}"  th:each="review:${subscribes}"></option>
+						<option th:value="${review.pack.packageId}" th:text = "${review.pack.packageName}"  th:each="review:${subscribes}"></option>
 
 					</select> </td>
                         </tr>
@@ -109,6 +111,7 @@
 		<input type="radio" name="score"  value="10">
 		<span class="startRadio__img"><span class="blind">10</span></span>
 	</label>
+
 </div></td>
                         </tr>
                         </table>
@@ -120,13 +123,14 @@
                         <button type="submit" class="btn">등록하기</button>
 						<button type="reset" class="btn">reset</button>
 						</div>
+
 		</form>
 
 	</div>
 
 
 <script th:inline="javascript">
-/* $(function() {
+ $(function() {
 	
 	console.log($('#pack').val())
 	
@@ -134,12 +138,7 @@
 	 var btn = document.getElementById('btn-submit');
 	 btn.disabled = 'disabled';
  }
-}); */
-
-
-
-
-
+}); 
 
 
 

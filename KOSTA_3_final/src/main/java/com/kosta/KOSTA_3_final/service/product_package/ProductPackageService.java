@@ -40,6 +40,11 @@ public class ProductPackageService {
 	@Autowired
 	CompanyRepository companyRepo;
 	
+	public PackageVO selectById(Long packageId) {
+		return packageRepo.findById(packageId).get();
+	}
+	
+	
 	public List<Product> selectProductAll() {
 		return (List<Product>) productRepo.findAll();
 	}
@@ -49,8 +54,6 @@ public class ProductPackageService {
 	}
 	
 	public List<Product> selectProductAll(String type, String keyword) {
-		System.out.println(type);
-		System.out.println(keyword);
 		Predicate p = productRepo.makePredicate(type, keyword);
 		return (List<Product>) productRepo.findAll(p);
 	}
@@ -59,6 +62,11 @@ public class ProductPackageService {
 		return (List<Category>) categoryRepo.findAll();
 	}
 	
+	public List<String> findProductbyPackageNo(Long pno){
+		return productPackageRepo.findProductbyPackageNo(pno);
+	}
+	
+
 	public PackageVO insertPackage(ProductListVO productList) {
 		// 따로 클래스로 만들자
 		PackageVO packageVO = PackageVO.builder().
@@ -66,43 +74,23 @@ public class ProductPackageService {
 				price(productList.getPackagePrice()).
 				packageType(1).
 				build();
-//		PackageVO packageVO = PackageVO.builder().
-//				packageId(12114).
-//				packageName("남후승package"). // 이름도 login한 사람의 이름+"package" 로 사용
-//				price(productList.getPackagePrice()).
-//				packageType(1).
-//				build();
-		
-		//System.out.println("여기!"+ packageVO.getPackageId());
+
 		PackageVO newPackage = packageRepo.save(packageVO);
-		System.out.println(newPackage+"newPackage!!!!!!!!!!!!!!!!!");
-		//System.out.println(packageVO.getPackageId());
-		// 따로 클래스로 만들자
-		
-		 
-		// package_id를 어떻게 생성할 것인지 -> PackageVO의 @GeneratedValue를 없앨 것인지
-		// product_id를 어떻게 넣을 것인지 -> Product_PackageVO의 @GeneratedValue를 없앨 것인지  
-		 
 		IntStream.range(0, productList.getProductId().length).forEach(idx->{
-			
 			Product p = productRepo.findById(productList.getProductId()[idx]).get();
 			PackageVO packageVO1 = packageRepo.findById(packageVO.getPackageId()).get();
-			
 			Product_Package productPackage = Product_Package.builder().
 					product_qty(productList.getProductQty()[idx]).
 					product(p).
 					pack(packageVO1).
 					build();
-			
 			productPackageRepo.save(productPackage);
-			System.out.println("insert 성공" + idx);
 		});
 		return newPackage;
 	}
 	
 	public void adminInsertProduct(ProductListVO productList) {
 		IntStream.range(0, productList.getProductName().length).forEach(idx->{
-						
 			Product product = Product.builder().
 					productName(productList.getProductName()[idx]).
 					price(productList.getProductPrice()[idx]).
@@ -111,7 +99,7 @@ public class ProductPackageService {
 					build();
 			
 			productRepo.save(product);
-			System.out.println("insert 성공" + idx);
+
 		});	
 	}
 	
