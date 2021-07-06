@@ -1,33 +1,75 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	layout:decorate="~{layout/layout2}">
 
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>글 작성</title>
+<style>
+        table.table2{
+                border-collapse: separate;
+                border-spacing: 1px;
+                text-align: left;
+                line-height: 1.5;
+                border-top: 1px solid #ccc;
+                margin : 20px 10px;
+        }
+        table.table2 tr {
+                 width: 50px;
+                 padding: 10px;
+                font-weight: bold;
+                vertical-align: top;
+                border-bottom: 1px solid #ccc;
+        }
+        table.table2 td {
+                 width: 100px;
+                 padding: 10px;
+                 vertical-align: top;
+                 border-bottom: 1px solid #ccc;
+        }
+
+ 
+</style>
+
 </head>
 <body>
 
-	<div>
-		<h1 >Board 등록</h1>
-		<div >
+	<div layout:fragment="content1">
+		<div  style="padding-top:50px;">
 		
 			<form th:action="@{register}" method="post">
-				<div class="form-group">
-					<label for="btitle">title:</label> <br>
-					<input class="form-control" placeholder="enter title" name="btitle" >
-				</div><br><br>
-				<div class="form-group">
-					<label for="bcontent">content:</label><br>
-					<textarea class="form-group" rows="3" cols="" name="bcontent"></textarea>
-				</div><br><br><br>
-	
-				<div class="form-group">
-				<p sec:authentication="name"></p><p>님에 의해서 작성됩니다.</p>
-				</div><br><br><br>
-				<button type="submit" >등록하기</button>
-				<button type="reset" >reset</button>
+				<table  style="margin:5% auto;">
+                <tr>
+                <td height=20 align= center bgcolor=red><font color=white size="5px"> 글쓰기</font></td>
+                </tr>
+                <tr>
+                <td bgcolor=white>
+                <table class = "table2">
+                        <tr>
+                        <td >작성자</td>
+                        <td><p sec:authentication="name"></p> </td>
+                        </tr>
+ 
+                        <tr>
+                        <td>제목</td>
+                        <td><input type = text name="btitle" size=60></td>
+                        </tr>
+ 
+                        <tr>
+                        <td>내용</td>
+                        <td><textarea name="bcontent"  cols=85 rows=15></textarea></td>
+                        </tr>
+                        </table>
+ 
+                       
+                        </table>
+ 
+						<div style="text-align: center;">
+                        <button type="submit" class="btn">등록하기</button>
+						<button type="reset" class="btn">reset</button>
+						</div>
 			</form>
 
 		</div>
