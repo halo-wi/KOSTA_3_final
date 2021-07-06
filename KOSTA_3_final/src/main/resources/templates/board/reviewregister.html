@@ -17,13 +17,11 @@
 
 		<form th:action="@{reviewregister}" method="post">
 
-
-
 			<div class="form-group">
 				<label for="pack"> 패키지 </label><br>
 					<select id= "pack" name="pack">
 						<option value="">----- 패키지를 선택하세요-----</option>
-						<option th:value="${review.pack}" th:text = "${review.pack.packageName}"  th:each="review:${subscribes}"></option>
+						<option th:value="${review.pack.packageId}" th:text = "${review.pack.packageName}"  th:each="review:${subscribes}"></option>
 
 					</select>
 			</div>
@@ -82,13 +80,6 @@
 	</label>
 </div>
 				
-				
-				
-				
-				
-				
-				
-				
 			</div>
 			<br>
 			<div class="form-group">
@@ -104,7 +95,7 @@
 	</div>
 
 <script th:inline="javascript">
-/* $(function() {
+ $(function() {
 	
 	console.log($('#pack').val())
 	
@@ -112,7 +103,7 @@
 	 var btn = document.getElementById('btn-submit');
 	 btn.disabled = 'disabled';
  }
-}); */
+}); 
 
 
 

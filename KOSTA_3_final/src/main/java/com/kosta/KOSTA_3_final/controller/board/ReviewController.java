@@ -31,6 +31,7 @@ public class ReviewController {
 	UserService uservice;
 	@Autowired
 	ProductPackageService pservice;
+
 	
 	@GetMapping("/board/reviewlist")
 	public void selectAll(Model model, PageVO pagevo) {
@@ -57,7 +58,8 @@ public class ReviewController {
 	
 	
 	@PostMapping("/board/reviewregister")
-	public String reviewRegisterPost( Review review, RedirectAttributes rttr, Principal principal) {
+	public String reviewRegisterPost(Review review, RedirectAttributes rttr, Principal principal, Long pack) {
+		review.setPack(pservice.selectById(pack));
 		Member member = uservice.getMemberInfo(principal.getName());
 		review.setCustomer(member);
 		Review ins_re = service.insertReview(review);

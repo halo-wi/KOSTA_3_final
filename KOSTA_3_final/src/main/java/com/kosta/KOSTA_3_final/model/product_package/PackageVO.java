@@ -46,8 +46,8 @@ public class PackageVO {
 
 	int price;
 	
-	
 	String img;
+	
 	@JsonIgnore
 	@OneToMany(mappedBy = "pack", cascade = CascadeType.ALL)
 	List<Review> reviews;

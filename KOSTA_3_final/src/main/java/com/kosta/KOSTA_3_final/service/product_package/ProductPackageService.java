@@ -40,6 +40,11 @@ public class ProductPackageService {
 	@Autowired
 	CompanyRepository companyRepo;
 	
+	public PackageVO selectById(Long packageId) {
+		return packageRepo.findById(packageId).get();
+	}
+	
+	
 	public List<Product> selectProductAll() {
 		return (List<Product>) productRepo.findAll();
 	}

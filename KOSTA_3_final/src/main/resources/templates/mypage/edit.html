@@ -23,10 +23,10 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
         <link rel="stylesheet" href="../../assets/css/style.css">
         <style>
         #email,#customerName,#password,#phone_number{width: 70%;}
- .col-lg-6{width:70%; text-align:center; margin:30px auto;
+ .col-lg-6{width:100%; text-align:center; margin:1% auto;
 }
 .left,.col-md-12{text-align: left;}
-#address{width: 70%;}
+#address{width: 80%;}
         </style>
 </head>
 <body>
@@ -60,7 +60,8 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
                                     </li>
                                     <li><a href="#">Pages</a>
                                         <ul class="submenu">
-                                            <li><a href="/login">로그인</a></li>
+                                           <li sec:authorize="isAnonymous()"><a href="/login">로그인</a></li>
+                                            <li sec:authorize="isAuthenticated()"><a href="/logout">로그아웃</a></li>
                                             <li><a href="cart.html">Cart</a></li>
                                             <li><a href="elements.html">Element</a></li>
                                             <li><a href="confirmation.html">Confirmation</a></li>
@@ -79,7 +80,8 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
                                         <span class="flaticon-search"></span>
                                     </div>
                                 </li>
-                                <li> <a href="/login"><span class="flaticon-user"></span></a></li>
+                                 <li sec:authorize="isAnonymous()"><a href="/login"><span class="flaticon-user"></span></a></li>
+                                 <li sec:authorize="isAuthenticated()"><a href="/logout"><span class="flaticon-user"></span></a></li>
                                 <li><a href="cart.html"><span class="flaticon-shopping-cart"></span></a> </li>
                             </ul>
                         </div>
@@ -99,32 +101,33 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
                             <div class="login_part_form_iner">
                                 <h4>
                                     회원 정보 수정</h4>
+                                    <hr>
         <form th:action="@{/mypage/edit}" method="post">
         <div class="col-md-12 form-group p_star">
-        <div class="left">이메일(*수정하실 수 없습니다.*)</div>
-        <input type="text" readonly name="email" id="email" th:value=${memberinfo.email}>
+        <div class="left"></div>
+        <input type="hidden" readonly name="email" id="email" th:value="${memberinfo.email}">
         </div>
         <div class="col-md-12 form-group p_star">
         <div class="left">이름</div>
-        <input type="text" th:name="customerName" th:value=${memberinfo.customerName}>
+        <input type="text" th:name="customerName" th:value="${memberinfo.customerName}">
         </div>
         <div class="col-md-12 form-group p_star">
 <div class='left'>비밀번호</div>
-<input type="text" 	id="password" name="password" value="" placeholder="반드시 바꿔주세요"/>
+<input type="text" 	id="password" name="password" value="" placeholder="반드시 바꿔주세요" required/>
 </div>
         <div class="col-md-12 form-group p_star">
         <div class="left">전화번호</div>
-        <input type="text" th:name="phone_number" th:value=${memberinfo.phone_number}>
+        <input type="text" th:name="phone_number" th:value="${memberinfo.phone_number}">
         </div>
         <div class="col-md-12 form-group p_star">
        <div class="left"> 주소 </div>
-<input type="text" 	id="postnumber" th:name="postnumber" th:value=${memberinfo.postnumber}  readonly/>
-<br><input type="text" 	id="address" th:name="address" th:value=${memberinfo.address} placeholder="우편 번호 검색을 눌러주세요" readonly/>
+<input type="text" 	id="postnumber" th:name="postnumber" th:value="${memberinfo.postnumber}"  readonly/>
+<br><input type="text" 	id="address" th:name="address" th:value="${memberinfo.address}" placeholder="우편 번호 검색을 눌러주세요" readonly/>
 <input type="button" onclick="Postcode()" value="우편번호 찾기"><br>
-<input type="text" id='addressdetail' th:name="addressdetail" th:value=${memberinfo.addressdetail} placeholder="상세 주소 입력">
+<input type="text" id='addressdetail' th:name="addressdetail" th:value="${memberinfo.addressdetail}" placeholder="상세 주소 입력">
  </div>
- <input type="hidden" id="auth" name="auth" value="USER"/>
- 
+ <input type="hidden" id="auth" name="auth" th:value="${memberinfo.auth}"/>
+ <hr>
  <input class="btn" type="submit" value="정보 수정">
         </form>
         </div>
