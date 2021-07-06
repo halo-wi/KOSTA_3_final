@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProductListVO {
 	private int packageId;
 	private int packagePrice;
+	private int packageType;
 	private String packageName;
 	private int[] productId;
 	private String[] productName;
@@ -26,6 +27,12 @@ public class ProductListVO {
 	}
 	public void setPackagePrice(int packagePrice) {
 		this.packagePrice = packagePrice;
+	}
+	public int getPackageType() {
+		return packageType;
+	}
+	public void setPackageType(int packageType) {
+		this.packageType = packageType;
 	}
 	public String getPackageName() {
 		return packageName;
@@ -77,13 +84,10 @@ public class ProductListVO {
 	}
 	@Override
 	public String toString() {
-		return "ProductListVO [packageId=" + packageId + ", packagePrice=" + packagePrice + ", packageName="
-				+ packageName + ", productId=" + Arrays.toString(productId) + ", productName="
-				+ Arrays.toString(productName) + ", productPrice=" + Arrays.toString(productPrice) + ", productQty="
-				+ Arrays.toString(productQty) + ", companyId=" + Arrays.toString(companyId) + ", categoryId="
-				+ Arrays.toString(categoryId) + ", files=" + Arrays.toString(files) + "]";
+		return "ProductListVO [packageId=" + packageId + ", packagePrice=" + packagePrice + ", packageType="
+				+ packageType + ", packageName=" + packageName + ", productId=" + Arrays.toString(productId)
+				+ ", productName=" + Arrays.toString(productName) + ", productPrice=" + Arrays.toString(productPrice)
+				+ ", productQty=" + Arrays.toString(productQty) + ", companyId=" + Arrays.toString(companyId)
+				+ ", categoryId=" + Arrays.toString(categoryId) + ", files=" + Arrays.toString(files) + "]";
 	}
-	
-	
-	
 }
