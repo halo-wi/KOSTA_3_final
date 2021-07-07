@@ -177,4 +177,14 @@ public class ProductPackageService {
 			price_result = 0;
 		}
 	}
+	
+	public PackageVO selectById(Long packageId) {
+		return packageRepo.findById(packageId).get();
+	}
+	
+	
+	public List<String> findProductbyPackageNo(Long pno){
+		return productPackageRepo.findProductbyPackageNo(pno);
+	}
+	
 }

@@ -7,12 +7,11 @@ layout:decorate="~{layout/layout2}">
 
 <head>
 <meta charset="UTF-8">
-<title>board</title>
+<title>스낵24 - 과자갤러리</title>
 
 
 </head>
-<body>
-
+<body onload="showImage()">
 <div layout:fragment="content1">
 	<!-- Hero Area Start-->
 	<div class="slider-area" th:fragment="heroArea1">
@@ -29,8 +28,8 @@ layout:decorate="~{layout/layout2}">
 		</div>
 	</div>
 	
-	
-	<img th:src="@{/images/고래밥.jpg}" width="100px" height=100px>
+	<p>출출할 땐.....??</p>
+	<img id="introImg" border="0" style="width: 200px; height: 200px">
 	<div id="1bo_head">
 		<select id="searchType" name="sf1">
 			<option>전체</option>

@@ -45,7 +45,7 @@
 		
 <table  style="margin:5% auto;">
                 <tr>
-                <td height=20 align= center bgcolor=red><font color=white size="5px"> 글쓰기</font></td>
+                <td height=20 align= center bgcolor=red><font color=white size="5px"> 리뷰 남기기 </font></td>
                 </tr>
                 <tr>
                 <td bgcolor=white>
@@ -56,8 +56,9 @@
                         </tr>
                         <tr>
                         <td>패키지</td>
-                        <td><select id= "pack" name="pack">
-
+                        <td>
+                        <label for="pack"></label>
+                        <select id= "pack" name="pack">
 						<option value="">----- 패키지를 선택하세요-----</option>
 						<option th:value="${review.pack.packageId}" th:text = "${review.pack.packageName}"  th:each="review:${subscribes}"></option>
 
@@ -66,7 +67,7 @@
  
                         <tr>
                         <td>내용</td>
-                        <td><textarea name="review"  cols=85 rows=15></textarea></td>
+                        <td><label for="review"></label><textarea name="review"  cols=85 rows=15></textarea></td>
                         </tr>
                         <tr>
                         <td>별점</td>

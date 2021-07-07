@@ -18,6 +18,7 @@ import com.kosta.KOSTA_3_final.model.board.Board;
 import com.kosta.KOSTA_3_final.model.board.BoardReply;
 import com.kosta.KOSTA_3_final.model.board.PageVO;
 import com.kosta.KOSTA_3_final.model.user.Member;
+import com.kosta.KOSTA_3_final.model.user.UserRoleEnumType;
 import com.kosta.KOSTA_3_final.persistance.board.BoardPersistance;
 import com.kosta.KOSTA_3_final.persistance.board.BoardReplyPersistance;
 import com.kosta.KOSTA_3_final.persistance.user.MemberRepository;
@@ -39,10 +40,25 @@ class Kosta3FinalApplicationTests {
 	
 
 	//@Test
-	void contextLoads() {
+	public void test1() {
+		IntStream.range(100, 200).forEach(i->{
+			Member cu = new Member();
+		
+			cu.setCustomer_id(25);
+			cu.setAuth(UserRoleEnumType.USER);
+			cu.setEmail("swk9514@naver.com");
+		
+			Board board = Board.builder()
+					.btitle("FreeBoard title" +i)
+					.bcontent("FreeBoard content" +i)
+					.customer(cu)
+					.build();
+			
+			repo.save(board);
+		});
 	}
 	
-	@Test
+	//@Test
 	public void insertreply() {
 		Long[] arr = {47L, 48L, 49L};
 		
@@ -51,9 +67,9 @@ class Kosta3FinalApplicationTests {
 		Arrays.stream(arr).forEach(num -> {
 			Board board = new Board();
 			board.setBid(num);
-			IntStream.range(0, 10).forEach(i -> {
+			IntStream.range(400, 500).forEach(i -> {
 				BoardReply reply = new BoardReply();
-				reply.setReply("qqq"+i);
+				reply.setReply("테스트용 댓글"+i);
 				reply.setCustomer(userPersistance.findByCustomerName("swk9514@naver.com"));
 				reply.setBoard(board);
 

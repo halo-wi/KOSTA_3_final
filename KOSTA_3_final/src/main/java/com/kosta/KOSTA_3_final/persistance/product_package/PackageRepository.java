@@ -11,8 +11,10 @@ import com.kosta.KOSTA_3_final.model.product_package.PackageVO;
 
 public interface PackageRepository extends CrudRepository<PackageVO, Long>{
 	@Query("select p from PackageVO p where rownum <=6 and packageType=?1")
+	public List<PackageVO> findByPackageType2(int packageType);
+	
 	public List<PackageVO> findByPackageType(int packageType);
-
+	
 
 	@Query("select img from PackageVO")
 	public List<Integer> getImgName();

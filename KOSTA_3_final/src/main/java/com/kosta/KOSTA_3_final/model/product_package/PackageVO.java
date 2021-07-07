@@ -45,6 +45,8 @@ public class PackageVO {
 	int packageType;
 
 	int price;
+	
+	int score;
 
 
 	String img;
