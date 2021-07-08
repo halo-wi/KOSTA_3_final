@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -32,10 +33,15 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="tp_product")
+@SequenceGenerator(
+		  name = "PP_ID_EX_SEQ", 
+		  sequenceName = "PP_ID_SEQ", // 매핑할 데이터베이스 시퀀스 이름 
+		  allocationSize = 1)
 public class Product {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,
+	generator = "PP_ID_EX_SEQ")
 	@Column(name = "product_id")
 	int productId;
 	@Column(name = "product_name")

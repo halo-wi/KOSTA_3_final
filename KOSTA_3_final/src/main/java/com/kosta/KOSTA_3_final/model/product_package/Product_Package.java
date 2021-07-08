@@ -28,7 +28,7 @@ import lombok.ToString;
 @Table(name = "tp_productpack")
 @SequenceGenerator(
 		  name = "PP_ID_EX_SEQ", 
-		  sequenceName = "EX_SEQ", // 매핑할 데이터베이스 시퀀스 이름 
+		  sequenceName = "PP_ID_SEQ", // 매핑할 데이터베이스 시퀀스 이름 
 		  allocationSize = 1)
 public class Product_Package {
 	

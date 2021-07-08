@@ -46,8 +46,8 @@ public class PackageVO {
 
 	int price;
 	
-	int score;
-
+	@Column(columnDefinition = "number(4,2) default 0")
+	float score;
 
 	String img;
 	@JsonIgnore

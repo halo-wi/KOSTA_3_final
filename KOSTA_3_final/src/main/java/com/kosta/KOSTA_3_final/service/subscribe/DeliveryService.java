@@ -29,6 +29,12 @@ public class DeliveryService {
 	@Autowired
 	MemberRepository memberRepo;
 	
+	@Autowired
+	PackageRepository packRepo;
+	
+	@Autowired
+	MemberRepository memberRepo;
+	
 	public List<Delivery> selectDeliveryList(Date date) {
 		System.out.println(date);
 		Predicate p = deliRepo.makePredicate(date);
@@ -44,7 +50,9 @@ public class DeliveryService {
 		
 		return result;
 	}
+
 	public void deliveryInsert(long packageId, long customerId,Date date) {
+
 		
 		PackageVO package_id = packRepo.findById(packageId).get();
 		Member customer_id = memberRepo.findById(customerId).get();
@@ -52,7 +60,9 @@ public class DeliveryService {
 		Delivery delivery = Delivery.builder().
 		pack(package_id).
 		customer(customer_id).
+
 		deliveryDate(date).
+
 		build();
 		
 		deliRepo.save(delivery);
