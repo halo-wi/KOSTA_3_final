@@ -1,5 +1,6 @@
 package com.kosta.KOSTA_3_final.service.subscribe;
 
+
 import java.sql.Date;
 import java.util.List;
 
@@ -22,6 +23,11 @@ public class DeliveryService {
 	
 	@Autowired
 	DeliveryRepository deliRepo;
+	@Autowired
+	PackageRepository packRepo;
+	
+	@Autowired
+	MemberRepository memberRepo;
 	
 	@Autowired
 	PackageRepository packRepo;
@@ -44,8 +50,9 @@ public class DeliveryService {
 		
 		return result;
 	}
-	
-	public void deliveryInsert(long packageId, long customerId, Date deliveryDate) {
+
+	public void deliveryInsert(long packageId, long customerId,Date date) {
+
 		
 		PackageVO package_id = packRepo.findById(packageId).get();
 		Member customer_id = memberRepo.findById(customerId).get();
@@ -53,7 +60,9 @@ public class DeliveryService {
 		Delivery delivery = Delivery.builder().
 		pack(package_id).
 		customer(customer_id).
-		deliveryDate(deliveryDate).
+
+		deliveryDate(date).
+
 		build();
 		
 		deliRepo.save(delivery);

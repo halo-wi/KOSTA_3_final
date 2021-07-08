@@ -14,16 +14,22 @@ import com.kosta.KOSTA_3_final.persistance.user.MemberRepository;
 
 @Service
 public class SubscribeService {
-
 	@Autowired
 	MemberRepository memberRepo;
-	
 	@Autowired
 	PackageRepository packRepo;
-	
 	@Autowired
 	SubscribeRepository subRepo;
-	
+	public void insertSubscribe(long package_id, long customer_id ){
+		PackageVO pack=   packRepo.findById(package_id).get();
+		Member member = memberRepo.findById(customer_id).get();
+		Subscribe sub = Subscribe.builder()
+				.subscribeId(new Date().getTime())
+				.pack(pack)
+				.customer(member)
+				.build();
+		subRepo.save(sub);
+	}
 	
 	
 	public PackageVO findById(Long packageId) {
@@ -31,18 +37,5 @@ public class SubscribeService {
 		return packRepo.findById(packageId).get();
 	}
 	
-	public void insertSubscribe(long package_id, long customer_id ){
-		PackageVO pack=   packRepo.findById(package_id).get();
-		
-		Member member = memberRepo.findById(customer_id).get();
-		Subscribe sub = Subscribe.builder()
-				.subscribeId(new Date().getTime())
-				.pack(pack)
-				.customer(member)
-				.build();
-		
-		subRepo.save(sub);
-		
-	}
-
+	
 }
