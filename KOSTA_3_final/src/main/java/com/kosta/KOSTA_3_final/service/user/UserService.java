@@ -37,9 +37,8 @@ public class UserService implements UserDetailsService{
 		// member.setMrole(MemberRoleEnumType.USER);
 		System.out.println(passwordEncoder.encode(member.getPassword()));
 		return repo.save(member);
-	}
+	}	
 	
-
 	public Member getMemberInfo(String email) {
 		return repo.findByEmail(email).get();
 	}
