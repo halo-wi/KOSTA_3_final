@@ -109,7 +109,7 @@ public class PaymentController {
 	public void product_details(Model model, Long pno) {
 		model.addAttribute("pack", subscribeService.findById(pno));
 		model.addAttribute("plist", packRepo.findAll());
-		model.addAttribute("packlist", packRepo.findByPackageType(0));		
+		model.addAttribute("packlist", packRepo.findByPackageType3(0));
 		model.addAttribute("productList", packService.findProductbyPackageNo(pno));
 	}
 	
