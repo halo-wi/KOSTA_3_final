@@ -37,7 +37,7 @@ public class Category {
 	String categoryName;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY) //, fetch = FetchType.EAGER
+	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	List<Product> products;
 	
 }
