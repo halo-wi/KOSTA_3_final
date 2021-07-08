@@ -133,15 +133,12 @@
 	                    <div class="single_product_img">
 	                        <img th:src="|assets/img/gallery/${pack.img}.jpg|" width="60%"; height="auto">
 	                    </div>
-	                    <!-- <div class="single_product_img">
-	                       <img th:src="@{/images/product_images/}+${productlist.productName}+.jpg" width="60%"; height="auto">
-	                    </div> -->
-	
+
 	                </div>
                 </div>
                 <div class="col-lg-6"  style="float:left;height: 600px;">
 	    
-	                   	<h3 style="color:black"><a class = "packlist"  th:href="@{/payment(pno=${pack.packageId})}"></a></h3>
+	                   	<h3 style="color:black"><a class = "packlist" th:href="@{/payment(pno=${pack.packageId})}"></a></h3>
 	                    	<h3 th:text="${pack.packageName}"></h3>
 	                    <div id="pro_detail" style="margin-top: 30px; margin-bottom: 30px;">
 							<h4>구성품 정보</h4>
@@ -158,7 +155,7 @@
                 </div>
                 
 			<div class="add_to_cart">
-			     <a class="btn_3" th:href="@{/payment(pno=${pack.packageId})}"></a>
+			     <a class="btn_3" th:href="@{/payment(pno=${pack.packageId})}">정기구독</a>
 			</div>
             </div>
             </div>
