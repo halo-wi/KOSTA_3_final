@@ -1,6 +1,7 @@
 package com.kosta.KOSTA_3_final.controller.board;
 
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,13 +50,25 @@ public class ReviewController {
 	public void boardRegister(Model model, Principal principal) {
 		String email = principal.getName();
 		List<Subscribe> subscribes = uservice.getMemberInfo(email).getSubscribes();
-		List<Review> review = uservice.getMemberInfo(email).getReviews();
+		List<Review> reviewlist = uservice.getMemberInfo(email).getReviews();
+		System.out.println(email);
+		String[] arr = new String[subscribes.size()];
+		int i=0;
+		for(Subscribe a :subscribes) {
+			String search ="false";
+			for(Review vo : reviewlist) {
+				if(vo.getPack().getPackageId() == a.getPack().getPackageId()) search="true";
+			}
+			arr[i++] = search;
 		
-		for(Subscribe a :subscribes) {System.out.println(a.getPack().getReviews());}
 		
+		}
+		
+		System.out.println(Arrays.toString(arr));
 		
 		model.addAttribute("subscribes", subscribes);
-		model.addAttribute("reviewList", review);
+		model.addAttribute("arr", arr);
+		//model.addAttribute("reviewList", review);
 	}
 
 	

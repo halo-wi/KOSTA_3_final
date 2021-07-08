@@ -9,9 +9,6 @@ public interface MemberRepository extends CrudRepository<Member, Long>{
    public Member findByCustomerName(String userEmail);
    public Member findByCustomerNameAndEmail(String name,String email);
 	 public boolean existsByEmail(String email);
-
-
-
-   
+	
 }
 
