@@ -37,60 +37,25 @@
 *::before, *::after {
   box-sizing: border-box;
 }
+#ghostbtn{
+	font-size : 1.2em;
+	
+	padding: 25px 40px;
+	width : 300px;
+	height:auto;
+	border: 3px solid #d9cbb3;
+	color: #F1C164;
+	text-align: center; 
+	margin-left: 1%;
+	
+	}
+#ghostbtn:hover {
+	background-color:#d9cbb3;
+	color:black;
 
-button {
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-  outline: none;
-  border: 0;
-  vertical-align: middle;
-  text-decoration: none;
-  font-size: inherit;
-  font-family: inherit;
+
 }
-button.learn-more {
-  font-weight: 600;
-  color: #382b22;
-  text-transform: uppercase;
-  padding: 1.25em 2em;
-  background: #fff0f0;
-  border: 2px solid #b18597;
-  border-radius: 0.75em;
-  transform-style: preserve-3d;
-  transition: transform 150ms cubic-bezier(0, 0, 0.58, 1), background 150ms cubic-bezier(0, 0, 0.58, 1);
-}
-button.learn-more::before {
-  position: absolute;
-  content: "";
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: #f9c4d2;
-  border-radius: inherit;
-  box-shadow: 0 0 0 2px #b18597, 0 0.625em 0 0 #ffe3e2;
-  transform: translate3d(0, 0.75em, -1em);
-  transition: transform 150ms cubic-bezier(0, 0, 0.58, 1), box-shadow 150ms cubic-bezier(0, 0, 0.58, 1);
-}
-button.learn-more:hover {
-  background: #ffe9e9;
-  transform: translate(0, 0.25em);
-}
-button.learn-more:hover::before {
-  box-shadow: 0 0 0 2px #b18597, 0 0.5em 0 0 #ffe3e2;
-  transform: translate3d(0, 0.5em, -1em);
-}
-button.learn-more:active {
-  background: #ffe9e9;
-  transform: translate(0em, 0.75em);
-}
-button.learn-more:active::before {
-  box-shadow: 0 0 0 2px #b18597, 0 0 #ffe3e2;
-  transform: translate3d(0, 0, -1em);
-}
+
 </style>
 
 
@@ -98,6 +63,8 @@ button.learn-more:active::before {
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap'); 
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
+    	
+	@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
 	</style>
 
 
@@ -135,11 +102,11 @@ button.learn-more:active::before {
                                     <li><a href="/index">Home</a></li>
                                     <li><a href="">구독 서비스</a>
                                    		<ul class="submenu">
-                                            <li><a href="/shop">월간 간식</a></li>
+                                            <li><a href="/payments/shop">월간 간식</a></li>
                                             <li><a href="/product/customPackaging3">나만의 간식 팩</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="">게시판</a>
+                                    <li><a href="/board/boardlist">게시판</a>
                                         <ul class="submenu">
                                             <li><a href="/board/reviewlist">한줄평</a></li>
                                             <li><a href="/board/boardlist">과자갤러리</a></li>
@@ -194,22 +161,45 @@ button.learn-more:active::before {
 		  <div class="carousel-inner">
 		    <div class="carousel-item active ">
 		      <img class="d-block w-100" style="width: auto; height: 800px;" src="/images/carousel_icecream.jpg" alt="First slide">
-		      <div class="carousel-caption" style = "margin-bottom: 25%; margin-left: 3%;">
-		      	<h1 style="font-family: 'Staatliches', cursive; font-size: 6em; text-align: center; 
+		      <div class="carousel-caption" style = "margin-bottom: 25%; margin-left: 1%;">
+		      	<h1 style="font-family: 'Staatliches', cursive; font-size: 6em; text-align: left; 
 
 		      	color: #F1C164; text-shadow: 5px 5px #2D63A7; margin: 0;">MONTHLY SNACK<br> DELIVERY SERVICE</h1>
-		    	<!-- <button>구독 서비스 바로가기</button> -->
-		    	<button class="learn-more">Learn More</button>
+
+			  </div>
+			  <div class="carousel-caption" style = " margin-bottom: 15%; margin-left: 1%;">
+		      	<h2 style=" text-align: left; color: white; margin: 0; font-size: 2.5em;"> 다양한 구성의 간식을<br> 매달 배송해드립니다!</h2>
+			  </div>
+			  
+			  
+			  <div class="carousel-caption" style = " margin-bottom: 1%;">
+
+	    	<a href="/payments/shop"><button id="ghostbtn" style="margin-bottom:10%;; float:left;">다양한 패키지 둘러보기!</button></a> 
 			  </div>
 		    </div>
-		    <!-- <div class="carousel-item" >
+		    	
+		    
+		    <!-- 두번째 -->
+		    <div class="carousel-item" >
 
 		      <img class="d-block w-100" style="width: auto; height: 800px;" src="/images/carousel_nut.jpg" alt="Second slide" >
-		    </div>
-		    <div class="carousel-item" >
-		      <img class="d-block w-100" style="width: auto; height: 800px;" src="/images/carousel_office.jpg" alt="Third slide">
+		      <div class="carousel-caption" style = "margin-bottom: 25%; margin-left: 1%;">
+		      	<h1 style="font-family: 'Staatliches', cursive; font-size: 6em; text-align: left; 
 
-		    </div> -->
+		      	color: #F1C164; text-shadow: 5px 5px #2D63A7; margin: 0;">MAKE YOUR<br> OWN PACKAGE</h1>
+
+			  </div>
+			  <div class="carousel-caption" style = " margin-bottom: 15%; margin-left: 1%;">
+		      	<h2 style=" text-align: left; color: white; margin: 0; font-size: 2.5em;"> 취향에 맞는 간식을 골라<br> 나만의 패키지로!</h2>
+
+			  </div>
+			  
+			  <div class="carousel-caption" style = " margin-bottom: 1%;">
+
+	    	<a href="/product/customPackaging3"><button id="ghostbtn" style="margin-bottom:10%;; float:left;">패키지 만들기</button></a> 
+			  </div>
+		    </div>
+
 
 		  </div>
 		  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
@@ -242,7 +232,7 @@ button.learn-more:active::before {
                            <img th:src="|assets/img/gallery/${pack.img}.jpg|"  alt="">
 
                                 <div class="img-cap"> 
-                                    <a th:href="@{/product_details(pno=${pack.packageId})}"><span>상세 정보</span></a>
+                                    <a th:href="@{/payments/product_details(pno=${pack.packageId})}"><span>상세 정보</span></a>
                                 </div>
 
                             </div>

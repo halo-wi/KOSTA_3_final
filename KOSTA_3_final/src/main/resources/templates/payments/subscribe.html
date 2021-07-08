@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zxx" xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layout/layout3}">
+<head>
+<meta charset="utf-8">
+<title>구독리스트</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="manifest" href="site.webmanifest">
+<link rel="shortcut icon" type="image/x-icon"
+	href="assets/img/favicon.ico">
+
+
+</head>
+<style>
+.button {height:35px;}
+</style>
+<body>
+
+
+	
+	<main>
+	<div layout:fragment="content1">
+		<!-- Hero Area Start-->
+		<div class="slider-area ">
+			<div class="single-slider slider-height2 d-flex align-items-center">
+				<div class="container">
+					<div class="row">
+						<div class="col-xl-12">
+							<div class="hero-cap text-center">
+								<h2>선택 패키지 정보</h2>
+
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Hero Area End-->
+		<!--================Single Product Area =================-->
+		<div class="product_image_area">
+			<div class="container">
+				<div class="row justify-content-center">
+					
+					<div class="col-lg-8">
+						<div class="single_product_text text-center" style="margin-top: 10px;">
+
+							<h2>구독 내역</h2>
+							<table class="table mb-0">
+								<thead>
+									<tr>
+										<th class="border-gray-200" scope="col">구독번호</th>
+										<th class="border-gray-200" scope="col">상품명</th>
+										<th class="border-gray-200" scope="col">결제일</th>
+										<th class="border-gray-200" scope="col">이메일</th>
+										<th></th>
+										<th></th>
+										
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="sub:${subscribe}">
+										<td th:text="${sub.subscribeId}"></td>
+										<td th:text="${sub.pack.packageName}"></td>
+										<td th:text="${sub.paymentDate}"></td>
+										<td th:text="${sub.customer.email}" />
+										<td><button class="btn btn-sm btn-primary" type="button" th:onClick="call([[${sub.pack.packageId}]])">리뷰달기</button></td>
+										 <td><button class="btn btn-sm btn-priamary" type= "button" onclick="deleteRow(this);">구독취소</button></td> 
+									</tr>
+								</tbody>
+							</table>
+							
+
+							<!-- <div class="add_to_cart">
+                        <a class="btn_3" th:href="@{/payment(pno=${pack.packageId})}"></a>
+                    </div> -->
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		</main>
+
+	<!-- Search model end -->
+
+    <!-- JS here -->
+	
+	
+	<script>
+		function call(pno){
+			alert(pno);
+			location.href='/board/reviewregister'
+		}
+		
+		
+		 function deleteRow(ths){
+			 $.ajax({
+                 type: "GET",
+                 url: "/deleteSubscribe",
+                 data: {
+                    
+                 },
+                 success(){
+                 	window.location.href = "/suscribe";
+                 },error:function(request,status,error){   alert("code"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); }
+
+             })
+		    
+		    
+		} 
+		
+		
+	
+	</script>
+
+
+
+</body>
+
+</html>

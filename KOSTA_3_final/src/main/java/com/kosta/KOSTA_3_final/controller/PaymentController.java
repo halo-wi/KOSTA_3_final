@@ -82,20 +82,18 @@ public class PaymentController {
 	
 	
 	
-	 @GetMapping("/payment") public void payment(Model model, Long pno) {
+	 @GetMapping("/payments/payment") public void payment(Model model, Long pno) {
 	  model.addAttribute("pack", subscribeService.findById(pno));
 	 }
 	 
-	 @PostMapping("/payment") 
+	 @PostMapping("payment") 
 	 public String payment (Model model, @ModelAttribute
 	 ProductListVO productList) {
-	 //productList.setPackageId(Long.parseLong(packageId.getPackageId()));
 	  PackageVO  newPackageVO =packService.insertPackage(productList);
-	 // model.addAttribute("pack", productList);
-	 return "redirect:/payment?pno="+newPackageVO.getPackageId();
+	 return "redirect:/payments/payment?pno="+newPackageVO.getPackageId();
 	 }
 		 
-	@GetMapping("/shop")
+	@GetMapping("/payments/shop")
 	public void packlist(Model model) {
 		model.addAttribute("plist", packRepo.findByPackageType2(0));
 	}
@@ -105,7 +103,7 @@ public class PaymentController {
 		model.addAttribute("plist", packRepo.findByPackageType(0));	
 	}
 
-	@GetMapping("/product_details")
+	@GetMapping("/payments/product_details")
 	public void product_details(Model model, Long pno) {
 		model.addAttribute("pack", subscribeService.findById(pno));
 		model.addAttribute("plist", packRepo.findAll());
@@ -144,7 +142,7 @@ public class PaymentController {
 		deliService.deliveryInsert(packageId, customerId, deliveryDate);
 	}
 	
-	@GetMapping("/subscribe")
+	@GetMapping("/payments/subscribe")
 	   public String viewed(Model model) {
 	      //구독 조회
 	      Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();//로그인시 정보 받아오기
@@ -155,7 +153,7 @@ public class PaymentController {
 	      System.out.println(lel);
 	      model.addAttribute("subscribe",lel);
 
-	      return "subscribe";
+	      return "/payments/subscribe";
 	   }
 
 
