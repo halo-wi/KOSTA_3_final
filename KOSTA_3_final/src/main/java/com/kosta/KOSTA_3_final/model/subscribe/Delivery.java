@@ -1,5 +1,7 @@
 package com.kosta.KOSTA_3_final.model.subscribe;
 
+
+
 import java.sql.Date;
 
 import javax.persistence.Column;
