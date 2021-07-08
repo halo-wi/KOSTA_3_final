@@ -49,19 +49,31 @@ public class ReviewController {
 	public void boardRegister(Model model, Principal principal) {
 		String email = principal.getName();
 		List<Subscribe> subscribes = uservice.getMemberInfo(email).getSubscribes();
+		List<Review> review = uservice.getMemberInfo(email).getReviews();
+		
+		for(Subscribe a :subscribes) {System.out.println(a.getPack().getReviews());}
+		
+		
 		model.addAttribute("subscribes", subscribes);
+		model.addAttribute("reviewList", review);
 	}
 
 	
 	
 	
 	@PostMapping("/board/reviewregister")
-	public String reviewRegisterPost(Review review, RedirectAttributes rttr, Principal principal, Long pack) {
-		review.setPack(pservice.selectById(pack));
+	public String reviewRegisterPost(int score, String review, RedirectAttributes rttr, Principal principal, Long pack) {
+		
+		Review reviewVo = Review.builder().score(score).review(review).build();
+		
+		reviewVo.setPack(pservice.selectById(pack));
 		Member member = uservice.getMemberInfo(principal.getName());
-		review.setCustomer(member);
-		Review ins_re = service.insertReview(review);
-		//주소창에 보이지 않고 전달된다.
+		reviewVo.setCustomer(member);
+		
+		System.out.println(reviewVo);
+		
+		Review ins_re = service.insertReview(reviewVo);
+		
 		rttr.addFlashAttribute("resultMessage", ins_re==null?"입력실패":"입력성공");
 		return "redirect:/board/reviewlist";
 	}
