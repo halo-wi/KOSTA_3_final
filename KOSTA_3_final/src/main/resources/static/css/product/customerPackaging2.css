@@ -105,7 +105,7 @@
 }
 .product_name {
 	text-align: left;
-
+	
 }
 .product_price {
 	margin-left: 0px;
@@ -141,7 +141,7 @@
     padding-bottom: 9px;
     border-bottom: 1px solid gray;
     text-align: center;
-
+    
 }
 #add_list {
 	float: right;
@@ -224,7 +224,7 @@ hr {
 }
 #move_btn {
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-columns: 1fr 1fr;
 }
 .move_btn {
 	color: gray;
@@ -245,7 +245,7 @@ hr {
 	border-right: none;
 }
 
-/* grid�� ����ؾ��� */
+/* grid       ؾ    */
 .category_name { 
 	float: left;
 	color: gray;
@@ -271,7 +271,7 @@ hr {
 .category:nth-child(-n+5)>.category_name {
 	border-bottom: none;
 }
-
+	
 .category {
 	display: inline-grid;
 }

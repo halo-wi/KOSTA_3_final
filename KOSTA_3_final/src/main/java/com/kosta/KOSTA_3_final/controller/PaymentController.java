@@ -1,9 +1,11 @@
 package com.kosta.KOSTA_3_final.controller;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +17,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.kosta.KOSTA_3_final.model.product_package.PackageVO;
 import com.kosta.KOSTA_3_final.model.product_package.ProductListVO;
+import com.kosta.KOSTA_3_final.model.subscribe.Subscribe;
+import com.kosta.KOSTA_3_final.model.user.Member;
 import com.kosta.KOSTA_3_final.persistance.product_package.PackageRepository;
 import com.kosta.KOSTA_3_final.persistance.subscribe.SubscribeRepository;
+import com.kosta.KOSTA_3_final.security.UserSecurity;
 import com.kosta.KOSTA_3_final.service.product_package.PackageId;
 import com.kosta.KOSTA_3_final.service.product_package.ProductPackageService;
 import com.kosta.KOSTA_3_final.service.subscribe.DeliveryService;
@@ -92,12 +97,12 @@ public class PaymentController {
 		 
 	@GetMapping("/shop")
 	public void packlist(Model model) {
-		model.addAttribute("plist", packRepo.findByPackageType(0));
+		model.addAttribute("plist", packRepo.findByPackageType2(0));
 	}
 
 	@GetMapping("/index")
 	public void index(Model model) {
-		model.addAttribute("plist", packRepo.findByPackageType2(0));	
+		model.addAttribute("plist", packRepo.findByPackageType(0));	
 	}
 
 	@GetMapping("/product_details")
@@ -118,9 +123,6 @@ public class PaymentController {
 		log.info("구독정보 입력성공");
 	}
 	
-	
-	
-	
 	@GetMapping("/delivery/deliveryInsert")
 	public @ResponseBody void deliveryInsert(@RequestParam Map<String, Object> map)
 			throws JsonMappingException, JsonProcessingException{
@@ -129,6 +131,22 @@ public class PaymentController {
 		Date deliveryDate = Date.valueOf((String) map.get("deliveryDate"));
 		deliService.deliveryInsert(packageId, customerId, deliveryDate);
 	}
+	
+	@GetMapping("/subscribe")
+	   public String viewed(Model model) {
+	      //구독 조회
+	      Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();//로그인시 정보 받아오기
+	      UserSecurity usersecurity=(UserSecurity)principal;
+	      Member mem=userService.getMemberInfo(usersecurity.getUsername());//정보 찾기
+	      
+	      List<Subscribe> lel=subService.findByCustomer(mem);
+	      System.out.println(lel);
+	      model.addAttribute("subscribe",lel);
+
+	      return "subscribe";
+	   }
+
+
 
 }
 

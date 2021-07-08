@@ -28,13 +28,7 @@ public class DeliveryService {
 	
 	@Autowired
 	MemberRepository memberRepo;
-	
-	@Autowired
-	PackageRepository packRepo;
-	
-	@Autowired
-	MemberRepository memberRepo;
-	
+
 	public List<Delivery> selectDeliveryList(Date date) {
 		System.out.println(date);
 		Predicate p = deliRepo.makePredicate(date);

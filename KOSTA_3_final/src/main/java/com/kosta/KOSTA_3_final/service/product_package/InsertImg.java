@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.stream.IntStream;
 
-import javax.swing.filechooser.FileSystemView;
 
 import org.springframework.stereotype.Component;
 
@@ -17,15 +16,16 @@ public class InsertImg {
 			String[] length = {"0"};
 			productList.setProductName(length);
 		}
-		System.out.println("여긴오남??");
-		IntStream.range(0, productList.getProductName().length).forEach(idx->{
-			String rootPath = FileSystemView.getFileSystemView().getHomeDirectory().toString();
-		    String basePath = rootPath;
-		    String filePath = basePath + "/git/final_project_subscribe/final_project_subscribe/src/main/resources/static/images/product_images/" + productList.getFiles()[idx].getOriginalFilename();
+		
+		IntStream.range(0, productList.getProductName().length).forEach(idx->{			
 		    
+		    String rootPath = System.getProperty("user.dir");
+		    String filePath = rootPath + "/src/main/resources/static/images/product_images/" + productList.getFiles()[idx].getOriginalFilename();
+		    System.out.println(filePath);
 		    File dest = new File(filePath);
+		    System.out.println(dest);
+
 		    try {
-		    	
 				productList.getFiles()[idx].transferTo(dest);
 			} catch (IllegalStateException e) {
 				// TODO Auto-generated catch block
@@ -35,6 +35,5 @@ public class InsertImg {
 				e.printStackTrace();
 			}
 		});
-
 	}
 }

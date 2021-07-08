@@ -66,9 +66,5 @@ public class ProductPackageController {
 		return "redirect:/product/adminMakeProductAndPackage";
 	}
 
-	@GetMapping("/subscribe")
-	public String aaa() {
 
-		return "/subscribe";
-	}
 }

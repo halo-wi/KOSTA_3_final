@@ -105,7 +105,7 @@ button.learn-more:active::before {
 
 <body>
     <!--? Preloader Start -->
-	<input type="hidden" id="auth" th:value="${#authentication.principal.member.auth}">
+<!-- 	<input type="hidden" id="auth" th:value="${#authentication.principal.member.auth}"> -->
     <div id="preloader-active">
         <div class="preloader d-flex align-items-center justify-content-center">
             <div class="preloader-inner position-relative">
@@ -139,20 +139,19 @@ button.learn-more:active::before {
                                             <li><a href="/product/customPackaging3">나만의 간식 팩</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="/board/boardlist">게시판</a>
+                                    <li><a href="">게시판</a>
                                         <ul class="submenu">
-                                            <li><a href="/board/qnalist">한줄평</a></li>
-                                            <li><a href="/board/reviewlist"></a></li>
-                                            <li><a href="/board/reviewlist"></a></li>
+                                            <li><a href="/board/reviewlist">한줄평</a></li>
+                                            <li><a href="/board/boardlist">과자갤러리</a></li>
+                                            <li><a href="/board/qnalist">문의</a></li>
                                         </ul>
                                     </li>
                                     <li><a href="">회원정보</a>
                                         <ul class="submenu">
-                                            <li><a href="/login">로그인</a></li>
-                                            <li><a href="/logout">로그아웃</a></li>
+                                            <li sec:authorize="isAnonymous()"><a href="/login">로그인</a></li>
+                                            <li sec:authorize="isAuthenticated()"><a href="/logout">로그아웃</a></li>
                                             <li><a href="/mypage/profile">마이페이지</a></li>
-                                            <li><a href="confirmation.html">Confirmation</a></li>
-                                            <li><a href="checkout.html">Product Checkout</a></li>
+
                                         </ul>
                                     </li>
                                     <li class="admin-menu"><a href="">관리자</a>
@@ -172,7 +171,8 @@ button.learn-more:active::before {
                                         <span class="flaticon-search"></span>
                                     </div>
                                 </li>
-                                <li> <a href="/login"><span class="flaticon-user"></span></a></li>
+                                <li sec:authorize="isAnonymous()"> <a href="/login"><span class="flaticon-user"></span></a></li>
+                                <li sec:authorize="isAuthenticated()"> <a href="/mypage/profile"><span class="flaticon-user"></span></a></li>
 
                             </ul>
                         </div>
