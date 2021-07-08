@@ -25,17 +25,13 @@ public class SchedulePayment {
 	@Setter(onMethod_ = @Autowired)
 	private ImportPay pay;
 	
-	public String schedulePay(int customer_uid, int price) {
+	public String schedulePay(long customer_uid, int price) {
 		String token = pay.getToken();
-
 		long timestamp = 0;
 		Calendar cal = Calendar.getInstance();
-		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.KOREA);
-
-		cal.add(Calendar.MINUTE, +3);
+		cal.add(Calendar.MINUTE, +1);
 		String date = sdf.format(cal.getTime());
-		
 		try {
 			Date stp = sdf.parse(date);
 			timestamp = stp.getTime()/1000;
@@ -44,9 +40,6 @@ public class SchedulePayment {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-		
-		
-		//getToken에서 얻은 response에서 필요한 값만 추출
 		 Gson str = new Gson(); 
 		 token = token.substring(token.indexOf("response") +10); 
 		 token = token.substring(0, token.length() - 1);
@@ -55,7 +48,6 @@ public class SchedulePayment {
 		 
 		 
 		 RestTemplate restTemplate = new RestTemplate();
-		 
 		 HttpHeaders headers = new HttpHeaders();
 		 headers.setContentType(MediaType.APPLICATION_JSON);
 		 headers.setBearerAuth(access_token);
