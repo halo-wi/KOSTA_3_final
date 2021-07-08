@@ -1,9 +1,11 @@
 package com.kosta.KOSTA_3_final.controller;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +17,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.kosta.KOSTA_3_final.model.product_package.PackageVO;
 import com.kosta.KOSTA_3_final.model.product_package.ProductListVO;
+import com.kosta.KOSTA_3_final.model.subscribe.Subscribe;
+import com.kosta.KOSTA_3_final.model.user.Member;
 import com.kosta.KOSTA_3_final.persistance.product_package.PackageRepository;
 import com.kosta.KOSTA_3_final.persistance.subscribe.SubscribeRepository;
+import com.kosta.KOSTA_3_final.security.UserSecurity;
 import com.kosta.KOSTA_3_final.service.product_package.PackageId;
 import com.kosta.KOSTA_3_final.service.product_package.ProductPackageService;
 import com.kosta.KOSTA_3_final.service.subscribe.DeliveryService;
@@ -118,7 +123,14 @@ public class PaymentController {
 		log.info("구독정보 입력성공");
 	}
 	
+	@Autowired
+	ReqPaymentScheduler scheldule;
+	@GetMapping("/deleteSubscribe")
+	public void deleteSubscribe() {
+		scheldule.stopScheduler();
+	}
 	
+
 	
 	
 	@GetMapping("/delivery/deliveryInsert")

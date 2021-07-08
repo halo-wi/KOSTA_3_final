@@ -45,27 +45,47 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 </head>
 <body>
        <header>
-        <!-- Header Start -->
         <div class="header-area">
             <div class="main-header header-sticky">
                 <div class="container-fluid">
                     <div class="menu-wrapper">
                         <!-- Logo -->
-                        <div >
-                            <p style="color: black !important;"><a style="color:black !important;" href="/index">
-                            <img src="/images/snackLogo.jpg" width=200px;></a></p>
-                        </div>
+                        <div class="logo">
+							<a href="/index"><img src="/images/snackLogo.jpg"
+								alt="" style="width:97px; height:67px"></a>
+						</div>
                         <!-- Main-menu -->
                         <div class="main-menu d-none d-lg-block">
                             <nav>                                                
                                 <ul id="navigation">  
                                     <li><a href="/index">Home</a></li>
-                                    <li><a href="/product/customPackaging3">과자모음</a></li>
-                                    <li><a href="/shop">구독서비스</a></li>
-                                    <li class="hot"><a href="/product_details">상세보기</a>
+                                    <li><a href="">구독 서비스</a>
+                                   		<ul class="submenu">
+                                            <li><a href="/shop">월간 간식</a></li>
+                                            <li><a href="/product/customPackaging3">나만의 간식 팩</a></li>
+                                        </ul>
                                     </li>
-                                  
-                                    <li><a href="contact.html">Contact</a></li>
+                                    <li><a href="/board/boardlist">게시판</a>
+                                        <ul class="submenu">
+                                            <li><a href="/board/qnalist">qna</a></li>
+                                            <li><a href="/board/reviewlist">후기모음</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="">회원정보</a>
+                                        <ul class="submenu">
+                                            <li sec:authorize="isAnonymous()"><a href="/login">로그인</a></li>
+                                            <li sec:authorize="isAuthenticated()"><a href="/logout">로그아웃</a></li>
+                                            <li><a href="/mypage/profile">마이페이지</a></li>
+                                            <li><a href="confirmation.html">Confirmation</a></li>
+                                            <li><a href="checkout.html">Product Checkout</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="admin-menu"><a href="">관리자</a>
+                                    	<ul class="submenu">
+                                            <li><a href="/product/adminMakeProductAndPackage">패키지/제품 관리</a></li>
+                                            <li><a href="/delivery/deliveryList">배송일정</a></li>
+                                        </ul>
+                                    </li>
                                 </ul>
                             </nav>
                         </div>
@@ -78,7 +98,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
                                     </div>
                                 </li>
                                 <li> <a href="/login"><span class="flaticon-user"></span></a></li>
-                                <li><a href="cart.html"><span class="flaticon-shopping-cart"></span></a> </li>
+
                             </ul>
                         </div>
                     </div>
@@ -144,7 +164,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
                         </div>
                    
 </main>
- <footer>
+<footer>
         <!-- Footer Start-->
         <div class="footer-area footer-padding">
             <div class="container">
@@ -154,13 +174,9 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
                             <div class="single-footer-caption mb-30">
                                 <!-- logo -->
                                 <div class="footer-logo">
-                                    <a href="/Home"><img src="../../assets/img/logo/logo2_footer.png" alt=""></a>
+                                    <a href="index.html"><img src="images/snackLogo.jpg" width="200px" alt=""></a>
                                 </div>
-                                <div class="footer-tittle">
-                                    <div class="footer-pera">
-                                        <p>Asorem ipsum adipolor sdit amet, consectetur adipisicing elitcf sed do eiusmod tem.</p>
-                                </div>
-                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -210,7 +226,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
                         <div class="footer-copy-right">
                             <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
   Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>               
+  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>                  
                         </div>
                     </div>
                     <div class="col-xl-5 col-lg-4 col-md-5">
