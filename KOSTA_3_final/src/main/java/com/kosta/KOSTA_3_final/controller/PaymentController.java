@@ -123,6 +123,18 @@ public class PaymentController {
 		log.info("구독정보 입력성공");
 	}
 	
+
+	@Autowired
+	ReqPaymentScheduler scheldule;
+	@GetMapping("/deleteSubscribe")
+	public void deleteSubscribe() {
+		scheldule.stopScheduler();
+	}
+	
+
+	
+	
+
 	@GetMapping("/delivery/deliveryInsert")
 	public @ResponseBody void deliveryInsert(@RequestParam Map<String, Object> map)
 			throws JsonMappingException, JsonProcessingException{

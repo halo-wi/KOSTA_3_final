@@ -288,19 +288,30 @@
 
     <!-- JS here -->
 	
+	
 	<script>
 		function call(pno){
 			alert(pno);
-			//location.href='/board/reviewregister?pno=' +pno;
+			location.href='/board/reviewregister'
 		}
 		
 		
-		/* function deleteRow(ths){
-		    var ths = $(ths);
+		 function deleteRow(ths){
+			 $.ajax({
+                 type: "GET",
+                 url: "/deleteSubscribe",
+                 data: {
+                    
+                 },
+                 success(){
+                 	window.location.href = "/suscribe";
+                 },error:function(request,status,error){   alert("code"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); }
+
+             })
 		    
-		    ths.parents("tr").remove();
+		    
 		} 
-		구독 삭제기능*/
+		
 		
 	
 	</script>
