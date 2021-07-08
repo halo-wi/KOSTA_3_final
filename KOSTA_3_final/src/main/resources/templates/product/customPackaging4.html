@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-layout:decorate="~{layout/layout1}">
+layout:decorate="~{layout/layout3}">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
@@ -30,6 +30,12 @@ layout:decorate="~{layout/layout1}">
 		</div>
 	</div>
 	<div class="custom_content">
+	<div id="move_btn">
+		<button class="move_btn" onclick="fnMove('add_package_h1')">패키지 추가</button>
+	    <button class="move_btn" onclick="fnMove('add_product_h1')">제품 추가</button>
+	    <!-- <button class="move_btn" onclick="fnMove('')">패키지 업데이트</button> -->
+	</div>
+		<h1 class="add_package_h1">패키지 추가</h1>
 		<div class="category_row">
 			<div class="col-xs-12" style="padding: 0px">
 				<div class="product_category">
@@ -48,9 +54,10 @@ layout:decorate="~{layout/layout1}">
 			</select> -->
 			<div class='search_box'>
 			
-			<!-- hidden 권한 -->
-			<input type="hidden" id="auth" th:value="${#authentication.principal.member.auth}">
-			
+				<!-- hidden 권한 -->
+				<input type="hidden" id="auth" th:value="${#authentication.principal.member.auth}">
+				<input type="hidden" id="auth_url" th:value="${admin_check}">
+				
 				<span style="margin-right:46px">상품검색</span>
 				<input type='text' id="search_keyword" placeholder="상품명을 입력해주세요.">
 				<button id="search_product">검색</button>
@@ -60,7 +67,8 @@ layout:decorate="~{layout/layout1}">
 			<div class="col-lg-7" style="padding: 0px">
 				<div class="area1" id="area1">
 					<div class="product" th:each="productlist:${productlist}">
-						<img class="product_img" src="/images/고래밥.jpg">
+						<img class="product_img" style="width: 125px; height: 127px;" th:src="@{/images/product_images/}+${productlist.productName}+.jpg">
+						<button onclick="adminProductDelete(this)" class="product_delete_btn">X</button>
 						<div class="product_name" th:text="${productlist.productName}"></div>
 						<div class="product_price" th:text="${productlist.price}"></div>
 						<span style="float: left; padding-top: 8px">원</span>
@@ -70,8 +78,8 @@ layout:decorate="~{layout/layout1}">
 				</div>
 			</div>
 			<div id='basketlist' class="col-lg-5">
-				<form name="orderform" id="orderform" method="get" class="orderform"
-					action="/product/customInsert">
+				<form name="orderform" id="orderform" method="post" class="orderform"
+					action="/payment" enctype="multipart/form-data">
 					<div class="basketdiv" id="basket">
 						<div class="row head">
 							<div class="subdiv">
@@ -101,20 +109,33 @@ layout:decorate="~{layout/layout1}">
 							onclick="javascript:basket.delAllItem();">장바구니비우기</a>
 					</div>
 
-					<div class="bigtext right-align sumcount" id="sum_p_num">상품갯수:
+					<div class="bigtext right-align sumcount" id="sum_p_num">상품개수:
 						0개</div>
 					<div class="bigtext right-align box blue summoney" id="sum_p_price">합계금액:
 						0원</div>
 					<div class="bigtext right-align box red summoney" id="sale_p_price"></div>
 
-					<input type="hidden" id="package_price" name="packagePrice"
-						value=""> <input type="hidden" id="package_name"
-						name="packageName" value="">
+					<input type="hidden" id="package_price" name="packagePrice"	value="">
+					<input type="hidden" id="package_name" name="packageName" th:value="${#authentication.principal.member.customerName}+Package">
+					<input type="hidden" id="package_type" name="packageType" value="1">
 					<div id="goorder" class="">
 						<div class="clear"></div>
 						<div id='order_btn' class="buttongroup center-align cmd">
 							<a href="javascript:void(0);" id="package_buy_btn">선택한 상품 주문</a>
-							<a href="javascript:void(0);" id="package_make">패키지 생성</a>
+							<ul class="package_price_name_list">
+								<li>
+									패키지 가격 : <input type="text" id="make_package_price" name="packagePrice"	placeholder=" 패키지 가격을 입력해주세요.">
+								</li>
+								<li>
+									패키지 이름 : <input type="text" id="make_package_name" name="packageName" placeholder=" 패키지 이름을 입력해주세요.">
+								</li>
+								<li>
+									패키지 이미지 : <input id="make_package_img" type="file" name="files">
+								</li>
+								<li>
+									<a href="javascript:void(0);" id="package_make">패키지 생성</a>
+								</li>
+							</ul>
 						</div>
 					</div>
 				</form>
@@ -126,39 +147,34 @@ layout:decorate="~{layout/layout1}">
 			
 			<!-- 관리자 제품 추가 기능 -->
 			<div id="add_product" class="col-lg-offset-2 col-lg-8">
-				<h1>제품 추가</h1>
+				<h1 class="add_product_h1">제품 생성</h1>
 				<button id="add_list">+ 목록추가</button>
 				<form id="add_product_form" method="post" action="/product/adminProductInsert" 
 					enctype="multipart/form-data">
-					<table>
-						<thead>
-							<tr>
-								<th>제품명</th>
-								<th>카테고리</th>
-								<th>회사</th>
-								<th>가격</th>
-								<th>이미지 파일첨부</th>
-							</tr>
-						</thead>
-						<tbody id="add_product_tbody">
-							<tr class="add_product_row">
-								<td><input name="productName" type="text"></td>
-								<td>
-									<select name="categoryId">
-										<option th:each="category:${categorylist}" th:text="${category.categoryName}" th:value="${category.categoryId}"></option>
-									</select>
-								</td>
-								<td>
-									<select name="companyId">
-										<option th:each="company:${companylist}" th:text="${company.company_name}" th:value="${company.company_id}"></option>
-									</select>
-								</td>
-								<td><input name="productPrice" id="product_price_add" type="text"></td>
-								<td><input id="product_image_add" type="file" name="files"></td>
-								
-							</tr>
-						</tbody>
-					</table>
+					<div>
+						<div id="add_product_div_head">
+							<div>제품명</div>
+							<div>카테고리</div>
+							<div>회사</div>
+							<div>가격</div>
+							<div>이미지 파일첨부</div>
+							<div></div>
+						</div>
+						<div id="add_product_div_body">
+							<div id="add_product_div_row">
+								<input class="add_productName" name="productName" type="text" placeholder="ex) 새우깡">
+								<select name="categoryId">
+									<option th:each="category:${categorylist}" th:text="${category.categoryName}" th:value="${category.categoryId}"></option>
+								</select>
+								<select name="companyId">
+									<option th:each="company:${companylist}" th:text="${company.company_name}" th:value="${company.company_id}"></option>
+								</select>
+								<input class="add_productPrice" name="productPrice" id="product_price_add" type="text" placeholder="ex) 1000">
+								<input id="product_image_add" type="file" name="files">
+								<div></div>
+							</div>
+						</div>
+					</div>
 				</form>
 				<div id='order_btn' class="buttongroup center-align cmd">
 					<a href="#" id="product_add">제품 넣기</a>
@@ -170,24 +186,20 @@ layout:decorate="~{layout/layout1}">
 		</div> -->
 		
 		<!-- 관리자 기능중 제품 목록 추가 시 필요한 html 코드 --> 
-		<table id=add_product_row_table>
-			<tr class="add_product_row">
-				<td><input name="productName" type="text"></td>
-				<td>
-					<select name="categoryId">
-						<option th:each="category:${categorylist}" th:text="${category.categoryName}" th:value="${category.categoryId}"></option>
-					</select>
-				</td>
-				<td>
-					<select name="companyId">
-						<option th:each="company:${companylist}" th:text="${company.company_name}" th:value="${company.company_id}"></option>
-					</select>
-				</td>
-				<td><input name="productPrice" id="product_price_add" type="text"></td>
-				<td><input id="product_image_add" multiple type="file" name="files"></td>
-				<td><button onclick="productRowDelete(this)" id="add_product_row_del">목록삭제</button></td>
-			</tr>
-		</table>
+		<div id="add_product_div_body" class="add_product_div_body">
+			<div id="add_product_div_row">
+				<input name="productName" type="text">
+				<select name="categoryId">
+					<option th:each="category:${categorylist}" th:text="${category.categoryName}" th:value="${category.categoryId}"></option>
+				</select>
+				<select name="companyId">
+					<option th:each="company:${companylist}" th:text="${company.company_name}" th:value="${company.company_id}"></option>
+				</select>
+				<input name="productPrice" id="product_price_add" type="text">
+				<input id="product_image_add" type="file" name="files">
+				<button onclick="productRowDelete(this)" id="add_product_row_del">삭제</button>
+			</div>
+		</div>
 	</div>
 </div>
 </body>

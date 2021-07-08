@@ -97,12 +97,12 @@ public class PaymentController {
 		 
 	@GetMapping("/shop")
 	public void packlist(Model model) {
-		model.addAttribute("plist", packRepo.findByPackageType(0));
+		model.addAttribute("plist", packRepo.findByPackageType2(0));
 	}
 
 	@GetMapping("/index")
 	public void index(Model model) {
-		model.addAttribute("plist", packRepo.findByPackageType2(0));	
+		model.addAttribute("plist", packRepo.findByPackageType(0));	
 	}
 
 	@GetMapping("/product_details")
@@ -123,6 +123,7 @@ public class PaymentController {
 		log.info("구독정보 입력성공");
 	}
 	
+
 	@Autowired
 	ReqPaymentScheduler scheldule;
 	@GetMapping("/deleteSubscribe")
@@ -133,6 +134,7 @@ public class PaymentController {
 
 	
 	
+
 	@GetMapping("/delivery/deliveryInsert")
 	public @ResponseBody void deliveryInsert(@RequestParam Map<String, Object> map)
 			throws JsonMappingException, JsonProcessingException{
@@ -141,6 +143,22 @@ public class PaymentController {
 		Date deliveryDate = Date.valueOf((String) map.get("deliveryDate"));
 		deliService.deliveryInsert(packageId, customerId, deliveryDate);
 	}
+	
+	@GetMapping("/subscribe")
+	   public String viewed(Model model) {
+	      //구독 조회
+	      Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();//로그인시 정보 받아오기
+	      UserSecurity usersecurity=(UserSecurity)principal;
+	      Member mem=userService.getMemberInfo(usersecurity.getUsername());//정보 찾기
+	      
+	      List<Subscribe> lel=subService.findByCustomer(mem);
+	      System.out.println(lel);
+	      model.addAttribute("subscribe",lel);
+
+	      return "subscribe";
+	   }
+
+
 
 }
 
