@@ -1,5 +1,7 @@
 package com.kosta.KOSTA_3_final.service.board;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,5 +30,5 @@ public class ReviewService {
 	public Review insertReview(Review review) {
 		return repository.save(review);
 	}
-
+	
 }
