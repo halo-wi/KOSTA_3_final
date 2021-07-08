@@ -122,16 +122,7 @@ public class PaymentController {
 	}
 	
 
-	@Autowired
-	ReqPaymentScheduler scheldule;
-	@GetMapping("/deleteSubscribe")
-	public void deleteSubscribe() {
-		scheldule.stopScheduler();
-	}
-	
 
-	
-	
 
 	@GetMapping("/delivery/deliveryInsert")
 	public @ResponseBody void deliveryInsert(@RequestParam Map<String, Object> map)
@@ -142,7 +133,7 @@ public class PaymentController {
 		deliService.deliveryInsert(packageId, customerId, deliveryDate);
 	}
 	
-	@GetMapping("/payments/subscribe")
+	@GetMapping("/subscribe")
 	   public String viewed(Model model) {
 	      //구독 조회
 	      Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();//로그인시 정보 받아오기
@@ -153,7 +144,7 @@ public class PaymentController {
 	      System.out.println(lel);
 	      model.addAttribute("subscribe",lel);
 
-	      return "/payments/subscribe";
+	      return "/subscribe";
 	   }
 
 
