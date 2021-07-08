@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html lang="zxx" xmlns:th="http://www.thymeleaf.org"
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-layout:decorate="~{layout/layout1}">
+layout:decorate="~{layout/layout3}">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
@@ -376,7 +377,7 @@ th, td{
                 	 		<th>주문금액</th>
                 	 	</tr>
                 	 	<tr>
-                	 		<td><img th:src="|assets/img/gallery/${pack.img}.jpg|"  style = "width:200px; height:auto;" alt=""></td>
+                	 		<td><img th:src="|../assets/img/gallery/${pack.img}.jpg|"  style = "width:200px; height:auto;" alt=""></td>
                 	 		<td th:text="${pack.packageName}">
                 	 		<td>무료</td>
                 	 		<td th:text="${pack.price}">

@@ -33,7 +33,7 @@
 	<link rel="stylesheet" type="text/css" href=/css/board/star.css>
 </head>
 <body>
-	<!--? Preloader Start -->
+		<!--? Preloader Start -->
 	<div id="preloader-active">
 		<div
 			class="preloader d-flex align-items-center justify-content-center">
@@ -47,170 +47,159 @@
 	</div>
 	<!-- Preloader End -->
 	<header>
-		<!-- Header Start -->
-		<div class="header-area">
-			<div class="main-header header-sticky">
-				<div class="container-fluid">
-					<div class="menu-wrapper">
-						<!-- Logo -->
-						<div class="logo">
-							<a href="/index"><img src="/assets/img/logo/logo.png"
-								alt=""></a>
+        <!-- Header Start -->
+        <div class="header-area">
+            <div class="main-header header-sticky">
+                <div class="container-fluid">
+                    <div class="menu-wrapper">
+                        <!-- Logo -->
+                        <div class="logo">
+							<a href="/index"><img src="/images/snackLogo.jpg"
+								alt="" style="width:200px; height:auto;"></a>
 						</div>
-						<!-- Main-menu -->
-						<div class="main-menu d-none d-lg-block">
-							<nav>
-								<ul id="navigation">  
+                        <!-- Main-menu -->
+                        <div class="main-menu d-none d-lg-block">
+                            <nav>                                                
+                                <ul id="navigation">  
                                     <li><a href="/index">Home</a></li>
-                                    <li><a href="/product/customPackaging3">과자모음</a></li>
-                                    <li><a href="/shop">구독서비스</a></li>
-                                    <li class="hot"><a href="/product_details">상세보기</a>
-                                        <ul class="submenu">
-                                            <li><a href="/product_details"> 상세보기</a></li>
+                                    <li><a href="">구독 서비스</a>
+                                   		<ul class="submenu">
+                                            <li><a href="/shop">월간 간식</a></li>
+                                            <li><a href="/product/customPackaging3">나만의 간식 팩</a></li>
                                         </ul>
                                     </li>
                                     <li><a href="/board/boardlist">게시판</a>
                                         <ul class="submenu">
-                                            <li><a href="/board/qnalist">qna</a></li>
-                                            <li><a href="/board/reviewlist">후기모음</a></li>
+                                            <li><a href="/board/reviewlist">한줄평</a></li>
+                                            <li><a href="/board/boardlist">과자갤러리</a></li>
+                                            <li><a href="/board/qnalist">문의</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="#">회원정보</a>
+                                    <li><a href="">회원정보</a>
                                         <ul class="submenu">
-                                            <li><a href="/login">로그인</a></li>
-                                            <li><a href="/logout">로그아웃</a></li>
+                                            <li sec:authorize="isAnonymous()"><a href="/login">로그인</a></li>
+                                            <li sec:authorize="isAuthenticated()"><a href="/logout">로그아웃</a></li>
                                             <li><a href="/mypage/profile">마이페이지</a></li>
-                                            <li><a href="confirmation.html">Confirmation</a></li>
-                                            <li><a href="checkout.html">Product Checkout</a></li>
+
                                         </ul>
                                     </li>
-                                    <li><a href="contact.html">Contact</a></li>
+                                    <li class="admin-menu"><a href="">관리자</a>
+                                    	<ul class="submenu">
+                                            <li><a href="/product/adminMakeProductAndPackage">패키지/제품 관리</a></li>
+                                            <li><a href="/delivery/deliveryList">배송일정</a></li>
+                                        </ul>
+                                    </li>
                                 </ul>
-							</nav>
-						</div>
-						<!-- Header Right -->
-						<div class="header-right">
-							<ul>
-								<li>
-									<div class="nav-search search-switch">
-										<span class="flaticon-search"></span>
-									</div>
-								</li>
-								<li><a href="login.html"><span class="flaticon-user"></span></a></li>
-								<li><a href="cart.html"><span
-										class="flaticon-shopping-cart"></span></a></li>
-							</ul>
-						</div>
-					</div>
-					<!-- Mobile Menu -->
-					<div class="col-12">
-						<div class="mobile_menu d-block d-lg-none"></div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<hr>
-		<!-- Header End -->
-	</header>
+                            </nav>
+                        </div>
+                        <!-- Header Right -->
+                        <div class="header-right">
+                            <ul>
+                                <li>
+                                    <div class="nav-search search-switch">
+                                        <span class="flaticon-search"></span>
+                                    </div>
+                                </li>
+                                <li sec:authorize="isAnonymous()"> <a href="/login"><span class="flaticon-user"></span></a></li>
+                                <li sec:authorize="isAuthenticated()"> <a href="/mypage/profile"><span class="flaticon-user"></span></a></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Mobile Menu -->
+                    <div class="col-12">
+                        <div class="mobile_menu d-block d-lg-none"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Header End -->
+    </header>
 	<div layout:fragment="content1">
 	
 	</div> <!-- 구현하신 부분 넣으시면 됩니다. -->
-	<footer>
-	<!-- Footer Start-->
-		<div class="footer-area footer-padding">
-			<div class="container">
-				<div class="row d-flex justify-content-between">
-					<div class="col-xl-3 col-lg-3 col-md-5 col-sm-6">
-						<div class="single-footer-caption mb-50">
-							<div class="single-footer-caption mb-30">
-								<!-- logo -->
-								<div class="footer-logo">
-									<a href="index.html"><img
-										src="/assets/img/logo/logo2_footer.png" alt=""></a>
-								</div>
-								<div class="footer-tittle">
-									<div class="footer-pera">
-										<p>Asorem ipsum adipolor sdit amet, consectetur
-											adipisicing elitcf sed do eiusmod tem.</p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-2 col-lg-3 col-md-3 col-sm-5">
-						<div class="single-footer-caption mb-50">
-							<div class="footer-tittle">
-								<h4>Quick Links</h4>
-								<ul>
-									<li><a href="#">About</a></li>
-									<li><a href="#"> Offers & Discounts</a></li>
-									<li><a href="#"> Get Coupon</a></li>
-									<li><a href="#"> Contact Us</a></li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-lg-3 col-md-4 col-sm-7">
-						<div class="single-footer-caption mb-50">
-							<div class="footer-tittle">
-								<h4>New Products</h4>
-								<ul>
-									<li><a href="#">Woman Cloth</a></li>
-									<li><a href="#">Fashion Accessories</a></li>
-									<li><a href="#"> Man Accessories</a></li>
-									<li><a href="#"> Rubber made Toys</a></li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-lg-3 col-md-5 col-sm-7">
-						<div class="single-footer-caption mb-50">
-							<div class="footer-tittle">
-								<h4>Support</h4>
-								<ul>
-									<li><a href="#">Frequently Asked Questions</a></li>
-									<li><a href="#">Terms & Conditions</a></li>
-									<li><a href="#">Privacy Policy</a></li>
-									<li><a href="#">Report a Payment Issue</a></li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- Footer bottom -->
-				<div class="row align-items-center">
-					<div class="col-xl-7 col-lg-8 col-md-7">
-						<div class="footer-copy-right">
-							<p>
-								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-								Copyright &copy;
-								<script>
-									document.write(new Date().getFullYear());
-								</script>
-								All rights reserved | This template is made with <i
-									class="fa fa-heart" aria-hidden="true"></i> by <a
-									href="https://colorlib.com" target="_blank">Colorlib</a>
-								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-							</p>
-						</div>
-					</div>
-					<div class="col-xl-5 col-lg-4 col-md-5">
-						<div class="footer-copy-right f-right">
-							<!-- social -->
-							<div class="footer-social">
-								<a href="#"><i class="fab fa-twitter"></i></a> <a
-									href="https://www.facebook.com/sai4ull"><i
-									class="fab fa-facebook-f"></i></a> <a href="#"><i
-									class="fab fa-behance"></i></a> <a href="#"><i
-									class="fas fa-globe"></i></a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- Footer End-->
-	</footer>
+	 <footer>
+        <!-- Footer Start-->
+        <div class="footer-area footer-padding">
+            <div class="container">
+                <div class="row d-flex justify-content-between">
+                    <div class="col-xl-3 col-lg-3 col-md-5 col-sm-6">
+                        <div class="single-footer-caption mb-50">
+                            <div class="single-footer-caption mb-30">
+                                <!-- logo -->
+                                <div class="footer-logo">
+                                    <a href="index.html"><img src="../images/snackLogo.jpg" width="200px" alt=""></a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-md-3 col-sm-5">
+                        <div class="single-footer-caption mb-50">
+                            <div class="footer-tittle">
+                                <h4>Quick Links</h4>
+                                <ul>
+                                    <li><a href="#">About</a></li>
+                                    <li><a href="#"> Offers & Discounts</a></li>
+                                    <li><a href="#"> Get Coupon</a></li>
+                                    <li><a href="#">  Contact Us</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-7">
+                        <div class="single-footer-caption mb-50">
+                            <div class="footer-tittle">
+                                <h4>New Products</h4>
+                                <ul>
+                                    <li><a href="#">Woman Cloth</a></li>
+                                    <li><a href="#">Fashion Accessories</a></li>
+                                    <li><a href="#"> Man Accessories</a></li>
+                                    <li><a href="#"> Rubber made Toys</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-5 col-sm-7">
+                        <div class="single-footer-caption mb-50">
+                            <div class="footer-tittle">
+                                <h4>Support</h4>
+                                <ul>
+                                    <li><a href="#">Frequently Asked Questions</a></li>
+                                    <li><a href="#">Terms & Conditions</a></li>
+                                    <li><a href="#">Privacy Policy</a></li>
+                                    <li><a href="#">Report a Payment Issue</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Footer bottom -->
+                <div class="row align-items-center">
+                    <div class="col-xl-7 col-lg-8 col-md-7">
+                        <div class="footer-copy-right">
+                            <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> 
+  <span><a  id="giturl" style="color:black" href="https://github.com/halo-wi/KOSTA_3_final">All rights reserved | https://github.com/halo-wi/KOSTA_3_final</a></span>
+  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>                  
+                        </div>
+                    </div>
+                    <div class="col-xl-5 col-lg-4 col-md-5">
+                        <div class="footer-copy-right f-right">
+                            <!-- social -->
+                            <div class="footer-social">
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="https://www.facebook.com/sai4ull"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-behance"></i></a>
+                                <a href="#"><i class="fas fa-globe"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End-->
+    </footer>
 
 	<!-- JS here -->
     <script src="/assets/js/vendor/modernizr-3.5.0.min.js"></script>

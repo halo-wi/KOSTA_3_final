@@ -60,7 +60,7 @@
                         <label for="pack"></label>
                         <select id="pack" name="pack">
 						<option value="">----- 패키지를 선택하세요-----</option>
-						<option th:each="sub:${subscribes}"  th:value="${sub.pack.packageId}" th:text = "${sub.pack.packageName}" th:disabled="${sub.pack.reviews.size()>0?true:false}">
+						<option th:each="sub, i :${subscribes}"  th:value="${sub.pack.packageId}" th:text = "${sub.pack.packageName}" th:disabled="${arr[i.index]}">
 						</option>
 
 					</select> </td>

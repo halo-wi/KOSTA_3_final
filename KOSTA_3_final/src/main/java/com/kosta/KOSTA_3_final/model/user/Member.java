@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -80,7 +81,7 @@ public class Member {
 	List<QnAReply> qnareplies; 
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL) //, fetch = FetchType.EAGER
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	List<Subscribe> subscribes;
 	
 	@JsonIgnore
