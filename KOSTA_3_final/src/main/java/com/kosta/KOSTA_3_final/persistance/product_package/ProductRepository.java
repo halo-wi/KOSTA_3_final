@@ -14,7 +14,7 @@ public interface ProductRepository extends CrudRepository<Product, Integer>, Que
 		BooleanBuilder builder = new BooleanBuilder();
 		QProduct product = QProduct.product;
 		//builder.and(product.product_id.gt(0)); // and bno>0
-
+		
 		if(type==null) return builder;
 		switch(type) {
 		case "product":
@@ -29,7 +29,7 @@ public interface ProductRepository extends CrudRepository<Product, Integer>, Que
 		default:
 			break;
 		}
-
+		
 		return builder;
 	}
 }
