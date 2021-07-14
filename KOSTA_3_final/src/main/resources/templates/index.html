@@ -243,7 +243,7 @@
                              <div class="startRadio">
                              
                                 <label class="startRadio__box" for="score" th:each="num:${#numbers.sequence(1,10)}"> 
-									<input type="radio" th:name="'score' + ${packState2}" th:value="${num}" th:checked="${pack.score==num}?true:false" disabled="disabled">
+									<input type="radio" th:name="'score' + ${packState2}" th:value="${num}" th:checked="${pack.score>=num}?true:false" disabled="disabled">
 									<span class="startRadio__img"><span class="blind" th:text="${num}"></span></span>
 								</label>
                             </div>
